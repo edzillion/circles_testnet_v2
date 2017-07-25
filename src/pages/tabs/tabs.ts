@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Nav, NavController, NavParams } from 'ionic-angular';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+import { ProfilePage } from '../profile/profile';
+import { SearchPage } from '../search/search';
+import { LogPage } from '../log/log';
 
 @Component({
   selector: 'page-tabs',
@@ -16,9 +16,9 @@ export class TabsPage {
 
     //private toast: Toast
 
-    private tab1Root = HomePage;
-    private tab2Root = AboutPage;
-    private tab3Root = ContactPage;
+    private tab1Root = ProfilePage;
+    private tab2Root = SearchPage;
+    private tab3Root = LogPage;
 
     private nav: Nav;
 
