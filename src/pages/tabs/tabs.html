@@ -1,5 +1,24 @@
-<ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>
-</ion-tabs>
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Circles - {{pageTitle}}</ion-title>
+    <ion-buttons left>
+      <button ion-button menuToggle icon-only >
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button icon-only>
+        <ion-icon name="cash"></ion-icon>
+        <div class="title title-md">{{user?.balance}}</div>
+      </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<super-tabs tabsPlacement="bottom" toolbarColor="primary" (tabSelect)="onTabSelect($event)">
+  <super-tab [root]="tab1Root" [rootParams]="{'nav':_nav}" title="Profile" id="Profile" icon="person"></super-tab>
+  <super-tab [root]="tab2Root" [rootParams]="{'nav':_nav}" title="Search" id="Groups" icon="search"></super-tab>
+  <super-tab [root]="tab3Root" [rootParams]="{'nav':_nav}" title="Log" id="Send" icon="list"></super-tab>
+</super-tabs>
