@@ -7,11 +7,11 @@ This is a starter template for [Ionic](http://ionicframework.com/docs/) projects
 
 ## to run on ios / android:
 1. to install deployment tool: `npm install -g ios-deploy`
-2. if that fails try:
-`sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-sudo npm install -g ios-deploy --unsafe-perm=true --allow-root`
-https://github.com/npm/npm/issues/10055
-3. `sudo ionic cordova run ios`
+2. run `ionic cordova build ios`
+3. open the xcode project file located in platforms/ios/MyApp.xcodeproj
+4. run the app in a simulator, or if you have an Apple Developers License, you can run it on a device
+5. more useful info here: http://ionicframework.com/docs/v1/guide/testing.html
+
 
 ## How to use this template
 
