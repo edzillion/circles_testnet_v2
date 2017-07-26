@@ -4,7 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-
+import { Camera } from '@ionic-native/camera';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
@@ -74,14 +74,15 @@ import { environment } from '../environments/environment';
     TabsPage
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
     AnalyticsService,
+    Camera,
     GoogleAnalytics,
-    PushService,
-    UserService,
-    TransactionService,
     NewsService,
+    PushService,
+    SplashScreen,
+    StatusBar,
+    TransactionService,
+    UserService,
     // PushService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
