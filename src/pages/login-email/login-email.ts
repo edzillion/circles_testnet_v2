@@ -8,7 +8,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 
-@IonicPage()
 @Component({
   selector: 'page-login-email',
   templateUrl: 'login-email.html',

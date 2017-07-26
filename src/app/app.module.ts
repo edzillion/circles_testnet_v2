@@ -27,9 +27,9 @@ import { AngularFireModule } from 'angularfire2';
 
 import { UserService } from '../providers/user-service/user-service';
 
-// import { TransactionService } from '../providers/transaction-service/transaction-service';
-// import { NewsService } from '../providers/news-service/news-service';
-// import { PushService } from '../providers/push-service/push-service';
+import { TransactionService } from '../providers/transaction-service/transaction-service';
+import { NewsService } from '../providers/news-service/news-service';
+import { PushService } from '../providers/push-service/push-service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -43,6 +43,7 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
+    LoginEmailPage,
     LoginPage,
     LogPage,
     MyApp,
@@ -55,7 +56,6 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
-
     BrowserModule,
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
@@ -64,10 +64,10 @@ import { environment } from '../environments/environment';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-
+    LoginEmailPage,
     LoginPage,
     LogPage,
+    MyApp,
     ProfilePage,
     SearchPage,
     SignupEmailPage,
@@ -78,9 +78,10 @@ import { environment } from '../environments/environment';
     SplashScreen,
     AnalyticsService,
     GoogleAnalytics,
+    PushService,
     UserService,
-    // TransactionService,
-    // NewsService,
+    TransactionService,
+    NewsService,
     // PushService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
