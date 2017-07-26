@@ -6,7 +6,12 @@ This is a starter template for [Ionic](http://ionicframework.com/docs/) projects
 3. `ionic serve` to compile and run the app on a webserver.
 
 ## to run on ios / android:
-4. `sudo ionic cordova run ios`
+1. to install deployment tool: `npm install -g ios-deploy`
+2. if that fails try:
+`sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+sudo npm install -g ios-deploy --unsafe-perm=true --allow-root`
+https://github.com/npm/npm/issues/10055
+3. `sudo ionic cordova run ios`
 
 ## How to use this template
 
