@@ -4,7 +4,9 @@ This is a starter template for [Ionic](http://ionicframework.com/docs/) projects
 1. if you don't already have ionic installed run `sudo npm install -g ionic cordova`
 2. `sudo npm install` to install other packages
 3. `ionic serve` to compile and run the app on a webserver.
-4. see below for instructions on how to run it for ios/android
+
+## to run on ios / android:
+4. `sudo ionic cordova run ios`
 
 ## How to use this template
 
