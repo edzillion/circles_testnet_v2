@@ -14,7 +14,7 @@ import { User } from '../../interfaces/user-interface';
 @Injectable()
 export class UserService implements OnDestroy {
 
-  public initSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
+  public initUserSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   private userSubject$: BehaviorSubject<User>;
   private usersSubject$: ReplaySubject<Array<User>> = new ReplaySubject<Array<User>>(1);
@@ -29,6 +29,8 @@ export class UserService implements OnDestroy {
   private usersSub$: Subscription;
 
   private user: User;
+  //private userStub: User;
+  private email: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -36,51 +38,35 @@ export class UserService implements OnDestroy {
   ) {
 
     this.authState$ = this.afAuth.authState;
-    // this.authSub$ = this.afAuth.authState.subscribe(
-    //   auth => {
-    //     if (auth) {
-    //       let userSub = this.db.object('/users/' + auth.uid).subscribe(
-    //         user => {
-    //           if (user.$exists()) {
-    //             // at this point the user has a login and has a user profile.
-    //             // set up this service's user subscrioption and then called
-    //             // this.initSubject.next(false); to end the initialisation process
-    //             userSub.unsubscribe();
-    //             this.userSubject$ = new BehaviorSubject(user);
-    //             this.user$ = this.userSubject$.asObservable();
-    //             // this.userSubject$ is our app wide current user Subscription
-    //             this.userFirebaseObj$ = this.db.object('/users/' + auth.uid);
-    //             this.userSub$ = this.userFirebaseObj$.subscribe(
-    //               user => {
-    //                 this.user = user;
-    //                 this.userSubject$.next(user);
-    //               },
-    //               error => console.log('Could not load current user record.')
-    //             );
-    //             // is it worth having a separate subscription for the current user & all users?
-    //             this.usersSub$ = this.db.list('/users/').subscribe(
-    //               users => {
-    //                 //clone the users array so that we don't change a user accidentally
-    //                 //Object.assign(this.dataStore.users, users);
-    //                 this.usersSubject$.next(users);
-    //               },
-    //               error => console.log('Could not load users.')
-    //             );
-    //
-    //             this.initSubject$.next(null);
-    //           }
-    //           else {
-    //             this.initSubject$.next(auth);
-    //           }
-    //         },
-    //         error => console.error(error),
-    //         () => { }
-    //       )
-    //     }
-    //   },
-    //   error => console.error(error),
-    //   () => { }
-    // );
+    this.authSub$ = this.afAuth.authState.subscribe(
+      auth => {
+        if (auth) {
+          let userObs = this.db.object('/users/' + auth.uid);
+          let userSub = userObs.subscribe(
+            user => {
+              if (!user.$exists()) {
+                userObs.set(this.user);
+              }
+              else {
+                this.userSubject$ = new BehaviorSubject(user);
+                this.user$ = this.userSubject$.asObservable();
+                // this.userSubject$ is our app wide current user Subscription
+                this.userFirebaseObj$ = this.db.object('/users/' + auth.uid);
+                this.userSub$ = this.userFirebaseObj$.subscribe(
+                  user => {
+                    this.user = user;
+                    this.initUserSubject$.next(user)
+                    this.userSubject$.next(user);
+                  },
+                  error => console.log('Could not load current user record.')
+                );
+              }
+            });
+        }
+      },
+      error => console.error(error),
+      () => { }
+    );
   }
 
   public keyToUser$(key: string): Observable<User> {
@@ -120,19 +106,21 @@ export class UserService implements OnDestroy {
     }
   }
 
-  public signInEmail (email, password) {
+  public signInEmail(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  public signInRedirect (provider) {
+  public signInRedirect(provider) {
     return this.afAuth.auth.signInWithRedirect(provider);
   }
 
-  public createUser (email, password) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+  public async createUser(email, password) {
+    let u = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+    this.user.email = u.email;
+    return;
   }
 
-  public signOut () {
+  public signOut() {
     return this.afAuth.auth.signOut();
   }
 

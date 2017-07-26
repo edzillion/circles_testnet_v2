@@ -7,6 +7,10 @@ import { Camera } from '@ionic-native/camera';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
+import { Subscription } from 'rxjs/Subscription';
+
+import { UserService } from '../../providers/user-service/user-service';
+import { User } from '../../interfaces/user-interface';
 
 /**
  * Generated class for the ProfilePage page.
@@ -25,11 +29,15 @@ export class ProfilePage {
     private base64ImageData: string;
     public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
 
+    private user: User;
+    private userSub$: Subscription;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private notificationsService: NotificationsService,
     private camera: Camera,
     private db: AngularFireDatabase,
     private ds: DomSanitizer,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private userService: UserService
   ) {
   }
 
@@ -80,6 +88,11 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     this.notificationsService.create('Load Success','','success');
+    this.userSub$ = this.userService.initUserSubject$.subscribe(
+      user => {
+        this.user = user
+      }
+    );
   }
 
 }

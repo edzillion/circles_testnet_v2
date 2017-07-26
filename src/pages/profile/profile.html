@@ -14,17 +14,20 @@
 
 
 <ion-content padding>
-Profile pic:
-
-      <ion-row>
-          <ion-col col-6 offset-3>
-            <img class="profile-pic" src="{{profilePicURL}}" >
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-8 offset-2>
-            <button ion-button full (click)="openCamera()">Open camera</button>
-            <button ion-button full (click)="selectFromGallery()">Select from gallery</button>
-          </ion-col>
-        </ion-row>
+  <ion-list>
+    <ion-item>
+      Profile pic: <img class="profile-pic" src="{{profilePicURL}}">
+      <button ion-button (click)="openCamera()">Open camera</button>
+      <button ion-button (click)="selectFromGallery()">Select from gallery</button>
+    </ion-item>
+    <ion-item>
+      Name: {{user?.displayName}}
+    </ion-item>
+    <ion-item>
+      Email: {{user?.email}}
+    </ion-item>
+    <ion-item>
+      User: {{user?.uid}}
+    </ion-item>
+</ion-list>
 </ion-content>

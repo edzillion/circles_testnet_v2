@@ -9,7 +9,6 @@ import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 import { ProfilePage } from '../profile/profile';
 
-@IonicPage()
 @Component({
   selector: 'page-signup-email',
   templateUrl: 'signup-email.html',
@@ -39,31 +38,32 @@ export class SignupEmailPage {
     if (!formValid)
       return;
 
-    this.loading = this.loadingCtrl.create({
-      content: 'Saving User ...',
-      //dismissOnPageChange: true
-    });
-
-    this.loading.present();
+    // this.loading = this.loadingCtrl.create({
+    //   content: 'Saving User ...',
+    //   //dismissOnPageChange: true
+    // });
+    //
+    // this.loading.present();
 
     this.userService.createUser(
       formData.email,
       formData.password1
-    ).then(
-      user => {
-        this.loading.dismiss();
-        console.log("Email auth success: " + JSON.stringify(user));
-      }).catch(
-      error => {
-        console.log("Email auth failure: " + JSON.stringify(error));
-        this.toast = this.toastCtrl.create({
-          message: 'Email auth failure: ' + error,
-          duration: 3000,
-          position: 'middle'
-        });
-        this.loading.dismiss();
-        this.toast.present();
-      });
+    );
+    // .then(
+    //   user => {
+    //     this.loading.dismiss();
+    //     console.log("Email auth success: " + JSON.stringify(user));
+    //   }).catch(
+    //   error => {
+    //     console.log("Email auth failure: " + JSON.stringify(error));
+    //     this.toast = this.toastCtrl.create({
+    //       message: 'Email auth failure: ' + error,
+    //       duration: 3000,
+    //       position: 'middle'
+    //     });
+    //     this.loading.dismiss();
+    //     this.toast.present();
+    //   });
   }
 
   private passwordsAreEqual(ctrl: FormControl): any {

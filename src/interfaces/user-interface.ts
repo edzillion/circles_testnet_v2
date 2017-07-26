@@ -14,4 +14,5 @@ export interface User {
   offers: Array<Offer>;
   profilePicURL: string;
   type: string;
+  uid: string;
 }
