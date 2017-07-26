@@ -6,6 +6,7 @@
   height: 100%;
   align-items: center;
   justify-content: center;
+  color:white;
 
   #title{
     color:white;
@@ -14,10 +15,20 @@
     align-items: center;
     justify-content: center;
     vertical-align: center;
-    padding: 10%;
+    padding: 20%;
     img{
       display: block;
       margin: 0 auto;
+      padding: 20px;
     }
+  }
+
+  button{
+    width: 200px;
+  }
+
+  a{
+    margin-top: 10px;
+    color:white;
   }
 }

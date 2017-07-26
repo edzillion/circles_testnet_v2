@@ -20,3 +20,21 @@
 *{
   font-family: 'avenir';
 }
+
+//global styles
+.gradient-bg{
+  background-color: map-get($colors, primary);
+  background: linear-gradient(-150deg, map-get($colors, primary), #4788C8); /* Standard syntax */
+}
+
+//button styles
+button{
+  font-size: 16px;
+  color:map-get($colors, primary);
+  background-color: white;
+  padding: 10px 10px;
+  margin: 5px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,.5);
+}
+
