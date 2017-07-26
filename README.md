@@ -1,5 +1,13 @@
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
+## easy setup
+1. if you don't already have ionic installed run `sudo npm install -g ionic cordova`
+2. `sudo npm install` to install other packages
+3. `ionic serve` to compile and run the app on a webserver.
+
+## to run on ios / android:
+4. `sudo ionic cordova run ios`
+
 ## How to use this template
 
 *This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
