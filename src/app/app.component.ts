@@ -1,22 +1,70 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, Loading, LoadingController, Events, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Subscription } from 'rxjs/Subscription';
+
+import { UserService } from '../providers/user-service/user-service';
+
+import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any = LoginPage;
+  @ViewChild('content') nav;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+private loading: Loading;
+
+private initSub$: Subscription;
+
+  constructor(
+    private alertController: AlertController,
+    private userService: UserService,
+    public events: Events,
+    private afAuth: AngularFireAuth,
+    private db: AngularFireDatabase,
+    private platform: Platform,
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    //aprivate analytics: AnalyticsService,
+    private loadingCtrl: LoadingController
+  ) {
+    platform.ready()      .then(() => {
+
+      if (this.platform.is('cordova')) {
+
+      }
       statusBar.styleDefault();
-      splashScreen.hide();
+      this.userService.authState$.subscribe(
+        auth => {
+          if (auth)
+            this.nav.setRoot(TabsPage, { nav: this.nav })
+          else {}
+            //todo: error here
+        },
+        error => console.error(error),
+        () => { }
+      );
+
     });
+  }
+
+  private logout() {
+  //close subscriptions?? close services??
+  this.userService.signOut().then(
+    (user) => {
+    console.log('logout success');
+    this.nav.setRoot(LoginPage);
+  }, function(error) {
+    console.log('logout fail:', error);
+  });
+
   }
 }
