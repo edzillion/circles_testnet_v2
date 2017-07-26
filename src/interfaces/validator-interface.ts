@@ -1,4 +1,4 @@
-export interface Group {
+export interface Validator {
   $key: string,
   description: string;
   displayName: string;

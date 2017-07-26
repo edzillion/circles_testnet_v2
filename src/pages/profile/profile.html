@@ -16,6 +16,12 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
+      Validators:
+      <div *ngFor="let val of user?.validators" class="profileItem">
+        <img class="profile-item" src="{{val.profilePicURL}}">
+      </div>
+    </ion-item>
+    <ion-item>
       Profile pic: <img class="profile-pic" src="{{profilePicURL}}">
       <button ion-button (click)="openCamera()">Open camera</button>
       <button ion-button (click)="selectFromGallery()">Select from gallery</button>
@@ -24,10 +30,20 @@
       Name: {{user?.displayName}}
     </ion-item>
     <ion-item>
-      Email: {{user?.email}}
+      Greeting: {{user?.greeting}}
     </ion-item>
     <ion-item>
-      User: {{user?.uid}}
+      <h3>Auth Providers</h3>
+      Email: {{user?.email}}<br>
+      Facebook: false<br>
+      Google: false
+    </ion-item>
+
+    <ion-item>
+      Offers:
+      <div *ngFor="let offer of user?.offers" class="profileItem">
+        <img class="profile-item" src="{{offer.profilePicURL}}">
+      </div>
     </ion-item>
 </ion-list>
 </ion-content>

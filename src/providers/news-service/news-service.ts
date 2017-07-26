@@ -13,7 +13,7 @@ import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 import { NewsItem } from '../../interfaces/news-item-interface';
 import { Offer } from '../../interfaces/offer-interface';
-import { Group } from '../../interfaces/group-interface';
+import { Validator } from '../../interfaces/validator-interface';
 import { PushService } from '../../providers/push-service/push-service';
 
 @Injectable()
@@ -139,14 +139,14 @@ export class NewsService implements OnDestroy {
     this.dbNewsItems$.push(newsItem);
   }
 
-  public addGroupJoin(group: Group):void {
+  public addGroupJoin(validator: Validator):void {
     this.notificationsService.create('Join Success','','success');
-    let msg = 'You have joined the group: ' +group.displayName;
+    let msg = 'You have joined the group: ' +validator.displayName;
     this.notificationsService.create('Join', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      title: group.displayName,
+      title: validator.displayName,
       type: 'groupJoin'
     };
     this.dbNewsItems$.push(newsItem);
