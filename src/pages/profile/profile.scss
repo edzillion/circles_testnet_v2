@@ -10,4 +10,32 @@ page-profile {
     height: 55px;
     float:left;
   }
+
+  .profile-pic{
+    margin-top: -50px;
+    text-align: center;
+    color: white;
+    .circle-crop{
+      border-radius: 50%;
+      position:relative;
+      overflow: hidden;
+      width: 156px;
+      height: 156px;
+      margin: auto;
+      background-size:cover;
+      background-position: center;
+    }
+    img{
+      display: block;
+      margin: auto;
+    }
+    .user-name{
+      font-size: 36px;
+    }
+    .balance{
+      font-size: 18px;
+      color: #E7E6E6;
+    }
+  }
+
 }

@@ -24,20 +24,26 @@
       </div>
     </ion-item>-->
 
-    <ion-item>
-      Profile pic: <img class="profile-pic" src="{{profilePicURL}}">
+    <div class="profile-pic">
+      <div class="circle-crop"
+        [ngStyle]="{'background-image': 'url(' + profilePicURL + ')'}">
+        <!--<img src="{{profilePicURL}}">-->
+      </div>
       <button ion-button (click)="openCamera()">Open camera</button>
       <button ion-button (click)="selectFromGallery()">Select from gallery</button>
-    </ion-item>
-    <ion-item>
-      Name: {{user?.displayName}}
-    </ion-item>
-    <ion-item>
-      Greeting: {{user?.greeting}}
-    </ion-item>
-    <ion-item>
-      Balance: {{user?.balance}}
-    </ion-item>
+
+       <div class="user-name">
+        {{user?.displayName}}
+      </div>
+
+      <div class="balance">
+        {{user?.balance}} css
+      </div>
+
+    </div>
+
+    <!--<ion-item>Greeting: {{user?.greeting}}</ion-item>-->
+
     <ion-item>
       <ion-segment [(ngModel)]="view" color="primary">
         <ion-segment-button class="offer-segment-button" value="offers" (ionSelect)="selectNetwork()">
