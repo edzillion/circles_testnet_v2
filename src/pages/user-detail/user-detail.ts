@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { UserService } from '../../providers/user-service/user-service';
+import { TransactionService } from '../../providers/transaction-service/transaction-service';
 import { User } from '../../interfaces/user-interface';
 
 import { Subscription } from 'rxjs/Subscription';
+
+import { SendPage } from '../send/send';
 
 @Component({
   selector: 'page-user-detail',
@@ -21,7 +24,12 @@ export class UserDetailPage {
 
   private validatedBy: any;
 
-  constructor(private navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
+  constructor(
+    private navCtrl: NavController,
+    public navParams: NavParams,
+    private userService: UserService,
+    private transactionService: TransactionService
+  ) {
     this.viewUser = navParams.data;
 
     console.log(navParams.data);
@@ -37,6 +45,10 @@ export class UserDetailPage {
     this.userService.addTrustedUser(this.viewUser.$key);
     this.directTrust = true;
     this.trusted = true;
+  }
+
+  private sendCircles () {
+    this.navCtrl.push(SendPage, this.viewUser);
   }
 
   ionViewDidLoad() {

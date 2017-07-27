@@ -39,6 +39,7 @@ export class TransactionService implements OnDestroy {
   }
 
   private  async transfer(toUser:User, amount:number) {
+    amount = Number(amount);
     if (this.user.balance < amount)
       return false;
     let myBalance: number = +this.user.balance;

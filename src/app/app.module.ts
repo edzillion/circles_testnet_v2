@@ -20,7 +20,7 @@ import { LoginPage } from '../pages/login/login';
 import { LoginEmailPage } from '../pages/login-email/login-email';
 import { SignupEmailPage } from '../pages/signup-email/signup-email';
 
-
+import { SendPage } from '../pages/send/send';
 
 //services
 import { AnalyticsService } from '../providers/analytics-service/analytics-service';
@@ -53,7 +53,8 @@ import { environment } from '../environments/environment';
     ProfilePage,
     SearchPage,
     UserDetailPage,
-    SignupEmailPage
+    SignupEmailPage,
+    SendPage
   ],
   imports: [
     AngularFireAuthModule,
@@ -74,7 +75,8 @@ import { environment } from '../environments/environment';
     ProfilePage,
     SearchPage,
     UserDetailPage,
-    SignupEmailPage
+    SignupEmailPage,
+    SendPage
   ],
   providers: [
     AnalyticsService,
