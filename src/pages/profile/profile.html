@@ -50,24 +50,24 @@
       Total received : {{user?.totalReceived}} | Total sent: {{user?.totalSent}}
     </ion-item>
 
-      <span *ngIf="selectedView == 'network'">
-        <ion-item *ngFor="let user of viewList" (click)="goToUserDetail(user)">
-          <ion-avatar style="width:48px;height:48px" item-left>
-            <img src="{{user.profilePicURL}}">
-          </ion-avatar>
-          <h2>{{user.displayName}}</h2>
-          <p>{{user.greeting}}</p>
-        </ion-item>
-      </span>
-      <span *ngIf="selectedView == 'history'">
-        <ion-item *ngFor="let transaction of viewList" (click)="goToTransaction(user)">
-          <ion-avatar style="width:48px;height:48px" item-left>
-            <img src="{{user.profilePicURL}}">
-          </ion-avatar>
-          <h2>{{newsItem.type}}</h2>
-          <p>{{user.greeting}}</p>
-        </ion-item>
-      </span>
+    <span *ngIf="selectedView == 'network' && user?.trustedUsers">
+      <ion-item *ngFor="let networkUser of networkList" (click)="goToUserDetail(user)">
+        <ion-avatar style="width:48px;height:48px" item-left>
+          <img src="{{networkUser.profilePicURL}}">
+        </ion-avatar>
+        <h2>{{networkUser.displayName}}</h2>
+        <p>{{networkUser.greeting}}</p>
+      </ion-item>
+    </span>
+    <span *ngIf="selectedView == 'history'">
+      <ion-item *ngFor="let newsItem of newsService.allnewsItemsReversed$ | async" (click)="goToNewsItem(newsItem)">
+        <ion-avatar style="width:48px;height:48px" item-left>
+          <img src="{{user.profilePicURL}}">
+        </ion-avatar>
+        <h2>{{newsItem.title}}</h2>
+        <p>{{newsItem.newsItem}} Cirlces from {{userService.keyToUserName$(newsItem.from)}} to {{userService.keyToUserName$(newsItem.to)}}</p>
+      </ion-item>
+    </span>
 
 </ion-list>
 </ion-content>

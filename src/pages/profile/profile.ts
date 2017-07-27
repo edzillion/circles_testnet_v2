@@ -6,10 +6,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Camera } from '@ionic-native/camera';
 
 import { AngularFireDatabase } from 'angularfire2/database';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
+import { NewsService } from '../../providers/news-service/news-service';
 import { User } from '../../interfaces/user-interface';
 
 import { SearchPage } from '../search/search';
@@ -20,23 +21,25 @@ import { SearchPage } from '../search/search';
 })
 export class ProfilePage {
 
-    private toast: Toast;
-    private base64ImageData: string;
-    public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+  private toast: Toast;
+  private base64ImageData: string;
+  public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
 
-    private user: User;
-    private userSub$: Subscription;
+  private user: User;
+  private userSub$: Subscription;
 
-      private selectedView: string = 'network';
+  private selectedView: string = 'network';
 
-      private viewList: Array<any> = [];
+  private networkList: Array<any> = [];
+  private historyList: Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private notificationsService: NotificationsService,
     private camera: Camera,
     private db: AngularFireDatabase,
     private ds: DomSanitizer,
     private toastCtrl: ToastController,
-    private userService: UserService
+    private userService: UserService,
+    private newsService: NewsService
   ) {
   }
 
@@ -98,19 +101,17 @@ private selectHistory():void {
   }
 
   ionViewDidLoad() {
-    this.notificationsService.create('Load Success','','success');
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
-        debugger;
-        user.trustedUsers.map(
-
-          key => {
-            debugger;
-            this.userService.keyToUser$(key).subscribe( trustedUser => { this.viewList.push(trustedUser)})
+        this.user = user;
+          if (user.trustedUsers) {
+            user.trustedUsers.map(
+              key => {
+                this.userService.keyToUser$(key).subscribe( trustedUser => { this.networkList.push(trustedUser)})
+              }
+            );
           }
-        );
-        this.user = user
-      }
+        }
     );
   }
 

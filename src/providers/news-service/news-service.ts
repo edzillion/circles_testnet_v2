@@ -8,13 +8,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/take';
 
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 import { NewsItem } from '../../interfaces/news-item-interface';
 import { Offer } from '../../interfaces/offer-interface';
 import { Validator } from '../../interfaces/validator-interface';
-import { PushService } from '../../providers/push-service/push-service';
+//import { PushService } from '../../providers/push-service/push-service';
 
 @Injectable()
 export class NewsService implements OnDestroy {
@@ -30,11 +31,11 @@ export class NewsService implements OnDestroy {
   constructor(
     private db: AngularFireDatabase,
     private notificationsService: NotificationsService,
-    private pushService: PushService,
+    //private pushService: PushService,
     private userService: UserService
   ) {
 
-    this.userService.user$.take(1).subscribe(
+    this.userService.initUserSubject$.subscribe(
       user => {
         this.user = user;
         this.setupDBQuery(user);
@@ -108,8 +109,8 @@ export class NewsService implements OnDestroy {
     this.dbNewsItems$.push(newsItem);
 
     //send push notification to other user
-    msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;
-    this.pushService.pushToUser(txItem.toUser,msg);
+    //msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;
+    //this.pushService.pushToUser(txItem.toUser,msg);
   }
 
   public addPurchase(offer: Offer):void {
