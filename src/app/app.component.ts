@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../providers/user-service/user-service';
 
 import { LoginPage } from '../pages/login/login';
-import { TabsPage } from '../pages/tabs/tabs';
+import { ProfilePage } from '../pages/profile/profile';
 
 @Component({
   templateUrl: 'app.html'
@@ -45,7 +45,7 @@ private initSub$: Subscription;
       this.userService.authState$.subscribe(
         auth => {
           if (auth)
-            this.nav.setRoot(TabsPage, { nav: this.nav })
+            this.nav.setRoot(ProfilePage, { nav: this.nav })
           else {}
             //todo: error here
         },

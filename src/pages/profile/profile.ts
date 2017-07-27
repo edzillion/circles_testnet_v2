@@ -12,12 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { SearchPage } from '../search/search';
 
 @Component({
   selector: 'page-profile',
@@ -39,6 +34,10 @@ export class ProfilePage {
     private toastCtrl: ToastController,
     private userService: UserService
   ) {
+  }
+
+  private openSearch(): void {
+    this.navCtrl.push(SearchPage);
   }
 
   private selectFromGallery(): void {

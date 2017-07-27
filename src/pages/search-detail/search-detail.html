@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+     <img src="{{user.profilePicURL}}">
+     <ion-card-content>
+      <ion-card-title>
+       <h1>{{user.displayName}}</h1>
+       <p>Birthday: {{user?.dob | date}}</p>
+      </ion-card-title>
+       <ion-list no-lines>
+         <ion-item>
+           <ion-icon name="mail" item-left></ion-icon>
+           <p>{{user.email}}</p>
+         </ion-item>
+
+         <ion-item>
+           <ion-icon name="home" item-left></ion-icon>
+           1 The Street
+           <br />
+           CityTown, Upper State 101922
+         </ion-item>
+         <ion-item>
+         <ion-icon name="call" item-left>
+         </ion-icon>
+         + 49 1023893933
+         </ion-item>
+         <ion-item>
+         <ion-icon name="phone-portrait" item-left></ion-icon>
+         + 49 1023893933
+         </ion-item>
+       </ion-list>
+     </ion-card-content>
+   </ion-card>
+</ion-content>

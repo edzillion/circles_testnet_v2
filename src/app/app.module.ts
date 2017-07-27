@@ -12,12 +12,15 @@ import 'angular2-notifications';
 
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
+import { SearchDetailPage } from '../pages/search-detail/search-detail';
+
 import { LogPage } from '../pages/log/log';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { LoginPage } from '../pages/login/login';
 import { LoginEmailPage } from '../pages/login-email/login-email';
 import { SignupEmailPage } from '../pages/signup-email/signup-email';
+
+
 
 //services
 import { AnalyticsService } from '../providers/analytics-service/analytics-service';
@@ -49,8 +52,8 @@ import { environment } from '../environments/environment';
     MyApp,
     ProfilePage,
     SearchPage,
-    SignupEmailPage,
-    TabsPage
+    SearchDetailPage,
+    SignupEmailPage
   ],
   imports: [
     AngularFireAuthModule,
@@ -70,8 +73,8 @@ import { environment } from '../environments/environment';
     MyApp,
     ProfilePage,
     SearchPage,
-    SignupEmailPage,
-    TabsPage
+    SearchDetailPage,
+    SignupEmailPage
   ],
   providers: [
     AnalyticsService,
