@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the SearchPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { FormBuilder, FormGroup, FormControl, Validators, } from '@angular/forms';
+
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+
+import { UserService } from '../../providers/user-service/user-service';
+import { User } from '../../interfaces/user-interface';
 
 @Component({
   selector: 'page-search',
@@ -14,8 +15,27 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class SearchPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private searchTerm: string = '';
+  private searchUsers$: Observable<User[]> | boolean;
+  private searchControl: FormControl;
+
+  private toUser: User;
+  private user: User;
+  private userSub$: Subscription;
+
+
+
+  constructor(
+
+  private formBuilder: FormBuilder,
+  private userService: UserService
+) {
   }
+
+  private setFilteredItems(): void {
+    debugger;
+  this.searchUsers$ = this.userService.filterUsers$(this.searchTerm);
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');

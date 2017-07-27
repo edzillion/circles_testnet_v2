@@ -60,6 +60,16 @@ export class UserService implements OnDestroy {
                   },
                   error => console.log('Could not load current user record.')
                 );
+
+                this.usersSub$ = this.db.list('/users/').subscribe(
+                  users => {
+                    //clone the users array so that we don't change a user accidentally
+                    //Object.assign(this.dataStore.users, users);
+                    this.usersSubject$.next(users);
+                  },
+                  error => console.log('Could not load users.')
+                );
+
               }
             });
         }
@@ -87,7 +97,7 @@ export class UserService implements OnDestroy {
       return false; //todo: should this return an observable(false) or something?
     return this.users$.map((users) => {
       return users.filter((user) => {
-        if (user.$key == 'undefined' || (user.$key == this.user.$key))
+        if (!user.displayName || user.$key == 'undefined' || (user.$key == this.user.$key))
           return false;
         let s = searchTerm.toLowerCase();
         let d = user.displayName.toLowerCase();
