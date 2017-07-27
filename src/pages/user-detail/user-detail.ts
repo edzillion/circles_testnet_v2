@@ -27,7 +27,11 @@ export class UserDetailPage {
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
         this.user = user;
-        if (this.user.trustedUsers.some(user => user.$key === this.user.$key)) {
+        let isTrusted = this.user.trustedUsers.some(tUser => {
+          debugger;
+          return tUser.$key === this.user.$key;
+        })
+        if (isTrusted) {
           this.trusted = true;
         }
       }

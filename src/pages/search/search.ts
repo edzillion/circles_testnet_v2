@@ -41,7 +41,7 @@ export class SearchPage {
 private goToUserDetail(user): void {
   // go to the contact detail page
   // and pass in the user data
-  this.navCtrl.push(SearchDetailPage, user);
+  this.navCtrl.push(UserDetailPage, user);
   }
 
   ionViewDidLoad() {
