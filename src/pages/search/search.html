@@ -17,11 +17,18 @@
   <ion-row>
     <div *ngIf="searchUsers" class="search-list-backdrop"></div>
     <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredItems()"></ion-searchbar>
-
-    <ion-list class="user-search-list">
-      <ion-item *ngFor="let searchUser of searchUsers$ | async" (click)="clickUser(searchUser)">
-        {{searchUser.displayName}}
-      </ion-item>
-    </ion-list>
   </ion-row>
+  <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <ion-list>
+    <ion-item *ngFor="let user of searchUsers$ | async" (click)="goToUserDetail(user)">
+      <ion-avatar style="width:48px;height:48px" item-left>
+        <img src="{{user.profilePicURL}}">
+      </ion-avatar>
+      <h2>{{user.displayName}}</h2>
+      <p>{{user.greeting}}</p>
+    </ion-item>
+  </ion-list>
 </ion-content>

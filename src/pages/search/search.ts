@@ -33,7 +33,6 @@ export class SearchPage {
   }
 
   private setFilteredItems(): void {
-    debugger;
   this.searchUsers$ = this.userService.filterUsers$(this.searchTerm);
 }
 
