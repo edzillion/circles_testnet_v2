@@ -92,18 +92,48 @@
 	},
 	"users": {
 		"MdqRnUKHd1hrULQb11LxdtfG3O13": {
+			"createdAt": 1497078643926,
+			"balance": 999,
 			"firstName": "Quentin",
 			"lastName": "Quinn",
 			"displayName": "Quentin Quinn",
 			"email": "q@q.com",
-			"uid": "MdqRnUKHd1hrULQb11LxdtfG3O13"
+			"uid": "MdqRnUKHd1hrULQb11LxdtfG3O13",
+			"totalReceived": 845,
+			"totalSent": 233,
+			"weeklyReceived": 11,
+			"weeklySent": 5,
+			"trustedUsers": [
+				"jSu2I20VwcgesCvTCsAb2wsTqNG2",
+				"5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+				"7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+				"8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
+				"Ea793jse7XNcSrMMmO8GvRPLlbU2",
+				"J56XFbhioecI8PTQb90NKe5bwB13",
+				"tnwww1c9bMhbfexodcBwYCdu3gQ2"
+			]
 		},
 		"jSu2I20VwcgesCvTCsAb2wsTqNG2": {
+			"balance": 9999,
+			"createdAt": 1497078643916,
 			"firstName": "Jack",
 			"lastName": "Kalish",
 			"displayName": "Jack Kalish",
 			"email": "jack@jackkalish.com",
-			"uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2"
+			"uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+			"totalReceived": 845,
+			"totalSent": 233,
+			"weeklyReceived": 11,
+			"weeklySent": 5,
+			"trustedUsers": [
+				"MdqRnUKHd1hrULQb11LxdtfG3O13",
+				"5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+				"7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+				"8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
+				"Ea793jse7XNcSrMMmO8GvRPLlbU2",
+				"J56XFbhioecI8PTQb90NKe5bwB13",
+				"tnwww1c9bMhbfexodcBwYCdu3gQ2"
+			]
 		},
     "5jrFiCphYKbDZ4FeSMFuhMM8wzw2": {
       "balance": 650,

@@ -6,7 +6,7 @@ export interface User {
   $key: string,
   authProviders: Array<any>;
   balance: number;
-  createdAt: number;
+  createdAt: any;
   displayName: string;
   email: string;
   firstName: string;
@@ -17,4 +17,9 @@ export interface User {
   profilePicURL: string;
   pushID: string;
   validators: Array<Validator>;
+  totalReceived: number;
+  totalSent: number;
+  weeklyReceived: number;
+  weeklySent: number;
+  trustedUsers: Array<any>;
 }
