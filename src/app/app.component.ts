@@ -61,6 +61,7 @@ private initSub$: Subscription;
   this.userService.signOut().then(
     (user) => {
     console.log('logout success');
+    
     this.nav.setRoot(LoginPage);
   }, function(error) {
     console.log('logout fail:', error);
