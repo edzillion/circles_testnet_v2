@@ -12,7 +12,7 @@ import 'angular2-notifications';
 
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
-import { SearchDetailPage } from '../pages/search-detail/search-detail';
+import { UserDetailPage } from '../pages/user-detail/user-detail';
 
 import { LogPage } from '../pages/log/log';
 
@@ -52,7 +52,7 @@ import { environment } from '../environments/environment';
     MyApp,
     ProfilePage,
     SearchPage,
-    SearchDetailPage,
+    UserDetailPage,
     SignupEmailPage
   ],
   imports: [
@@ -73,7 +73,7 @@ import { environment } from '../environments/environment';
     MyApp,
     ProfilePage,
     SearchPage,
-    SearchDetailPage,
+    UserDetailPage,
     SignupEmailPage
   ],
   providers: [

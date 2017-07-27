@@ -7,10 +7,10 @@ import { User } from '../../interfaces/user-interface';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'page-search-detail',
-  templateUrl: 'search-detail.html',
+  selector: 'page-user-detail',
+  templateUrl: 'user-detail.html',
 })
-export class SearchDetailPage {
+export class UserDetailPage {
 
   private user: User;
   private viewUser: User;

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 
-import { SearchDetailPage } from '../search-detail/search-detail';
+import { UserDetailPage } from '../user-detail/user-detail';
 
 @Component({
   selector: 'page-search',

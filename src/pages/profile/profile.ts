@@ -14,7 +14,7 @@ import { NewsService } from '../../providers/news-service/news-service';
 import { User } from '../../interfaces/user-interface';
 
 import { SearchPage } from '../search/search';
-import { SearchDetailPage } from '../search-detail/search-detail';
+import { UserDetailPage } from '../user-detail/user-detail';
 
 @Component({
   selector: 'page-profile',
@@ -51,7 +51,7 @@ export class ProfilePage {
   private goToUserDetail(user): void {
     // go to the contact detail page
     // and pass in the user data
-    this.navCtrl.push(SearchDetailPage, user);
+    this.navCtrl.push(UserDetailPage, user);
     }
 
   private selectNetwork():void {
