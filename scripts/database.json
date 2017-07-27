@@ -104,6 +104,154 @@
 			"displayName": "Jack Kalish",
 			"email": "jack@jackkalish.com",
 			"uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2"
-		}
+		},
+    "5jrFiCphYKbDZ4FeSMFuhMM8wzw2": {
+      "balance": 650,
+      "createdAt": 1496781495492,
+      "displayName": "Cafe Grundeinkommen",
+      "email": "basicincomeberlin@gmail.com",
+      "log": {
+        "0": {
+          "timestamp": 1496781495492,
+          "type": "createProfile"
+        }
+      },
+      "offers": [{
+        "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fcoffee.jpg?alt=media&token=201f2112-cbc2-4951-84a9-8ea694100be3",
+        "price": 50,
+        "priceDescription": "For One",
+        "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+        "timestamp": 1496952402440,
+        "title": "Hot Cup of Coffee"
+      }, {
+        "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fmuffin.jpg?alt=media&token=a0f53c7e-5f47-44f9-9ea9-69e165bf68ad",
+        "price": 30,
+        "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+        "priceDescription": "For One",
+        "timestamp": 1496952402440,
+        "title": "Vegan Muffin"
+      }],
+      "organisation": "Cafe Grundeinkommen",
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FI4V4vhOejVNSkoJSj3LOMKCYoGh1?alt=media&token=719e5232-0766-4a7f-aab3-f7587813f52c",
+      "tagline": "Basic Income Now!",
+      "type": "organisation",
+      "wants": [{
+        "price": 150,
+        "quantityDescription": "Per Kilo",
+        "timestamp": 1496952402440,
+        "title": "Fairtrade Coffee Beans"
+      }],
+      "website": "www.cafe-grundeinkommen.org"
+    },
+    "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
+      "balance": 143,
+      "createdAt": 1496952402440,
+      "displayName": "Jane Smith",
+      "email": "fafafa@fafa.com",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "log": [{
+        "timestamp": 1496952402440,
+        "type": "createProfile"
+      }],
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F7H0ByozNeBgwy2ZdQjWnTk2ZbCN2?alt=media&token=bb7fd08b-3a73-4b4e-a082-535e00c59580",
+      "type": "individual"
+    },
+    "J56XFbhioecI8PTQb90NKe5bwB13": {
+      "balance": 143,
+      "createdAt": 1496952177281,
+      "displayName": "Ed Murphy",
+      "email": "edzillion@gmail.com",
+      "firstName": "Ed",
+      "lastName": "Murphy",
+      "log": [{
+        "timestamp": 1496952177281,
+        "type": "createProfile"
+      }],
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef",
+      "type": "individual"
+    },
+    "SKMdyuZc5cRdje6GHiXzcEL7wQs1": {
+      "balance": 143,
+      "createdAt": 1496952304626,
+      "displayName": "Baba Blacksheep",
+      "email": "baba@baba.com",
+      "firstName": "Baba",
+      "lastName": "Blacksheep",
+      "log": [{
+        "timestamp": 1496952304626,
+        "type": "createProfile"
+      }],
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951",
+      "type": "individual"
+    },
+    "8tmyxjdsXOWQM6YLCGeYwLfqU4I3": {
+      "balance": 857,
+      "createdAt": 1497089064339,
+      "displayName": "Carl Ambroselli",
+      "email": "basicincomeberlin@carl-ambroselli.de",
+      "firstName": "Carl",
+      "lastName": "Ambroselli",
+      "log": {
+        "0": {
+          "timestamp": 1497089064339,
+          "type": "createProfile"
+        },
+        "-KmGSw9A4o7RQzk1LzMh": {
+          "timestamp": 1497089164875,
+          "title": "Tinyhouse University Group",
+          "type": "groupJoin"
+        }
+      },
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F8tmyxjdsXOWQM6YLCGeYwLfqU4I3?alt=media&token=ebf12adb-7b9b-419d-a884-2cf05378f61b",
+      "type": "individual"
+    },
+    "Ea793jse7XNcSrMMmO8GvRPLlbU2": {
+      "balance": 857,
+      "createdAt": 1497078641926,
+      "displayName": "Christian Eisenhofer",
+      "email": "christian@plasticwood.de",
+      "firstName": "Christian",
+      "lastName": "Eisenhofer",
+      "log": [{
+        "timestamp": 1497078641926,
+        "type": "createProfile"
+      }],
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FEa793jse7XNcSrMMmO8GvRPLlbU2?alt=media&token=9fec5f7a-3d2e-448c-8e2d-938eff38f50a",
+      "type": "individual"
+    },
+    "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3": {
+      "balance": 857,
+      "createdAt": 1497089879370,
+      "displayName": "Brian Heussen ",
+      "email": "brian.heussen@gmail.com",
+      "firstName": "Brian",
+      "lastName": "Heussen ",
+      "log": [{
+        "timestamp": 1497089879370,
+        "type": "createProfile"
+      }],
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FZSbGLxzQwgfYMQ5Xy98dyqlL8JA3?alt=media&token=ce6af920-2e35-4088-b1ba-6cd341c923f6",
+      "type": "individual"
+    },
+    "tnwww1c9bMhbfexodcBwYCdu3gQ2": {
+      "balance": 857,
+      "createdAt": 1497126941460,
+      "displayName": "Lu Isa",
+      "email": "luisa.bilke@hotmail.de",
+      "firstName": "Lu",
+      "lastName": "Isa",
+      "log": {
+        "0": {
+          "timestamp": 1497126941460,
+          "type": "createProfile"
+        },
+        "-KmIiN-OzdTMb5IRvpA0": {
+          "timestamp": 1497127026875,
+          "title": "Tinyhouse University Group",
+          "type": "groupJoin"
+        }
+      }
+    }
 	}
 }
