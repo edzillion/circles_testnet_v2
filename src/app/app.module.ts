@@ -63,7 +63,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
     SuperTabsModule.forRoot(),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {mode: 'ios'}) //this will force 'ios' style on all platforms
   ],
   bootstrap: [IonicApp],
   entryComponents: [

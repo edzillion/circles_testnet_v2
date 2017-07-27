@@ -30,6 +30,7 @@ export class ProfilePage {
   private userSub$: Subscription;
 
   private selectedView: string = 'network';
+  private view:string = 'network';
 
   private networkList: Array<any> = [];
   private historyList: Array<any> = [];
@@ -52,19 +53,19 @@ export class ProfilePage {
     // go to the contact detail page
     // and pass in the user data
     this.navCtrl.push(UserDetailPage, user);
-    }
+   }
 
   private selectNetwork():void {
-  this.selectedView = 'network';
-}
+    this.selectedView = 'network';
+  }
 
-private selectHistory():void {
-  this.selectedView = 'history';
-}
+  private selectHistory():void {
+    this.selectedView = 'history';
+  }
 
-private selectValidators():void {
-  this.selectedView = 'validators';
-}
+  private selectValidators():void {
+    this.selectedView = 'validators';
+  }
 
   private selectFromGallery(): void {
   var options = {
