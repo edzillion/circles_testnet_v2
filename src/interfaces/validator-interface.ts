@@ -2,7 +2,7 @@ export interface Validator {
   $key: string,
   description: string;
   displayName: string;
-  members: Array<string>;
+  trustedUsers: Array<string>;
   profilePicURL: string;
   requirements: Array<string>;
 }

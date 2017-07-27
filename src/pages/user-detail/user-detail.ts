@@ -15,7 +15,11 @@ export class UserDetailPage {
   private user: User;
   private viewUser: User;
   private userSub$: Subscription;
+  private directTrust: boolean = false;
+  private validatorTrust: boolean = false;
   private trusted: boolean = false;
+
+  private validatedBy: any;
 
   constructor(private navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
     this.viewUser = navParams.data;
@@ -23,18 +27,40 @@ export class UserDetailPage {
     console.log(navParams.data);
   }
 
+  private revokeTrust() {
+    this.userService.removeTrustedUser(this.viewUser.$key);
+    this.directTrust = false;
+    this.trusted = false;
+  }
+
+  private affordTrust() {
+    this.userService.addTrustedUser(this.viewUser.$key);
+    this.directTrust = true;
+    this.trusted = true;
+  }
+
   ionViewDidLoad() {
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
         this.user = user;
-        let isTrusted = this.user.trustedUsers.some(tUserKey => {
+        let dTrust = this.user.trustedUsers.some(tUserKey => {
           return tUserKey == this.viewUser.$key;
         });
-        if (isTrusted) {
+        if (dTrust) {
+          this.directTrust = true;
           this.trusted = true;
+        }
+        else if (this.user.validators) {
+          for (var validator of this.user.validators) {
+            for (var tUserKey of validator.trustedUsers) {
+              if (tUserKey == this.viewUser.$key)
+                this.validatorTrust = true;
+                this.validatedBy = validator;
+                this.trusted = true;
+            }
+          }
         }
       }
     );
   }
-
 }

@@ -143,6 +143,20 @@ export class UserService implements OnDestroy {
     return;
   }
 
+  public async addTrustedUser(userKey) {
+    this.user.trustedUsers.push(userKey);
+    let userObs = this.db.object('/users/' + this.user.$key);
+    await userObs.update({trustedUsers: this.user.trustedUsers});
+  }
+
+  public async removeTrustedUser(userKey) {
+    let arr = this.user.trustedUsers.filter( user =>
+	     user != userKey
+     );
+    let userObs = this.db.object('/users/' + this.user.$key);
+    await userObs.update({trustedUsers: arr});
+  }
+
   public signOut() {
     return this.afAuth.auth.signOut();
   }
