@@ -28,6 +28,9 @@ export class UserService implements OnDestroy {
   private userSub$: Subscription;
   private usersSub$: Subscription;
 
+  //private createdAt: number;
+  private weeklyGrant: number = 100;
+
   private user: User;
   //private userStub: User;
   private email: string;
@@ -45,6 +48,8 @@ export class UserService implements OnDestroy {
           let userSub = userObs.subscribe(
             user => {
               if (!user.$exists()) {
+                this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
+                this.user.balance = this.calcInitialBalance();
                 userObs.set(this.user);
               }
               else {
@@ -132,6 +137,14 @@ export class UserService implements OnDestroy {
 
   public signOut() {
     return this.afAuth.auth.signOut();
+  }
+
+  private calcInitialBalance(): number {
+    var now = new Date(),
+      day = now.getDay();
+    var diff = (7 - 5 + day) % 7;
+    var b = this.weeklyGrant - ((this.weeklyGrant / 7) * (diff));
+    return Math.round(b);
   }
 
   ngOnDestroy() {

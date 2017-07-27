@@ -27,6 +27,10 @@ export class ProfilePage {
     private user: User;
     private userSub$: Subscription;
 
+      private selectedView: string = 'network';
+
+      private viewList: Array<any> = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private notificationsService: NotificationsService,
     private camera: Camera,
     private db: AngularFireDatabase,
@@ -39,6 +43,14 @@ export class ProfilePage {
   private openSearch(): void {
     this.navCtrl.push(SearchPage);
   }
+
+  private selectNetwork():void {
+  this.selectedView = 'network';
+}
+
+private selectHistory():void {
+  this.selectedView = 'history';
+}
 
   private selectFromGallery(): void {
   var options = {
@@ -89,6 +101,14 @@ export class ProfilePage {
     this.notificationsService.create('Load Success','','success');
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
+        debugger;
+        user.trustedUsers.map(
+
+          key => {
+            debugger;
+            this.userService.keyToUser$(key).subscribe( trustedUser => { this.viewList.push(trustedUser)})
+          }
+        );
         this.user = user
       }
     );
