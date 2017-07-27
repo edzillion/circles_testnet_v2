@@ -44,7 +44,7 @@ ion-navbar.toolbar{
 }
 
 .item-block:first-child {
-  border: none !important;
+  //border: none !important;
 }
 
 .item{
@@ -60,4 +60,14 @@ button{
   margin: 5px;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0,0,0,.5);
+}
+
+.segment-ios-primary .segment-button{
+  color:white;
+  border-color: white;
+}
+
+.segment-ios-primary .segment-button.segment-activated {
+  color: map-get($colors, primary);
+  background-color: white;
 }
