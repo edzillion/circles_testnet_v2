@@ -38,6 +38,19 @@ ion-navbar.toolbar{
   }
 }
 
+//app content
+.content{
+//  background: linear-gradient(170deg, map-get($colors, primary) 10%, #4788C8 50%, white 50%); /* Standard syntax */
+}
+
+.item-block:first-child {
+  border: none !important;
+}
+
+.item{
+  background-color: transparent;
+}
+
 //button styles
 button{
   font-size: 16px;

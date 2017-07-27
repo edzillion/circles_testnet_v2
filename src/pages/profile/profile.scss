@@ -1,5 +1,8 @@
 page-profile {
 
+  .content{
+    background: linear-gradient(170deg, map-get($colors, primary) 10%, #4788C8 50%, white 50%); /* Standard syntax */
+  }
 
   .profile-item {
     margin: 5px;

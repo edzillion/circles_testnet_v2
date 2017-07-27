@@ -52,6 +52,10 @@ private selectHistory():void {
   this.selectedView = 'history';
 }
 
+private selectValidators():void {
+  this.selectedView = 'validators';
+}
+
   private selectFromGallery(): void {
   var options = {
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
