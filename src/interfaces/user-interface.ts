@@ -2,6 +2,8 @@ import { NewsItem } from './news-item-interface';
 import { Offer } from './offer-interface';
 import { Validator } from './validator-interface';
 
+import { Coin } from './coin-interface';
+
 export interface User {
   $key: string,
   authProviders: Array<any>;
@@ -16,10 +18,11 @@ export interface User {
   offers: Array<Offer>;
   profilePicURL: string;
   pushID: string;
-  validators: Array<Validator>;
   totalReceived: number;
   totalSent: number;
+  trustedUsers: Array<any>;
+  validators: Array<Validator>;
+  wallet: Array<Coin>;
   weeklyReceived: number;
   weeklySent: number;
-  trustedUsers: Array<any>;
 }

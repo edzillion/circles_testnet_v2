@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 
 import { User } from '../../interfaces/user-interface';
 
+
 @Injectable()
 export class UserService implements OnDestroy {
 
@@ -50,11 +51,11 @@ export class UserService implements OnDestroy {
           let userObs = this.db.object('/users/' + auth.uid);
           let userSub = userObs.subscribe(
             user => {
+              debugger;
               if (!user.$exists()) {
+
                 this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
-                this.user.balance = this.calcInitialBalance();
                 this.user.authProviders = ["email"];
-                debugger;
                 this.user.totalReceived = 0;
                 this.user.totalSent = 0;
                 this.user.weeklyReceived = 0;
@@ -83,8 +84,16 @@ export class UserService implements OnDestroy {
                   },
                   error => console.log('Could not load users.')
                 );
+                userSub.unsubscribe();
               }
-            });
+            },
+            error => console.error(error),
+            () => { }
+          );
+        }
+        else { //auth=null
+          //wipe on logout
+          this.user = {} as User;
         }
       },
       error => console.error(error),
@@ -140,13 +149,12 @@ export class UserService implements OnDestroy {
   public async createUser(email, password) {
     let u = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
     this.user.email = u.email;
-    return;
   }
 
   public async addTrustedUser(userKey) {
     this.user.trustedUsers.push(userKey);
     let userObs = this.db.object('/users/' + this.user.$key);
-    await userObs.update({trustedUsers: this.user.trustedUsers});
+    userObs.update({trustedUsers: this.user.trustedUsers});
   }
 
   public async removeTrustedUser(userKey) {
@@ -161,15 +169,8 @@ export class UserService implements OnDestroy {
     return this.afAuth.auth.signOut();
   }
 
-  private calcInitialBalance(): number {
-    var now = new Date(),
-      day = now.getDay();
-    var diff = (7 - 5 + day) % 7;
-    var b = this.weeklyGrant - ((this.weeklyGrant / 7) * (diff));
-    return Math.round(b);
-  }
-
   ngOnDestroy() {
+    debugger;
     this.authSub$.unsubscribe();
     this.userSub$.unsubscribe();
     this.usersSub$.unsubscribe();

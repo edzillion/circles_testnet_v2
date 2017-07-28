@@ -13,6 +13,8 @@ import { UserService } from '../providers/user-service/user-service';
 import { LoginPage } from '../pages/login/login';
 import { ProfilePage } from '../pages/profile/profile';
 
+import { WalletPage } from '../pages/wallet/wallet';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -56,12 +58,16 @@ private initSub$: Subscription;
     });
   }
 
-  private logout() {
+  private goToWallet() : void {
+    this.nav.push(WalletPage);
+  }
+
+  private logout() : void {
   //close subscriptions?? close services??
   this.userService.signOut().then(
     (user) => {
     console.log('logout success');
-    
+
     this.nav.setRoot(LoginPage);
   }, function(error) {
     console.log('logout fail:', error);

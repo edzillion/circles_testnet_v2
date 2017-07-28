@@ -20,7 +20,9 @@ import { LoginPage } from '../pages/login/login';
 import { LoginEmailPage } from '../pages/login-email/login-email';
 import { SignupEmailPage } from '../pages/signup-email/signup-email';
 
+
 import { SendPage } from '../pages/send/send';
+import { WalletPage } from '../pages/wallet/wallet';
 
 //services
 import { AnalyticsService } from '../providers/analytics-service/analytics-service';
@@ -43,6 +45,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 
 //configs
 import { environment } from '../environments/environment';
+import { WalletService } from '../providers/wallet-service/wallet-service';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,8 @@ import { environment } from '../environments/environment';
     SearchPage,
     UserDetailPage,
     SignupEmailPage,
-    SendPage
+    SendPage,
+    WalletPage
   ],
   imports: [
     AngularFireAuthModule,
@@ -76,7 +80,8 @@ import { environment } from '../environments/environment';
     SearchPage,
     UserDetailPage,
     SignupEmailPage,
-    SendPage
+    SendPage,
+    WalletPage
   ],
   providers: [
     AnalyticsService,
@@ -89,7 +94,8 @@ import { environment } from '../environments/environment';
     TransactionService,
     UserService,
     // PushService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    WalletService
   ]
 })
 export class AppModule {}
