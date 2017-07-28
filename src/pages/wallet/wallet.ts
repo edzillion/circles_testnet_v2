@@ -4,8 +4,8 @@ import { NavController, NavParams, Toast, ToastController } from 'ionic-angular'
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
-import { WalletService } from '../../providers/wallet-service/wallet-service';
 import { User } from '../../interfaces/user-interface';
+import { Coin } from '../../interfaces/coin-interface';
 
 @Component({
   selector: 'page-wallet',
@@ -21,8 +21,7 @@ export class WalletPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private userService: UserService,
-    private toastCtrl: ToastController,
-    private walletService: WalletService
+    private toastCtrl: ToastController
   )
   { }
 

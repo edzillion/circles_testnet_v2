@@ -45,7 +45,6 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 
 //configs
 import { environment } from '../environments/environment';
-import { WalletService } from '../providers/wallet-service/wallet-service';
 
 @NgModule({
   declarations: [
@@ -94,8 +93,7 @@ import { WalletService } from '../providers/wallet-service/wallet-service';
     TransactionService,
     UserService,
     // PushService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    WalletService
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

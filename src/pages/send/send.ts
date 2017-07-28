@@ -14,8 +14,6 @@ import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 import { AnalyticsService } from '../../providers/analytics-service/analytics-service';
 
-import { WalletService } from '../../providers/wallet-service/wallet-service';
-
 @Component({
   selector: 'page-send',
   templateUrl: 'send.html',
@@ -43,8 +41,7 @@ export class SendPage {
     private transactionService: TransactionService,
     private userService: UserService,
     private navCtrl: NavController,
-    private navParams: NavParams,
-    private walletService: WalletService
+    private navParams: NavParams
   ) {
 
     this.toUser = navParams.data;

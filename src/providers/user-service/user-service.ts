@@ -11,7 +11,7 @@ import 'rxjs/add/operator/find';
 import 'rxjs/add/operator/map';
 
 import { User } from '../../interfaces/user-interface';
-
+import { Coin } from '../../interfaces/coin-interface';
 
 @Injectable()
 export class UserService implements OnDestroy {
@@ -33,6 +33,9 @@ export class UserService implements OnDestroy {
   //private createdAt: number;
   private weeklyGrant: number = 100;
 
+  private myCoins = {} as Coin;
+  private allCoins: Array<Coin> = [];
+
   private user = {} as User;
   //private userStub: User;
   private email: string;
@@ -51,11 +54,12 @@ export class UserService implements OnDestroy {
           let userObs = this.db.object('/users/' + auth.uid);
           let userSub = userObs.subscribe(
             user => {
-              debugger;
               if (!user.$exists()) {
-
+                //user doesn't exist, create user entry on db
                 this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
                 this.user.authProviders = ["email"];
+                this.setInitialWallet(auth.uid);
+                this.setBalance();
                 this.user.totalReceived = 0;
                 this.user.totalSent = 0;
                 this.user.weeklyReceived = 0;
@@ -165,12 +169,32 @@ export class UserService implements OnDestroy {
     await userObs.update({trustedUsers: arr});
   }
 
+  private setInitialWallet(userKey):void {
+    let now = new Date();
+    let day = now.getDay();
+    let diff = (7 - 5 + day) % 7;
+    let b = this.weeklyGrant - ((this.weeklyGrant / 7) * (diff));
+    this.myCoins.amount = b;
+    this.myCoins.owner = userKey;
+    this.myCoins.title = (this.user.firstName) ? this.user.firstName + 'Coin' : 'CircleCoin';
+    //my coins are always the first entry
+    this.allCoins = [this.myCoins];
+    this.user.wallet = this.allCoins;
+  }
+
+  private setBalance():void {
+    let total = 0;
+    for (let coinType of this.user.wallet) {
+      total += coinType.amount;
+    }
+    this.user.balance = total;
+  }
+
   public signOut() {
     return this.afAuth.auth.signOut();
   }
 
   ngOnDestroy() {
-    debugger;
     this.authSub$.unsubscribe();
     this.userSub$.unsubscribe();
     this.usersSub$.unsubscribe();

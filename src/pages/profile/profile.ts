@@ -16,8 +16,6 @@ import { User } from '../../interfaces/user-interface';
 import { SearchPage } from '../search/search';
 import { UserDetailPage } from '../user-detail/user-detail';
 
-import { WalletService } from '../../providers/wallet-service/wallet-service';
-
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -43,8 +41,7 @@ export class ProfilePage {
     private ds: DomSanitizer,
     private toastCtrl: ToastController,
     private userService: UserService,
-    private newsService: NewsService,
-    private walletService: WalletService
+    private newsService: NewsService
   ) {
   }
 
