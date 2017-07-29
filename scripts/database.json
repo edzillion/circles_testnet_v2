@@ -3,35 +3,35 @@
 		"-Kk1Xr2syRJ0V7NDKjSK": {
 			"description": "Tinyhouse university is a Berlin-based NGO founded by Van Bo Le-Mentzel, designers, education activists and refugees. Our goal is to create new models of social neighborhoods. Our tools are architecture and the beliefs that make diversity a village stronger than common sense.",
 			"displayName": "Tinyhouse University",
-			"members": [],
+			"trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
 			"profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Ftinyu.png?alt=media&token=a61c66b6-d6af-46a8-ad73-3a5f853ba99e",
 			"requirements": ["email", "name", "photo", "noconfirm"]
 		},
 		"-Kk1Xr2x-iftLqPsxscG": {
 			"description": "Berlin Basic Income is a local group that explores strategies to implement a universal basic income (UBI), including unconventional methods that may start outside of the usual political process (e.g. the basic income cryptocurrency Circles). ",
 			"displayName": "Berlin Basic Income Lab",
-			"members": [],
+			"trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
 			"profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Flab.png?alt=media&token=062c962c-9826-4714-98df-ba6c9d4fb166",
 			"requirements": ["email", "name", "photo", "facebook"]
 		},
 		"-Kk1Xr2ytzY1xPWUVXWP": {
 			"description": "Kreuzberg Music co-op is a group dedicated to sharing the means of music production. If you are a musician or a music lover this is the place for you.",
 			"displayName": "Kreuzberg Music Co-op",
-			"members": [],
+			"trustedUsers": [],
 			"profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FCClogo.png?alt=media&token=cc46a2db-297f-4558-a6cc-1d1a7aef02d5",
 			"requirements": ["email", "name", "photo", "facebook", "soundcloud"]
 		},
 		"-Kk1Xr2ytzY1xPWUVXWQ": {
 			"description": "Radwerk is a collective of Berlin bike shops. We share resources, time and knowledge :)",
 			"displayName": "Radwerk",
-			"members": ["7H0ByozNeBgwy2ZdQjWnTk2ZbCN2"],
+			"trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
 			"profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Frepair.png?alt=media&token=4d837bc7-7f92-4255-943a-5b34778e5a7d",
 			"requirements": ["name", "photo", "review"]
 		},
 		"-Kk1Xr2ytzY1xPWdcEEf": {
 			"description": "For hardcore gamerz only!",
 			"displayName": "Gamer",
-			"members": [],
+			"trustedUsers": [],
 			"profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgamecoop.png?alt=media&token=a8b6a45d-7249-46ab-90de-6f34a491c608",
 			"requirements": ["name", "photo", "steam"]
 		}
@@ -101,6 +101,11 @@
 			"uid": "MdqRnUKHd1hrULQb11LxdtfG3O13",
 			"totalReceived": 845,
 			"totalSent": 233,
+			"validators": [
+				"-Kk1Xr2syRJ0V7NDKjSK",
+				"-Kk1Xr2x-iftLqPsxscG",
+				"-Kk1Xr2ytzY1xPWUVXWQ"
+			],
 			"wallet": {
 					"MdqRnUKHd1hrULQb11LxdtfG3O13": {
 						"amount" : 100,

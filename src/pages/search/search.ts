@@ -16,6 +16,7 @@ import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 import { Validator } from '../../interfaces/validator-interface';
 
+import { ValidatorDetailPage } from '../validator-detail/validator-detail';
 import { UserDetailPage } from '../user-detail/user-detail';
 
 @Component({
@@ -51,17 +52,23 @@ export class SearchPage {
     let uObs = this.userService.filterUsers$(this.searchTerm);
     let vObs = this.userService.filterValidators$(this.searchTerm);
 
-    Observable.combineLatest(uObs,vObs).first().subscribe(
+    Observable.combineLatest(uObs, vObs).first().subscribe(
       combined => {
-          let oneArray = [...combined[0], ...combined[1]];
-          this.searchSubject$.next(oneArray);
+        let oneArray = [...combined[0], ...combined[1]];
+        this.searchSubject$.next(oneArray);
       }
-  )}
+    )
+  }
 
-  private goToUserDetail(user): void {
-    // go to the contact detail page
-    // and pass in the user data
-    this.navCtrl.push(UserDetailPage, user);
+  private goToDetail(userOrVali): void {
+    if (userOrVali.requirements) {
+      //validator
+      this.navCtrl.push(ValidatorDetailPage, userOrVali);
+    }
+    else {
+      this.navCtrl.push(UserDetailPage, userOrVali);
+    }
+
   }
 
   ionViewDidLoad() {

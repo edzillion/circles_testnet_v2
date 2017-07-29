@@ -14,6 +14,8 @@ import { User } from '../../interfaces/user-interface';
 import { Coin } from '../../interfaces/coin-interface';
 import { Validator } from '../../interfaces/validator-interface';
 
+import { ValidatorService } from '../validator-service/validator-service';
+
 @Injectable()
 export class UserService implements OnDestroy {
 
@@ -35,18 +37,20 @@ export class UserService implements OnDestroy {
   //private createdAt: number;
   private weeklyGrant: number = 100;
 
-
   private myCoins: Coin = {} as Coin;
 
   private allCoins: {[key:string]: Coin};
 
   private user = {} as User;
+  public users: Array<User>;
+  private validators: Array<Validator>;
   //private userStub: User;
   private email: string;
 
   constructor(
     private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
+    private validatorService: ValidatorService
   ) {
 
     this.user.createdAt = 0;
@@ -55,7 +59,7 @@ export class UserService implements OnDestroy {
     this.authSub$ = this.afAuth.authState.subscribe(
       auth => {
         if (auth) {
-          this.validators$ = this.db.list('/validators/');
+
           let userObs = this.db.object('/users/' + auth.uid);
           let userSub = userObs.subscribe(
             user => {
@@ -78,6 +82,9 @@ export class UserService implements OnDestroy {
                 this.userSub$ = this.userFirebaseObj$.subscribe(
                   user => {
                     this.user = user;
+                    if (this.user.validators) {
+                      this.validatorService.setUserValidators(this.user);
+                    }
                     this.initUserSubject$.next(user)
                     this.userSubject$.next(user);
                   },
@@ -86,6 +93,7 @@ export class UserService implements OnDestroy {
 
                 this.usersSub$ = this.db.list('/users/').subscribe(
                   users => {
+                    this.users = users;
                     //clone the users array so that we don't change a user accidentally
                     //Object.assign(this.dataStore.users, users);
                     this.usersSubject$.next(users);
@@ -139,8 +147,8 @@ export class UserService implements OnDestroy {
   public filterValidators$(searchTerm: string) {
     //if (!searchTerm)
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
-    return this.validators$.map((vali) => {
-      return vali.filter((vali) => {
+    return this.validators$.map((valis) => {
+      return valis.filter((vali) => {
         if (!vali.displayName || vali.$key == 'undefined' )
           return false;
         let s = searchTerm.toLowerCase();
@@ -203,6 +211,8 @@ export class UserService implements OnDestroy {
     this.user.wallet = this.allCoins;
     this.setBalance();
   }
+
+
 
   public setBalance():void {
     let total = 0;

@@ -13,6 +13,7 @@ import 'angular2-notifications';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
+import { ValidatorDetailPage } from '../pages/validator-detail/validator-detail';
 
 import { LogPage } from '../pages/log/log';
 
@@ -46,6 +47,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 //configs
 import { environment } from '../environments/environment';
 import { Keyobject } from '../pipes/key-object/key-object';
+import { ValidatorService } from '../providers/validator-service/validator-service';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { Keyobject } from '../pipes/key-object/key-object';
     SignupEmailPage,
     SendPage,
     WalletPage,
+    ValidatorDetailPage,
     Keyobject
   ],
   imports: [
@@ -82,7 +85,8 @@ import { Keyobject } from '../pipes/key-object/key-object';
     UserDetailPage,
     SignupEmailPage,
     SendPage,
-    WalletPage
+    WalletPage,
+    ValidatorDetailPage
   ],
   providers: [
     AnalyticsService,
@@ -95,7 +99,8 @@ import { Keyobject } from '../pipes/key-object/key-object';
     TransactionService,
     UserService,
     // PushService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ValidatorService
   ]
 })
 export class AppModule {}
