@@ -34,7 +34,7 @@ export class UserService implements OnDestroy {
   private weeklyGrant: number = 100;
 
 
-  private myCoins: Coin;
+  private myCoins: Coin = {} as Coin;
 
   private allCoins: {[key:string]: Coin};
 
@@ -61,7 +61,6 @@ export class UserService implements OnDestroy {
                 this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
                 this.user.authProviders = ["email"];
                 this.setInitialWallet(auth.uid);
-                this.setBalance();
                 this.user.totalReceived = 0;
                 this.user.totalSent = 0;
                 this.user.weeklyReceived = 0;
@@ -176,7 +175,7 @@ export class UserService implements OnDestroy {
     let day = now.getDay();
     let diff = (7 - 5 + day) % 7;
     let b = this.weeklyGrant - ((this.weeklyGrant / 7) * (diff));
-    this.myCoins.amount = b;
+    this.myCoins.amount = Math.round(b);
     this.myCoins.owner = userKey;
     this.myCoins.title = (this.user.firstName) ? this.user.firstName + 'Coin' : 'CircleCoin';
     //my coins are always the highest priority
@@ -185,6 +184,7 @@ export class UserService implements OnDestroy {
       [userKey]: this.myCoins,
     }
     this.user.wallet = this.allCoins;
+    this.setBalance();
   }
 
   public setBalance():void {
