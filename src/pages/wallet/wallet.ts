@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Toast, ToastController } from 'ionic-angular';
-
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
@@ -16,8 +16,10 @@ export class WalletPage {
   private user: User;
   private userSub$: Subscription;
   private toast: Toast;
+  private displayWallet: Array<Coin>;
 
   constructor(
+    private db: AngularFireDatabase,
     public navCtrl: NavController,
     public navParams: NavParams,
     private userService: UserService,
@@ -25,12 +27,66 @@ export class WalletPage {
   )
   { }
 
+  private priorityUp(coin) {
+    coin.priority--;
+    let c1 = this.displayWallet[coin.priority];
+    c1.priority++;
+    this.displayWallet[coin.priority] = coin;
+    this.displayWallet[c1.priority] = c1;
+  }
+
+  private priorityDown(coin) {
+    coin.priority++;
+    let c1 = this.displayWallet[coin.priority];
+    c1.priority--;
+    this.displayWallet[coin.priority] = coin;
+    this.displayWallet[c1.priority] = c1;
+  }
+
+
+  private orderByPriority() {
+    this.displayWallet.sort(
+      (a,b) => {
+        if (a.priority > b.priority) {
+          return 1;
+        }
+
+        if (a.priority < b.priority) {
+         return -1;
+        }
+      return 0;
+    });
+  }
+
+  private async save() {
+    for (let c of this.displayWallet) {
+      this.user.wallet[c.owner] = c;
+    }
+
+    try {
+      let a = await this.db.object('/users/'+this.user.$key).update({
+        wallet: this.user.wallet
+      });
+    }
+    catch (error) {
+      console.error(error);
+      throw new Error("Purchase fail");
+    }
+  }
+
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad WalletPage');
 
     this.userSub$ = this.userService.user$.subscribe(
-      user => this.user = user,
+      user => {
+        this.user = user;
+        this.displayWallet = [];
+        for (let i in this.user.wallet) {
+          this.displayWallet.push(this.user.wallet[i]);
+        }
+        this.orderByPriority();
+      },
       error => {
         this.toast = this.toastCtrl.create({
           message: 'Error getting user: '+error,

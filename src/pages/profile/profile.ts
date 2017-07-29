@@ -114,7 +114,6 @@ export class ProfilePage {
   ionViewDidLoad() {
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
-        debugger;
         this.user = user;
           if (user.trustedUsers) {
             user.trustedUsers.map(

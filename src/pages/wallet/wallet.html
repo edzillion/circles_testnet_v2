@@ -15,4 +15,43 @@
 
 <ion-content padding>
 
+  <ion-grid>
+		<ion-row>
+			<ion-col col-3>
+				Coin
+			</ion-col>
+			<ion-col col-4>
+				Owner
+			</ion-col>
+      <ion-col col-3>
+				Amount
+			</ion-col>
+      <ion-col col-2>
+        Priority
+      </ion-col>
+		</ion-row>
+		<ion-row *ngFor="let coin of displayWallet">
+			<ion-col col-3>
+				{{coin.title}}
+			</ion-col>
+			<ion-col col-4>
+				{{coin.owner}}
+			</ion-col>
+			<ion-col col-2>
+				{{coin.amount}}
+			</ion-col>
+      <ion-col col-3>
+        <button [disabled]="coin.priority < 1" class="pButton" (click)="priorityUp(coin)">
+          &uarr;
+          <!-- <ion-icon name="arrow-up"></ion-icon> -->
+        </button>
+        {{coin.priority}}
+        <button [disabled]="coin.priority >= displayWallet.length-1" class="pButton" (click)="priorityDown(coin)">
+          &darr;
+          <!-- <ion-icon name="arrow-down"></ion-icon> -->
+        </button>
+      </ion-col>
+		</ion-row>
+	</ion-grid>
+  <button ion-button full (click)="save()">SAVE</button>
 </ion-content>

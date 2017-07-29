@@ -45,6 +45,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 
 //configs
 import { environment } from '../environments/environment';
+import { Keyobject } from '../pipes/key-object/key-object';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { environment } from '../environments/environment';
     UserDetailPage,
     SignupEmailPage,
     SendPage,
-    WalletPage
+    WalletPage,
+    Keyobject
   ],
   imports: [
     AngularFireAuthModule,

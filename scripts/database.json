@@ -107,6 +107,24 @@
 						"owner": "MdqRnUKHd1hrULQb11LxdtfG3O13",
 						"priority": 0,
         		"title" : "QuentinCoin"
+					},
+					"jSu2I20VwcgesCvTCsAb2wsTqNG2": {
+						"amount" : 60,
+						"owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+						"priority": 1,
+						"title" : "JackCoin"
+					},
+					"Ea793jse7XNcSrMMmO8GvRPLlbU2": {
+						"amount" : 20,
+						"owner": "Ea793jse7XNcSrMMmO8GvRPLlbU2",
+						"priority": 2,
+						"title" : "ChristianCoin"
+					},
+					"7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
+						"amount" : 3,
+						"owner": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+						"priority": 3,
+						"title" : "JaneCoin"
 					}
 				},
 			"weeklyReceived": 11,
