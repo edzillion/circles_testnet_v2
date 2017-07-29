@@ -23,7 +23,10 @@ import { SignupEmailPage } from '../pages/signup-email/signup-email';
 
 
 import { SendPage } from '../pages/send/send';
+
+//side menu
 import { WalletPage } from '../pages/wallet/wallet';
+import { SettingsPage } from '../pages/settings/settings';
 
 //services
 import { AnalyticsService } from '../providers/analytics-service/analytics-service';
@@ -62,7 +65,8 @@ import { ValidatorService } from '../providers/validator-service/validator-servi
     SendPage,
     WalletPage,
     ValidatorDetailPage,
-    Keyobject
+    Keyobject,
+    SettingsPage
   ],
   imports: [
     AngularFireAuthModule,
@@ -86,7 +90,8 @@ import { ValidatorService } from '../providers/validator-service/validator-servi
     SignupEmailPage,
     SendPage,
     WalletPage,
-    ValidatorDetailPage
+    ValidatorDetailPage,
+    SettingsPage
   ],
   providers: [
     AnalyticsService,

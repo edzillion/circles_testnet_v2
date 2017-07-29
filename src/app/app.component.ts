@@ -14,6 +14,7 @@ import { LoginPage } from '../pages/login/login';
 import { ProfilePage } from '../pages/profile/profile';
 
 import { WalletPage } from '../pages/wallet/wallet';
+import { SettingsPage } from '../pages/settings/settings';
 
 @Component({
   templateUrl: 'app.html'
@@ -60,6 +61,10 @@ private initSub$: Subscription;
 
   private goToWallet() : void {
     this.nav.push(WalletPage);
+  }
+
+  private goToSettings() : void {
+    this.nav.push(SettingsPage);
   }
 
   private logout() : void {
