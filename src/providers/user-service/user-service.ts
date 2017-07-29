@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 
 import { User } from '../../interfaces/user-interface';
 import { Coin } from '../../interfaces/coin-interface';
+import { Validator } from '../../interfaces/validator-interface';
 
 @Injectable()
 export class UserService implements OnDestroy {
@@ -24,6 +25,7 @@ export class UserService implements OnDestroy {
   public user$: Observable<User>;
   public userFirebaseObj$: FirebaseObjectObservable<User>;
   public users$ = this.usersSubject$.asObservable();
+  public validators$: FirebaseListObservable<Validator[]>;
   public authState$: any;
 
   private authSub$: Subscription;
@@ -53,6 +55,7 @@ export class UserService implements OnDestroy {
     this.authSub$ = this.afAuth.authState.subscribe(
       auth => {
         if (auth) {
+          this.validators$ = this.db.list('/validators/');
           let userObs = this.db.object('/users/' + auth.uid);
           let userSub = userObs.subscribe(
             user => {
@@ -120,14 +123,28 @@ export class UserService implements OnDestroy {
   }
 
   public filterUsers$(searchTerm: string) {
-    if (!searchTerm)
-      return false; //todo: should this return an observable(false) or something?
+    //if (!searchTerm)
+    //  return Observable.empty(); //todo: should this return an observable(false) or something?
     return this.users$.map((users) => {
       return users.filter((user) => {
         if (!user.displayName || user.$key == 'undefined' || (user.$key == this.user.$key))
           return false;
         let s = searchTerm.toLowerCase();
         let d = user.displayName.toLowerCase();
+        return d.indexOf(s) > -1;
+      });
+    });
+  }
+
+  public filterValidators$(searchTerm: string) {
+    //if (!searchTerm)
+    //  return Observable.empty(); //todo: should this return an observable(false) or something?
+    return this.validators$.map((vali) => {
+      return vali.filter((vali) => {
+        if (!vali.displayName || vali.$key == 'undefined' )
+          return false;
+        let s = searchTerm.toLowerCase();
+        let d = vali.displayName.toLowerCase();
         return d.indexOf(s) > -1;
       });
     });

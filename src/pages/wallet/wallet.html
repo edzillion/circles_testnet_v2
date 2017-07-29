@@ -43,12 +43,10 @@
       <ion-col col-3>
         <button [disabled]="coin.priority < 1" class="pButton" (click)="priorityUp(coin)">
           &uarr;
-          <!-- <ion-icon name="arrow-up"></ion-icon> -->
         </button>
         {{coin.priority}}
         <button [disabled]="coin.priority >= displayWallet.length-1" class="pButton" (click)="priorityDown(coin)">
           &darr;
-          <!-- <ion-icon name="arrow-down"></ion-icon> -->
         </button>
       </ion-col>
 		</ion-row>

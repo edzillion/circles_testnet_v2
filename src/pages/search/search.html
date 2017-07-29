@@ -17,7 +17,7 @@
     </ion-refresher-content>
   </ion-refresher> -->
   <ion-list>
-    <ion-item *ngFor="let user of searchUsers$ | async" (click)="goToUserDetail(user)">
+    <ion-item *ngFor="let user of searchSubject$ | async" (click)="goToUserDetail(user)">
       <ion-avatar style="width:48px;height:48px" item-left>
         <img src="{{user.profilePicURL}}">
       </ion-avatar>
