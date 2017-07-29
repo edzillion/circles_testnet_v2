@@ -15,6 +15,7 @@ import { User } from '../../interfaces/user-interface';
 
 import { SearchPage } from '../search/search';
 import { UserDetailPage } from '../user-detail/user-detail';
+import { ValidatorDetailPage } from '../validator-detail/validator-detail';
 
 @Component({
   selector: 'page-profile',
@@ -51,9 +52,11 @@ export class ProfilePage {
   }
 
   private goToUserDetail(user): void {
-    // go to the contact detail page
-    // and pass in the user data
     this.navCtrl.push(UserDetailPage, user);
+  }
+
+  private goToValidatorDetail(validator): void {
+    this.navCtrl.push(ValidatorDetailPage, validator);
   }
 
   private selectNetwork(): void {
