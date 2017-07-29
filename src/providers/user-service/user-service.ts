@@ -33,8 +33,10 @@ export class UserService implements OnDestroy {
   //private createdAt: number;
   private weeklyGrant: number = 100;
 
-  private myCoins = {} as Coin;
-  private allCoins: Array<Coin> = [];
+
+  private myCoins: Coin;
+
+  private allCoins: {[key:string]: Coin};
 
   private user = {} as User;
   //private userStub: User;
@@ -177,15 +179,18 @@ export class UserService implements OnDestroy {
     this.myCoins.amount = b;
     this.myCoins.owner = userKey;
     this.myCoins.title = (this.user.firstName) ? this.user.firstName + 'Coin' : 'CircleCoin';
-    //my coins are always the first entry
-    this.allCoins = [this.myCoins];
+    //my coins are always the highest priority
+    this.myCoins.priority = 0;
+    this.allCoins = {
+      [userKey]: this.myCoins,
+    }
     this.user.wallet = this.allCoins;
   }
 
-  private setBalance():void {
+  public setBalance():void {
     let total = 0;
-    for (let coinType of this.user.wallet) {
-      total += coinType.amount;
+    for (let i in this.user.wallet) {
+      total += this.user.wallet[i].amount;
     }
     this.user.balance = total;
   }

@@ -39,18 +39,53 @@ export class TransactionService implements OnDestroy {
   }
 
   private  async transfer(toUser:User, amount:number) {
+
     amount = Number(amount);
-    if (this.user.balance < amount)
+    let sentCoins = [];
+
+    let trusted = this.getTrustIntersection(this.user, toUser);
+    if (trusted.balance < amount) {
+      //we don't have enough trusted coins
       return false;
-    let myBalance: number = +this.user.balance;
-    let toUserBalance: number = +toUser.balance;
-    let txAmount: number = +amount;
-    myBalance -= txAmount;
-    toUserBalance += txAmount;
-    //todo: add error handling here
+    }
+    for (let coin of trusted.trustedCoins) {
+      if (amount > coin.amount) {
+        let c = Object.assign({}, coin);;
+        c.priority = sentCoins[coin.owner].priority;
+        sentCoins[coin.owner] = c;
+        coin.amount = 0;
+      }
+      else {
+        let c = Object.assign({}, coin);
+        c.priority = Object.keys(toUser.wallet).length;
+        c.amount = amount;
+        sentCoins[coin.owner] = c;
+        coin.amount -= amount;
+      }
+    }
+    this.user.balance -= amount;
+
+    //now we need to update the other wallet
+    toUser.balance += amount;
+    for (let key in sentCoins) {
+      if (toUser.wallet[key]) {
+        toUser.wallet[key].amount += sentCoins[key].amount;
+      }
+      else {
+        toUser.wallet[key] = sentCoins[key];
+      }
+    }
+
     try {
-      let a = await this.db.object('/users/'+this.user.$key).update({balance: myBalance});
-      let b = await this.db.object('/users/'+toUser.$key).update({balance: toUserBalance});
+      let a = await this.db.object('/users/'+this.user.$key).update({
+        wallet: this.user.wallet,
+        balance: this.user.balance
+      });
+
+      let b = await this.db.object('/users/'+toUser.$key).update({
+        wallet: toUser.wallet,
+        balance: toUser.balance
+      });
     }
     catch (error) {
       console.error(error);
@@ -121,6 +156,20 @@ export class TransactionService implements OnDestroy {
     });
 
     return p;
+  }
+
+  //which of the receivingUser's trusted coins does the sendingUser have?
+  private getTrustIntersection(sendingUser:User, receivingUser:User) {
+    let ret = [];
+    let sum = 0;
+    for (let u of receivingUser.trustedUsers) {
+      if (this.user.wallet[u]) {
+        sum += this.user.wallet[u].amount;
+        let p = this.user.wallet[u].priority;
+        ret[p] = this.user.wallet[u];
+      }
+    }
+    return {trustedCoins:ret,balance:sum};
   }
 
   ngOnDestroy() {

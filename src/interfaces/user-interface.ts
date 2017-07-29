@@ -22,7 +22,7 @@ export interface User {
   totalSent: number;
   trustedUsers: Array<any>;
   validators: Array<Validator>;
-  wallet: Array<Coin>;
+  wallet: {};
   weeklyReceived: number;
   weeklySent: number;
 }

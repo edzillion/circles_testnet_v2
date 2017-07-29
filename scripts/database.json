@@ -93,7 +93,7 @@
 	"users": {
 		"MdqRnUKHd1hrULQb11LxdtfG3O13": {
 			"createdAt": 1497078643926,
-			"balance": 999,
+			"balance": 100,
 			"firstName": "Quentin",
 			"lastName": "Quinn",
 			"displayName": "Quentin Quinn",
@@ -101,6 +101,14 @@
 			"uid": "MdqRnUKHd1hrULQb11LxdtfG3O13",
 			"totalReceived": 845,
 			"totalSent": 233,
+			"wallet": {
+					"MdqRnUKHd1hrULQb11LxdtfG3O13": {
+						"amount" : 100,
+						"owner": "MdqRnUKHd1hrULQb11LxdtfG3O13",
+						"priority": 0,
+        		"title" : "QuentinCoin"
+					}
+				},
 			"weeklyReceived": 11,
 			"weeklySent": 5,
 			"trustedUsers": [
@@ -114,7 +122,7 @@
 			]
 		},
 		"jSu2I20VwcgesCvTCsAb2wsTqNG2": {
-			"balance": 9999,
+			"balance": 100,
 			"createdAt": 1497078643916,
 			"firstName": "Jack",
 			"lastName": "Kalish",
@@ -123,6 +131,14 @@
 			"uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
 			"totalReceived": 845,
 			"totalSent": 233,
+			"wallet": {
+					"jSu2I20VwcgesCvTCsAb2wsTqNG2": {
+						"amount" : 100,
+						"owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+						"priority": 0,
+						"title" : "JackCoin"
+					}
+				},
 			"weeklyReceived": 11,
 			"weeklySent": 5,
 			"trustedUsers": [

@@ -77,7 +77,6 @@ export class ProfilePage {
       // imageData is a base64 encoded string
       this.base64ImageData = imageData;
       this.profilePicURL = "data:image/jpeg;base64," + imageData;
-
     },
     error => {
       this.toast = this.toastCtrl.create({
@@ -115,6 +114,7 @@ export class ProfilePage {
   ionViewDidLoad() {
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
+        debugger;
         this.user = user;
           if (user.trustedUsers) {
             user.trustedUsers.map(
