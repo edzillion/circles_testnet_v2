@@ -1,5 +1,11 @@
 page-home {
 
+  .toolbar{
+    height: 120px;
+    align-items: flex-start;
+    padding-top: 10px;
+  }
+
   .content{
    // background: linear-gradient(170deg, map-get($colors, primary) 10%, #4788C8 60%, white 60%); /* Standard syntax */
    // display: flex;
