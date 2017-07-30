@@ -13,6 +13,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/observable/empty';
 
 import { UserService } from '../../providers/user-service/user-service';
+import { ValidatorService } from '../../providers/validator-service/validator-service'
 import { User } from '../../interfaces/user-interface';
 import { Validator } from '../../interfaces/validator-interface';
 
@@ -37,7 +38,8 @@ export class SearchPage {
   constructor(
     private navCtrl: NavController,
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private validatorService: ValidatorService
   ) {
 
     this.searchSubject$ = new Subject();
@@ -50,7 +52,7 @@ export class SearchPage {
       return;
     }
     let uObs = this.userService.filterUsers$(this.searchTerm);
-    let vObs = this.userService.filterValidators$(this.searchTerm);
+    let vObs = this.validatorService.filterValidators$(this.searchTerm);
 
     Observable.combineLatest(uObs, vObs).first().subscribe(
       combined => {

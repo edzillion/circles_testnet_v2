@@ -15,8 +15,6 @@ import { Coin } from '../../interfaces/coin-interface';
 import { Validator } from '../../interfaces/validator-interface';
 import { NewsItem } from '../../interfaces/news-item-interface';
 
-import { ValidatorService } from '../validator-service/validator-service';
-
 @Injectable()
 export class UserService implements OnDestroy {
 
@@ -28,7 +26,6 @@ export class UserService implements OnDestroy {
   public user$: Observable<User>;
   public userFirebaseObj$: FirebaseObjectObservable<User>;
   public users$ = this.usersSubject$.asObservable();
-  public validators$: FirebaseListObservable<Validator[]>;
   public authState$: any;
 
   private authSub$: Subscription;
@@ -44,21 +41,18 @@ export class UserService implements OnDestroy {
 
   private user = {} as User;
   public users: any;
-  private validators: Array<Validator>;
-  //private userStub: User;
-  private email: string;
+
+
 
   constructor(
     private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase,
-    private validatorService: ValidatorService
+    private db: AngularFireDatabase
   ) {
 
     this.user.createdAt = 0;
     this.authState$ = this.afAuth.authState;
     this.initUserSubject$.take(1).subscribe(
       initUser => {
-        this.validatorService.initialise();
         this.userSubject$ = new BehaviorSubject(initUser);
         this.user$ = this.userSubject$.asObservable();
         // this.userSubject$ is our app wide current user Subscription
@@ -67,9 +61,7 @@ export class UserService implements OnDestroy {
           user => {
             this.user = user;
             this.setBalance();
-            if (this.user.validators) {
-              this.validatorService.setUserValidators(this.user);
-            }
+
             //this.initUserSubject$.unsubscribe();
             this.userSubject$.next(this.user);
           },
@@ -210,20 +202,6 @@ export class UserService implements OnDestroy {
           return false;
         let s = searchTerm.toLowerCase();
         let d = user.displayName.toLowerCase();
-        return d.indexOf(s) > -1;
-      });
-    });
-  }
-
-  public filterValidators$(searchTerm: string) {
-    //if (!searchTerm)
-    //  return Observable.empty(); //todo: should this return an observable(false) or something?
-    return this.validators$.map((valis) => {
-      return valis.filter((vali) => {
-        if (!vali.displayName || vali.$key == 'undefined')
-          return false;
-        let s = searchTerm.toLowerCase();
-        let d = vali.displayName.toLowerCase();
         return d.indexOf(s) > -1;
       });
     });
