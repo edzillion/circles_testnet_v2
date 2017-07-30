@@ -23,31 +23,94 @@ import { ValidatorDetailPage } from '../validator-detail/validator-detail';
 })
 export class ProfilePage {
 
-    //vars
-    private base64ImageData: string;
-    public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
-    private user: User;
-    private userSub$: Subscription;
+  private toast: Toast;
+  private base64ImageData: string;
+  public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+  private user: User;
+  private userSub$: Subscription;
+  private providers$: Subscription;
+  private allProviders: Array<any>;
+  private userProviders: Array<boolean>;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
-    }
+  constructor(
+    private camera: Camera,
+    private db: AngularFireDatabase,
+    private ds: DomSanitizer,
+    private toastCtrl: ToastController,
+    private userService: UserService
+  ) { }
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ProfilePage');
 
-    ionViewDidLoad() {
-      console.log('ionViewDidLoad ProfilePage');
-
-      //load user data
-      this.userSub$ = this.userService.initUserSubject$.subscribe(
-        user => {
-          this.user = user;
-          console.log("user", user);
-        }
-      );
-
-    }
-
-    saveProfile() {
-
-    }
-
+    this.userSub$ = this.userService.initUserSubject$.subscribe(
+      user => {
+        this.user = user;
+        this.db.list('/static/authProviders/').subscribe(
+          provs => {
+            this.allProviders = [];
+            this.userProviders = [];
+            for (let p of user.authProviders) {
+              this.userProviders[p] = true;
+            }
+            for (let p2 of provs) {
+              if (this.userProviders[p2.$key]) {
+                p2.completed = true;
+              }
+              this.allProviders.push(p2);
+            }
+          }
+        );
+      }
+    );
   }
+
+  private selectFromGallery(): void {
+    var options = {
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL
+    };
+    this.camera.getPicture(options).then(
+      imageData => {
+        // imageData is a base64 encoded string
+        this.base64ImageData = imageData;
+        this.profilePicURL = "data:image/jpeg;base64," + imageData;
+      },
+      error => {
+        this.toast = this.toastCtrl.create({
+          message: 'Error selecting from gallery: ' + error,
+          duration: 3000,
+          position: 'middle'
+        });
+        console.error(error);
+        this.toast.present();
+      });
+  }
+
+  private openCamera(): void {
+    var options = {
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      destinationType: this.camera.DestinationType.DATA_URL
+    };
+    this.camera.getPicture(options).then(
+      imageData => {
+        // imageData is a base64 encoded string
+        this.base64ImageData = imageData;
+        this.profilePicURL = "data:image/jpeg;base64," + imageData;
+      },
+      error => {
+        this.toast = this.toastCtrl.create({
+          message: 'Error opening camera: ' + error,
+          duration: 3000,
+          position: 'middle'
+        });
+        console.error(error);
+        this.toast.present();
+      });
+  }
+
+  saveProfile() {
+    debugger;
+  }
+
+}
