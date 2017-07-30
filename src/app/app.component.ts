@@ -11,9 +11,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../providers/user-service/user-service';
 
 import { LoginPage } from '../pages/login/login';
-import { ProfilePage } from '../pages/profile/profile';
+import { HomePage } from '../pages/home/home';
 
 import { WalletPage } from '../pages/wallet/wallet';
+import { SettingsPage } from '../pages/settings/settings';
+import { ProfilePage } from '../pages/profile/profile';
+import { DisclaimerPage } from '../pages/disclaimer/disclaimer';
 
 @Component({
   templateUrl: 'app.html'
@@ -46,8 +49,20 @@ private initSub$: Subscription;
       statusBar.styleDefault();
       this.userService.authState$.subscribe(
         auth => {
-          if (auth)
-            this.nav.setRoot(ProfilePage, { nav: this.nav })
+          if (auth) {
+            let userObs = this.db.object('/users/' + auth.uid);
+            let userSub = userObs.subscribe(
+              user => {
+                if (!user.$exists()) {
+                  this.nav.push(DisclaimerPage, { obs: userObs, auth:auth });
+                }
+                else {
+                  this.userService.initUserSubject$.next(user)
+                  this.nav.setRoot(HomePage);
+                }
+              }
+            );
+          }
           else {}
             //todo: error here
         },
@@ -60,6 +75,14 @@ private initSub$: Subscription;
 
   private goToWallet() : void {
     this.nav.push(WalletPage);
+  }
+
+  private goToSettings() : void {
+    this.nav.push(SettingsPage);
+  }
+
+  private goToProfile() : void {
+    this.nav.push(ProfilePage);
   }
 
   private logout() : void {

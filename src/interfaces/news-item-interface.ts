@@ -1,6 +1,9 @@
 export interface NewsItem {
   amount: number;
+  decision?: boolean;
   from: string;
+  message?: string;
+  unResolved?: boolean;
   timestamp: number;
   title: string;
   to: string;

@@ -12,14 +12,14 @@ export interface User {
   displayName: string;
   email: string;
   firstName: string;
-  greeting: string;
+  greeting?: string;
   lastName: string;
-  log: Array<NewsItem>;
-  offers: Array<Offer>;
+  news: Array<NewsItem>;
   profilePicURL: string;
   pushID: string;
   totalReceived: number;
   totalSent: number;
+  tradeMessage?:string;
   trustedUsers: Array<any>;
   validators: Array<Validator>;
   wallet: {};

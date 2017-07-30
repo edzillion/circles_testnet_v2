@@ -18,51 +18,57 @@ import { UserDetailPage } from '../user-detail/user-detail';
 import { ValidatorDetailPage } from '../validator-detail/validator-detail';
 
 @Component({
-  selector: 'page-profile',
-  templateUrl: 'profile.html',
+  selector: 'page-home',
+  templateUrl: 'home.html',
 })
-export class ProfilePage {
+export class HomePage {
 
   private toast: Toast;
   private base64ImageData: string;
   public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+
   private user: User;
   private userSub$: Subscription;
-  private providers$: Subscription;
-  private allProviders: Array<any>;
-  private userProviders: Array<boolean>;
 
-  constructor(
+  private selectedView: string = 'network';
+  private view: string = 'network';
+
+  private networkList: Array<any> = [];
+  private newsList: Array<any> = [];
+  private validatorList: Array<any> = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private notificationsService: NotificationsService,
     private camera: Camera,
     private db: AngularFireDatabase,
     private ds: DomSanitizer,
     private toastCtrl: ToastController,
-    private userService: UserService
+    private userService: UserService,
+    private newsService: NewsService
   ) { }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+  private openSearch(): void {
+    this.navCtrl.push(SearchPage);
+  }
 
-    this.userSub$ = this.userService.user$.subscribe(
-      user => {
-        this.user = user;
-        this.db.list('/static/authProviders/').subscribe(
-          provs => {
-            this.allProviders = [];
-            this.userProviders = [];
-            for (let p of user.authProviders) {
-              this.userProviders[p] = true;
-            }
-            for (let p2 of provs) {
-              if (this.userProviders[p2.$key]) {
-                p2.completed = true;
-              }
-              this.allProviders.push(p2);
-            }
-          }
-        );
-      }
-    );
+  private goToUserDetail(user): void {
+    this.navCtrl.push(UserDetailPage, user);
+  }
+
+  private goToValidatorDetail(validator): void {
+    this.navCtrl.push(ValidatorDetailPage, validator);
+  }
+
+  private selectNetwork(): void {
+    this.selectedView = 'network';
+  }
+
+  private selectNews(): void {
+    this.selectedView = 'news';
+  //this.newsService.allnewsItemsReversed$.subscribe( ns => {debugger});
+  }
+
+  private selectValidators(): void {
+    this.selectedView = 'validators';
   }
 
   private selectFromGallery(): void {
@@ -109,7 +115,31 @@ export class ProfilePage {
       });
   }
 
-  saveProfile() {
+  ionViewDidLoad() {
+    this.userSub$ = this.userService.user$.subscribe(
+      user => {
+        this.networkList = [];
+        this.validatorList = [];
+        this.user = user;
+        if (user.trustedUsers) {
+          user.trustedUsers.map(
+            key => {
+              if (this.user.$key == key) {
+                return;
+              }
+              this.userService.keyToUser$(key).subscribe(
+                trustedUser => { this.networkList.push(trustedUser) }
+              )
+            }
+          );
+        }
+        if (this.user.validators) {
+          for (let i in this.user.validators) {
+            this.validatorList.push(this.user.validators[i] );
+          }
+        }
+      }
+    );
   }
 
 }

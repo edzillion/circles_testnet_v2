@@ -10,20 +10,21 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 import 'angular2-notifications';
 
+import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { ValidatorDetailPage } from '../pages/validator-detail/validator-detail';
 
-import { LogPage } from '../pages/log/log';
-
 import { LoginPage } from '../pages/login/login';
 import { LoginEmailPage } from '../pages/login-email/login-email';
 import { SignupEmailPage } from '../pages/signup-email/signup-email';
-
-
 import { SendPage } from '../pages/send/send';
+import { DisclaimerPage } from '../pages/disclaimer/disclaimer';
+
+//side menu
 import { WalletPage } from '../pages/wallet/wallet';
+import { SettingsPage } from '../pages/settings/settings';
 
 //services
 import { AnalyticsService } from '../providers/analytics-service/analytics-service';
@@ -48,21 +49,25 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { environment } from '../environments/environment';
 import { Keyobject } from '../pipes/key-object/key-object';
 import { ValidatorService } from '../providers/validator-service/validator-service';
+import { NewsCard } from '../components/news-card/news-card';
 
 @NgModule({
   declarations: [
     LoginEmailPage,
     LoginPage,
-    LogPage,
     MyApp,
     ProfilePage,
+    HomePage,
     SearchPage,
     UserDetailPage,
     SignupEmailPage,
     SendPage,
     WalletPage,
     ValidatorDetailPage,
-    Keyobject
+    Keyobject,
+    SettingsPage,
+    NewsCard,
+    DisclaimerPage
   ],
   imports: [
     AngularFireAuthModule,
@@ -78,15 +83,17 @@ import { ValidatorService } from '../providers/validator-service/validator-servi
   entryComponents: [
     LoginEmailPage,
     LoginPage,
-    LogPage,
     MyApp,
     ProfilePage,
+    HomePage,
     SearchPage,
     UserDetailPage,
     SignupEmailPage,
     SendPage,
     WalletPage,
-    ValidatorDetailPage
+    ValidatorDetailPage,
+    SettingsPage,
+    DisclaimerPage
   ],
   providers: [
     AnalyticsService,

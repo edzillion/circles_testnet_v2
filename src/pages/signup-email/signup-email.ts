@@ -7,7 +7,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
-import { ProfilePage } from '../profile/profile';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-signup-email',

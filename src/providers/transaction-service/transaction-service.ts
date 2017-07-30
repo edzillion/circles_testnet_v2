@@ -51,13 +51,11 @@ export class TransactionService implements OnDestroy {
     for (let coin of trusted.trustedCoins) {
       if (amount > coin.amount) {
         let c = Object.assign({}, coin);;
-        c.priority = sentCoins[coin.owner].priority;
         sentCoins[coin.owner] = c;
         coin.amount = 0;
       }
       else {
         let c = Object.assign({}, coin);
-        c.priority = Object.keys(toUser.wallet).length;
         c.amount = amount;
         sentCoins[coin.owner] = c;
         coin.amount -= amount;
@@ -94,64 +92,30 @@ export class TransactionService implements OnDestroy {
     return true;
   }
 
-  private logTransfer(toUser: User, offer: Offer, type: string, message?: string):void {
+  private logTransfer(toUser:User, amount:number):void {
 
     let logItem = {
       "from" : this.user.$key,
       "to" : toUser.$key,
       "timestamp" : firebase.database['ServerValue']['TIMESTAMP'],
-      "amount" : <number>offer.price,
-      "message": message || '',
-      "title": offer.title,
-      "type": type
+      "amount" : amount
     } as LogItem;
 
     //add to the main transaction log
     this.transactionLog$.push(logItem);
-
-    //add to other user's log
-    logItem.to = '';
-    if (logItem.type == 'purchase')
-      logItem.type = 'sale';
-
-    this.toUserLog$ = this.db.list('/users/'+toUser.$key+'/log/');
-    this.toUserLog$.push(logItem);
-
-  }
-
-  public createPurchaseIntent(sellerUserId:string, offer: Offer): Promise<any> {
-    let p = new Promise( (resolve, reject) => {
-      this.userService.keyToUser$(sellerUserId).take(1).subscribe( (sellerUser) => {
-        if (this.transfer(sellerUser, offer.price)) {
-          this.logTransfer(sellerUser, offer, 'purchase');
-          this.newsService.addPurchase(offer);
-          resolve(true);
-        }
-        else
-          reject(new Error("Purchase Failed"));
-      });
-    });
-
-    return p;
   }
 
   public createTransactionIntent(toUserId:string, amount:number, message?:string): Promise<any> {
     let p = new Promise( (resolve, reject) => {
       this.userService.keyToUser$(toUserId).take(1).subscribe( (toUser) => {
         if(this.transfer(toUser, amount)) {
-          let offerObj = {
-            amount: amount,
-            price: amount,
-            title:'Transaction',
-            to: toUserId,
-            toUser: toUser
-          };
-          this.logTransfer(toUser, <any>offerObj, 'transfer', message);
-          this.newsService.addTransaction(offerObj);
+
+          this.logTransfer(toUser, amount);
+          this.newsService.addTransaction(toUser, amount, message);
           resolve(true);
         }
         else
-          reject(new Error("Purchase Failed"));
+          reject(new Error("Transfer Failed"));
       });
     });
 

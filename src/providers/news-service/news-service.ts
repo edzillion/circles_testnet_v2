@@ -35,7 +35,7 @@ export class NewsService implements OnDestroy {
     private userService: UserService
   ) {
 
-    this.userService.initUserSubject$.subscribe(
+    this.userService.user$.subscribe(
       user => {
         this.user = user;
         this.setupDBQuery(user);
@@ -46,10 +46,9 @@ export class NewsService implements OnDestroy {
   }
 
   private setupDBQuery(user: User):void {
-
     // sets up a db list binding that will initially return all messages from the last
     // two minutes and then any added to the list after that.
-    this.dbNewsItems$ = this.db.list('/users/' + user.$key + '/log/');
+    this.dbNewsItems$ = this.db.list('/users/' + user.$key + '/news/');
     let twoMinsAgo = Date.now() - 120000;
     this.dbNewsItems$.$ref
       .orderByChild('timestamp')
@@ -61,12 +60,6 @@ export class NewsService implements OnDestroy {
           this.userService.keyToUser$(latestNewsItem.from).subscribe((fromUser) => {
             let msg = 'Receieved ' + latestNewsItem.amount + ' Circles from ' + fromUser.displayName;
             this.notificationsService.create('Transaction', msg, 'info');
-          });
-        }
-        else if (latestNewsItem.type == 'sale') {
-          this.userService.keyToUser$(latestNewsItem.from).subscribe((fromUser) => {
-            let msg = fromUser.displayName+' has just bought ' + latestNewsItem.title + ' for '+latestNewsItem.amount+' Circles';
-            this.notificationsService.create('Sale', msg, 'info');
           });
         }
       });
@@ -94,64 +87,69 @@ export class NewsService implements OnDestroy {
     return this.newsItemsReversed$;
   }
 
-  public addTransaction(txItem: any):void {
+  public addTransaction(toUser:User, amount:number, message?:string):void {
     //this will only be called for sending to someone else
-    this.notificationsService.create('Send Success','','success');
-    let msg = 'Sent ' + txItem.amount + ' Circles to ' + txItem.toUser.displayName;
-    this.notificationsService.create('Transaction', msg, 'info');
+
+    // this.notificationsService.create('Send Success','','success');
+    // let msg = 'Sent ' + txItem.amount + ' Circles to ' + txItem.toUser.displayName;
+    // this.notificationsService.create('Transaction', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      amount: txItem.amount,
-      to: txItem.to,
-      type: 'transaction'
+      from: this.user.$key,
+      amount: amount,
+      to: toUser.$key,
+      type: 'transaction',
+      message: message || ''
     };
     this.dbNewsItems$.push(newsItem);
+
+    this.db.list('/users/'+toUser.$key+'/log/').push(newsItem);
 
     //send push notification to other user
     //msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;
     //this.pushService.pushToUser(txItem.toUser,msg);
   }
 
-  public addPurchase(offer: Offer):void {
-    this.notificationsService.create('Purchase Success','','success');
-    let msg = 'Bought ' + offer.title + ' from '+offer.sellerName+' for '+offer.price+' Circles';
-    this.notificationsService.create('Purchase', msg, 'info');
 
-    let newsItem = {
-      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      title: offer.title,
-      from: offer.seller,
-      type: 'purchase'
-    };
-    this.dbNewsItems$.push(newsItem);
-  }
-
-  public addOfferListed(offer: Offer):void {
-    this.notificationsService.create('Listing Success','','success');
-    let msg = 'Listed ' + offer.title + ' on market';
-    this.notificationsService.create('Listing', msg, 'info');
-
-    let newsItem = {
-      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      title: offer.title,
-      type: 'offerListed'
-    };
-    this.dbNewsItems$.push(newsItem);
-  }
-
-  public addGroupJoin(validator: Validator):void {
-    this.notificationsService.create('Join Success','','success');
-    let msg = 'You have joined the group: ' +validator.displayName;
+  public addValidatorTrustRequest(validator: Validator):void {
+    //this.notificationsService.create('Join Success','','success');
+    let msg = 'You applied for validation from: ' +validator.displayName;
     this.notificationsService.create('Join', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
       title: validator.displayName,
-      type: 'groupJoin'
+      type: 'validatorRequest'
     };
     this.dbNewsItems$.push(newsItem);
-  };
+  }
+
+  public addTrustRequest(user: User):void {
+    //this.notificationsService.create('Join Success','','success');
+    let msg = 'You have requested trust from: ' +user.displayName;
+    this.notificationsService.create('Join', msg, 'info');
+
+    let newsItem = {
+      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+      title: user.displayName,
+      type: 'trustRequest'
+    };
+    this.dbNewsItems$.push(newsItem);
+  }
+
+  public addTrustUser(user: User):void {
+    //this.notificationsService.create('Join Success','','success');
+    let msg = 'You have trusted: ' +user.displayName;
+    this.notificationsService.create('Join', msg, 'info');
+
+    let newsItem = {
+      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+      title: user.displayName,
+      type: 'trustUser'
+    };
+    this.dbNewsItems$.push(newsItem);
+  }
 
   ngOnDestroy () {
     this.dbNewsSub$.unsubscribe();
