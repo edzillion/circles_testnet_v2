@@ -25542,6 +25542,138 @@ button {
   background-color: white;
 }
 
+page-home #home-content {
+  background: linear-gradient(170deg, #4AA7EF 10%, #4788C8 51%, white 51%);
+  /* Standard syntax */
+  height: 100%;
+  pointer-events: visible;
+}
+
+page-home .home-fixed {
+  padding-top: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  pointer-events: visible;
+}
+
+page-home .home-item {
+  margin: 5px;
+  width: 55px;
+  height: 55px;
+  float: left;
+}
+
+page-home .home-pic {
+  margin-top: -50px;
+  text-align: center;
+  color: white;
+}
+
+page-home .home-pic .circle-crop {
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  width: 156px;
+  height: 156px;
+  margin: auto;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid white;
+}
+
+page-home .home-pic img {
+  display: block;
+  margin: auto;
+}
+
+page-home .home-pic .user-name {
+  font-size: 36px;
+}
+
+page-home .home-pic .balance {
+  font-size: 18px;
+  color: #E7E6E6;
+  margin: -5px 0 10px 0;
+}
+
+page-home .segment-btns {
+  width: 75%;
+  margin: auto;
+}
+
+page-home #balance-detail {
+  background-color: white;
+  color: #333;
+  padding: 10px 0;
+  margin: 10px 60px;
+  border-radius: 10px;
+  -webkit-box-shadow: 3px 3px 25px rgba(136, 136, 136, 0.5);
+  box-shadow: 3px 3px 25px rgba(136, 136, 136, 0.5);
+  text-align: center;
+  z-index: 100;
+}
+
+page-home #balance-detail div {
+  display: inline-block;
+  padding: 10px;
+  margin: auto;
+  text-align: center;
+  width: 47%;
+}
+
+page-home #balance-detail h1 {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+page-home #balance-detail h2 {
+  font-size: 14px;
+  margin-bottom: -5px;
+}
+
+page-home #balance-detail .received {
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+page-home #balance-detail .received h2 {
+  color: #139105;
+}
+
+page-home #balance-detail .sent h2 {
+  color: #4AA7EF;
+}
+
+page-home .scrolling-list {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  background-color: transparent;
+  margin-top: -10px;
+}
+
+page-home .scrolling-list::after {
+  background: -webkit-gradient(linear, left top, left bottom, from(white), color-stop(10%, rgba(255, 255, 255, 0)));
+  background: linear-gradient(180deg, white 0%, rgba(255, 255, 255, 0) 10%);
+  /* Standard syntax */
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
 #login-page {
   background-color: #4AA7EF;
   text-align: center;
@@ -25597,9 +25729,25 @@ button {
   color: white;
 }
 
-page-profile .content {
+page-profile #profile-content {
   background: linear-gradient(170deg, #4AA7EF 10%, #4788C8 60%, white 60%);
   /* Standard syntax */
+  height: 100%;
+  pointer-events: visible;
+}
+
+page-profile .profile-fixed {
+  padding-top: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  pointer-events: visible;
 }
 
 page-profile .profile-item {
@@ -25638,6 +25786,13 @@ page-profile .profile-pic .user-name {
 page-profile .profile-pic .balance {
   font-size: 18px;
   color: #E7E6E6;
+}
+
+page-profile .scrolling-list {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 page-send .user-search-list {
