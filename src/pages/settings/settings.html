@@ -18,7 +18,8 @@
       <form (ngSubmit)="logForm()">
         <ion-item>
           <ion-label stacked>Name</ion-label>
-          <ion-input type="text" [(ngModel)]="settings.name" name="title"></ion-input>
+          <ion-input type="text" [value]="user?.displayName" name="title">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Greeting</ion-label>
