@@ -24,12 +24,15 @@
         [ngStyle]="{'background-image': 'url(' + profilePicURL + ')'}">
         <!--<img src="{{profilePicURL}}">-->
       </div>
+      <!--
       <button ion-button (click)="openCamera()">Open camera</button>
-      <button ion-button (click)="selectFromGallery()">Select from gallery</button>
+      <button ion-button (click)="selectFromGallery()">Select from gallery</button> -->
 
-       <div class="user-name">
+      <div class="user-name">
         {{user?.displayName}}
       </div>
+
+      <div>{{user?.greeting}}</div>
 
       <div class="balance">
         {{user?.balance}} css
@@ -37,9 +40,9 @@
 
     </div>
 
-    <ion-item>Greeting: {{user?.greeting}}</ion-item>
 
-    <ion-item>
+    <!-- segment btns -->
+    <div class="segment-btns">
       <ion-segment [(ngModel)]="view" color="primary">
         <ion-segment-button class="offer-segment-button" value="network" (ionSelect)="selectNetwork()">
           Network
@@ -51,11 +54,18 @@
           Validators
         </ion-segment-button>
       </ion-segment>
-    </ion-item>
+    </div>
 
-    <ion-item>
-      Total received : {{user?.totalReceived}} | Total sent: {{user?.totalSent}}
-    </ion-item>
+    <div id="balance-detail">
+      <div class="received">
+        <h1>Total received</h1>
+        <h2>{{user?.totalReceived}}</h2>
+      </div>
+      <div class="sent">
+        <h1>Total sent</h1>
+        <h2>{{user?.totalSent}}</h2>
+      </div>
+    </div>
 
     <ion-content overflow-scroll="true" class="scrolling-list">
       <span *ngIf="selectedView == 'network' && user?.trustedUsers">
