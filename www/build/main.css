@@ -25559,7 +25559,8 @@ page-home #home-content {
 }
 
 page-home .home-fixed {
-  padding-top: 30px;
+  padding-top: 0px;
+  margin-top: -20px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -25570,6 +25571,8 @@ page-home .home-fixed {
   -ms-flex-direction: column;
   flex-direction: column;
   pointer-events: visible;
+  height: 100%;
+  width: 100%;
 }
 
 page-home .home-item {
