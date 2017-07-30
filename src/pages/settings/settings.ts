@@ -45,10 +45,8 @@ export class SettingsPage {
 
   }
 
-  settings = {}
-
-  logForm() {
-    console.log(this.settings)
+  saveSettings() {
+    
   }
 
 }

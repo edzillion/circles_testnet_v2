@@ -15,7 +15,8 @@
 </ion-header>
 
 <ion-content padding id="profile-content">
-  <ion-list>
+
+<span ion-fixed class="profile-fixed" style="height: 100%; width: 100%">
   <!--
     <ion-item>
       Validators:
@@ -62,6 +63,7 @@
       Total received : {{user?.totalReceived}} | Total sent: {{user?.totalSent}}
     </ion-item>
 
+    <ion-content overflow-scroll="true" class="scrolling-list">
     <span *ngIf="selectedView == 'network' && user?.trustedUsers">
       <ion-item *ngFor="let networkUser of networkList" (click)="goToUserDetail(networkUser)">
         <ion-avatar style="width:48px;height:48px" item-left>
@@ -90,6 +92,8 @@
         <p>{{validator?.description}}</p>
       </ion-item>
     </span>
+    </ion-content>
 
-</ion-list>
+</span>
+
 </ion-content>

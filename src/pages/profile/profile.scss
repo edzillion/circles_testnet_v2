@@ -1,7 +1,25 @@
 page-profile {
 
   .content{
-    background: linear-gradient(170deg, map-get($colors, primary) 10%, #4788C8 60%, white 60%); /* Standard syntax */
+   // background: linear-gradient(170deg, map-get($colors, primary) 10%, #4788C8 60%, white 60%); /* Standard syntax */
+   // display: flex;
+   // flex-direction: column;
+  }
+
+  #profile-content{
+     background: linear-gradient(170deg, map-get($colors, primary) 10%, #4788C8 60%, white 60%); /* Standard syntax */
+     height: 100%;
+    pointer-events: visible;
+
+    // display: flex;
+    //flex-direction: column;
+  }
+
+  .profile-fixed{
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    pointer-events: visible;
   }
 
   .profile-item {
@@ -36,6 +54,10 @@ page-profile {
       font-size: 18px;
       color: #E7E6E6;
     }
+  }
+
+  .scrolling-list{
+    flex: 1 1 auto;
   }
 
 }
