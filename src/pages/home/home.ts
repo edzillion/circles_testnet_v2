@@ -44,8 +44,7 @@ export class HomePage {
     private toastCtrl: ToastController,
     private userService: UserService,
     private newsService: NewsService
-  ) {
-  }
+  ) { }
 
   private openSearch(): void {
     this.navCtrl.push(SearchPage);
@@ -117,7 +116,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.userSub$ = this.userService.initUserSubject$.subscribe(
+    this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.networkList = [];
         this.validatorList = [];
@@ -125,6 +124,9 @@ export class HomePage {
         if (user.trustedUsers) {
           user.trustedUsers.map(
             key => {
+              if (this.user.$key == key) {
+                return;
+              }
               this.userService.keyToUser$(key).subscribe(
                 trustedUser => { this.networkList.push(trustedUser) }
               )

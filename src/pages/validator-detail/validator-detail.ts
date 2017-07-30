@@ -44,7 +44,7 @@ export class ValidatorDetailPage {
   }
 
   ionViewDidLoad() {
-    this.userSub$ = this.userService.initUserSubject$.subscribe(
+    this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
         if (this.user.validators) {

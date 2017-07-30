@@ -35,7 +35,7 @@ export class NewsService implements OnDestroy {
     private userService: UserService
   ) {
 
-    this.userService.initUserSubject$.subscribe(
+    this.userService.user$.subscribe(
       user => {
         this.user = user;
         this.setupDBQuery(user);

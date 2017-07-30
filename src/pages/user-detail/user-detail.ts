@@ -48,7 +48,7 @@ export class UserDetailPage {
   }
 
   ionViewDidLoad() {
-    this.userSub$ = this.userService.initUserSubject$.subscribe(
+    this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
         let dTrust = this.user.trustedUsers.some(tUserKey => {

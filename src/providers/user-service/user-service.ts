@@ -40,7 +40,7 @@ export class UserService implements OnDestroy {
 
   private myCoins: Coin = {} as Coin;
 
-  private allCoins: {[key:string]: Coin};
+  private allCoins: { [key: string]: Coin };
 
   private user = {} as User;
   public users: any;
@@ -55,77 +55,139 @@ export class UserService implements OnDestroy {
   ) {
 
     this.user.createdAt = 0;
-
     this.authState$ = this.afAuth.authState;
-    this.authSub$ = this.afAuth.authState.subscribe(
-      auth => {
-        if (auth) {
-          this.validatorService.initialise();
-          let userObs = this.db.object('/users/' + auth.uid);
-          let userSub = userObs.subscribe(
-            user => {
-              if (!user.$exists()) {
-                //user doesn't exist, create user entry on db
-                this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
-                this.user.news = [{
-                  timestamp: this.user.createdAt,
-                  type: 'createAccount'
-                } as NewsItem];
-                this.user.authProviders = ["email"];
-                this.setInitialWallet(auth.uid);
-                this.user.totalReceived = 0;
-                this.user.totalSent = 0;
-                this.user.trustedUsers = [auth.uid];
-                this.user.weeklyReceived = 0;
-                this.user.weeklySent = 0;
-                userObs.set(this.user);
-              }
-              else {
-                this.userSubject$ = new BehaviorSubject(user);
-                this.user$ = this.userSubject$.asObservable();
-                // this.userSubject$ is our app wide current user Subscription
-                this.userFirebaseObj$ = this.db.object('/users/' + auth.uid);
-                this.userSub$ = this.userFirebaseObj$.subscribe(
-                  user => {
-                    this.user = user;
-                    this.setBalance();
-                    if (this.user.validators) {
-                      this.validatorService.setUserValidators(this.user);
-                    }
-                    this.initUserSubject$.next(user)
-                    this.userSubject$.next(user);
-                  },
-                  error => console.log('Could not load current user record.')
-                );
+    this.initUserSubject$.take(1).subscribe(
+      initUser => {
+        this.validatorService.initialise();
+        this.userSubject$ = new BehaviorSubject(initUser);
+        this.user$ = this.userSubject$.asObservable();
+        // this.userSubject$ is our app wide current user Subscription
+        this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key);
+        this.userSub$ = this.userFirebaseObj$.subscribe(
+          user => {
+            debugger;
+            this.user = user;
+            this.setBalance();
+            if (this.user.validators) {
+              this.validatorService.setUserValidators(this.user);
+            }
+            //this.initUserSubject$.unsubscribe();
+            this.userSubject$.next(this.user);
+          },
+          error => console.log('Could not load current user record.')
+        );
 
-                this.usersSub$ = this.db.list('/users/').subscribe(
-                  users => {
-                    this.users = [];
-                    for (let u of users) {
-                      this.users[u.$key] = u;
-                    }
-                    //clone the users array so that we don't change a user accidentally
-                    //Object.assign(this.dataStore.users, users);
-                    this.usersSubject$.next(users);
-                  },
-                  error => console.log('Could not load users.')
-                );
-                userSub.unsubscribe();
-              }
-            },
-            error => console.error(error),
-            () => { }
-          );
-        }
-        else { //auth=null
-          //wipe on logout
-          this.user = {} as User;
-        }
-      },
-      error => console.error(error),
-      () => { }
-    );
+        this.usersSub$ = this.db.list('/users/').subscribe(
+          users => {
+            this.users = [];
+            for (let u of users) {
+              this.users[u.$key] = u;
+            }
+            //clone the users array so that we don't change a user accidentally
+            //Object.assign(this.dataStore.users, users);
+            this.usersSubject$.next(users);
+          },
+          error => console.log('Could not load users.')
+        );
+//        this.initUserSubject$.unsubscribe();
+      }
+    )
   }
+
+
+    // this.authState$ = this.afAuth.authState;
+    // this.authSub$ = this.afAuth.authState.subscribe(
+    //   auth => {
+    //     if (auth) {
+          // this.validatorService.initialise();
+          // let userObs = this.db.object('/users/' + auth.uid);
+          // let userSub = userObs.subscribe(
+            // user => {
+              // if (!user.$exists()) {
+              //   //user doesn't exist, create user entry on db
+              //   this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
+              //   this.user.news = [{
+              //     timestamp: this.user.createdAt,
+              //     type: 'createAccount'
+              //   } as NewsItem];
+              //   this.user.authProviders = ["email"];
+              //   this.setInitialWallet(auth.uid);
+              //   this.user.totalReceived = 0;
+              //   this.user.totalSent = 0;
+              //   this.user.trustedUsers = [auth.uid];
+              //   this.user.weeklyReceived = 0;
+              //   this.user.weeklySent = 0;
+              //   userObs.set(this.user);
+              // }
+              // else {
+  //               this.userSubject$ = new BehaviorSubject(user);
+  //               this.user$ = this.userSubject$.asObservable();
+  //               // this.userSubject$ is our app wide current user Subscription
+  //               this.userFirebaseObj$ = this.db.object('/users/' + auth.uid);
+  //               this.userSub$ = this.userFirebaseObj$.subscribe(
+  //                 user => {
+  //                   this.user = user;
+  //                   this.setBalance();
+  //                   if (this.user.validators) {
+  //                     this.validatorService.setUserValidators(this.user);
+  //                   }
+  //                   this.initUserSubject$.next(user)
+  //                   this.userSubject$.next(user);
+  //                 },
+  //                 error => console.log('Could not load current user record.')
+  //               );
+  //
+  //               this.usersSub$ = this.db.list('/users/').subscribe(
+  //                 users => {
+  //                   this.users = [];
+  //                   for (let u of users) {
+  //                     this.users[u.$key] = u;
+  //                   }
+  //                   //clone the users array so that we don't change a user accidentally
+  //                   //Object.assign(this.dataStore.users, users);
+  //                   this.usersSubject$.next(users);
+  //                 },
+  //                 error => console.log('Could not load users.')
+  //               );
+  //               userSub.unsubscribe();
+  //             }
+  //           },
+  //           error => console.error(error),
+  //           () => { }
+  //         );
+  //       }
+  //       else { //auth=null
+  //         //wipe on logout
+  //         this.user = {} as User;
+  //       }
+  //     },
+  //     error => console.error(error),
+  //     () => { }
+  //   );
+  // }
+
+  public createUserRecord(auth): User {
+    //user doesn't exist, create user entry on db
+    this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
+    this.user.news = [{
+      timestamp: this.user.createdAt,
+      type: 'createAccount'
+    } as NewsItem];
+
+    this.user.email = auth.email || '';
+    this.user.authProviders = ["email"];
+    this.setInitialWallet(auth.uid);
+    this.user.totalReceived = 0;
+    this.user.totalSent = 0;
+    this.user.trustedUsers = [auth.uid];
+    this.user.weeklyReceived = 0;
+    this.user.weeklySent = 0;
+
+    return this.user;
+}
+
+
+
 
   public keyToUser$(key: string): Observable<User> {
     return this.users$.map(
@@ -159,7 +221,7 @@ export class UserService implements OnDestroy {
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
     return this.validators$.map((valis) => {
       return valis.filter((vali) => {
-        if (!vali.displayName || vali.$key == 'undefined' )
+        if (!vali.displayName || vali.$key == 'undefined')
           return false;
         let s = searchTerm.toLowerCase();
         let d = vali.displayName.toLowerCase();
@@ -194,18 +256,18 @@ export class UserService implements OnDestroy {
   public async addTrustedUser(userKey) {
     this.user.trustedUsers.push(userKey);
     let userObs = this.db.object('/users/' + this.user.$key);
-    userObs.update({trustedUsers: this.user.trustedUsers});
+    userObs.update({ trustedUsers: this.user.trustedUsers });
   }
 
   public async removeTrustedUser(userKey) {
-    let arr = this.user.trustedUsers.filter( user =>
+    let arr = this.user.trustedUsers.filter(user =>
 	     user != userKey
-     );
+    );
     let userObs = this.db.object('/users/' + this.user.$key);
-    await userObs.update({trustedUsers: arr});
+    await userObs.update({ trustedUsers: arr });
   }
 
-  private setInitialWallet(userKey):void {
+  private setInitialWallet(userKey): void {
     let now = new Date();
     let day = now.getDay();
     let diff = (7 - 5 + day) % 7;
@@ -222,7 +284,7 @@ export class UserService implements OnDestroy {
     this.setBalance();
   }
 
-  public setBalance():void {
+  public setBalance(): void {
     let total = 0;
     for (let i in this.user.wallet) {
       total += this.user.wallet[i].amount;

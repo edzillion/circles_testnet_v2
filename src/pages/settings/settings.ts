@@ -30,13 +30,13 @@ export class SettingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
   }
-    
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
 
     //load user data
-    this.userSub$ = this.userService.initUserSubject$.subscribe(
+    this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
         console.log("user", user);

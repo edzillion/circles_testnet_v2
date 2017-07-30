@@ -43,7 +43,7 @@ export class ProfilePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
 
-    this.userSub$ = this.userService.initUserSubject$.subscribe(
+    this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
         this.db.list('/static/authProviders/').subscribe(

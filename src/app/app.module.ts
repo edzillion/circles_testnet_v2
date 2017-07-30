@@ -19,9 +19,8 @@ import { ValidatorDetailPage } from '../pages/validator-detail/validator-detail'
 import { LoginPage } from '../pages/login/login';
 import { LoginEmailPage } from '../pages/login-email/login-email';
 import { SignupEmailPage } from '../pages/signup-email/signup-email';
-
-
 import { SendPage } from '../pages/send/send';
+import { DisclaimerPage } from '../pages/disclaimer/disclaimer';
 
 //side menu
 import { WalletPage } from '../pages/wallet/wallet';
@@ -67,7 +66,8 @@ import { NewsCard } from '../components/news-card/news-card';
     ValidatorDetailPage,
     Keyobject,
     SettingsPage,
-    NewsCard
+    NewsCard,
+    DisclaimerPage
   ],
   imports: [
     AngularFireAuthModule,
@@ -92,7 +92,8 @@ import { NewsCard } from '../components/news-card/news-card';
     SendPage,
     WalletPage,
     ValidatorDetailPage,
-    SettingsPage
+    SettingsPage,
+    DisclaimerPage
   ],
   providers: [
     AnalyticsService,
