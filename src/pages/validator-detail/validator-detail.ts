@@ -61,7 +61,6 @@ export class ValidatorDetailPage {
           }
         }
         if (this.validator.appliedUsers) {
-          debugger;
           if (this.validator.appliedUsers.find(u => u === this.user.$key))
             this.applied = true;
 

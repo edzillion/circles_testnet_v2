@@ -22,7 +22,6 @@ export class ValidatorService {
     this.validators$ = this.db.list('/validators/');
     this.validators$.subscribe(
       valis => {
-        debugger;
         this.validators = [];
         for (let v of valis) {
           this.validators[v.$key] = v;
