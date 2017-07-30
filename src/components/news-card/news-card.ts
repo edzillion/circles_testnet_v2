@@ -39,7 +39,7 @@ export class NewsCard implements OnDestroy, OnInit {
       },
       () => console.log('news-card ngOnInit userSub$ obs complete')
     );
-    debugger;
+
     if (this.newsItem.type == 'createAccount') {
       this.title = "Account Creation";
       this.message = "Your Circles account was created!";

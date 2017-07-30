@@ -48,8 +48,10 @@ export class ValidatorDetailPage {
       user => {
         this.user = user;
         if (this.user.validators) {
-          for (var validator of this.user.validators) {
-            for (var tUserKey of validator.trustedUsers) {
+          debugger;
+          for (var i in this.user.validators) {
+            let v = this.user.validators[i];
+            for (var tUserKey of v.trustedUsers) {
               let u = this.userService.users[tUserKey];
               this.trustedUsers.push(u);
               if (tUserKey == this.validator.$key)

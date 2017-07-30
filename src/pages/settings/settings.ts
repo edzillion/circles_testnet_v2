@@ -34,7 +34,7 @@ export class SettingsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
-  
+
     //load user data
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
@@ -46,7 +46,7 @@ export class SettingsPage {
   }
 
   saveSettings() {
-    
+
   }
 
 }

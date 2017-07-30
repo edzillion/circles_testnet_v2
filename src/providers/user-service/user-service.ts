@@ -43,7 +43,7 @@ export class UserService implements OnDestroy {
   private allCoins: {[key:string]: Coin};
 
   private user = {} as User;
-  public users: Array<User>;
+  public users: any;
   private validators: Array<Validator>;
   //private userStub: User;
   private email: string;
@@ -100,7 +100,10 @@ export class UserService implements OnDestroy {
 
                 this.usersSub$ = this.db.list('/users/').subscribe(
                   users => {
-                    this.users = users;
+                    this.users = [];
+                    for (let u of users) {
+                      this.users[u.$key] = u;
+                    }
                     //clone the users array so that we don't change a user accidentally
                     //Object.assign(this.dataStore.users, users);
                     this.usersSubject$.next(users);

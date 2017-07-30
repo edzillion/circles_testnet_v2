@@ -10,12 +10,11 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 import 'angular2-notifications';
 
+import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { UserDetailPage } from '../pages/user-detail/user-detail';
 import { ValidatorDetailPage } from '../pages/validator-detail/validator-detail';
-
-import { LogPage } from '../pages/log/log';
 
 import { LoginPage } from '../pages/login/login';
 import { LoginEmailPage } from '../pages/login-email/login-email';
@@ -57,9 +56,9 @@ import { NewsCard } from '../components/news-card/news-card';
   declarations: [
     LoginEmailPage,
     LoginPage,
-    LogPage,
     MyApp,
     ProfilePage,
+    HomePage,
     SearchPage,
     UserDetailPage,
     SignupEmailPage,
@@ -84,9 +83,9 @@ import { NewsCard } from '../components/news-card/news-card';
   entryComponents: [
     LoginEmailPage,
     LoginPage,
-    LogPage,
     MyApp,
     ProfilePage,
+    HomePage,
     SearchPage,
     UserDetailPage,
     SignupEmailPage,

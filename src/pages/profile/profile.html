@@ -1,96 +1,36 @@
 <ion-header>
-  <ion-navbar color="secondary">
-    <ion-title></ion-title>
-    <ion-buttons left>
-      <a menuToggle icon-only>
-        <ion-icon name="menu"></ion-icon>
-      </a>
-    </ion-buttons>
-    <ion-buttons right>
-      <a icon-only (click)="openSearch()">
-        <ion-icon name="search"></ion-icon>
-      </a>
-    </ion-buttons>
+  <ion-navbar color="primary">
+    <ion-title>Update Profile</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding id="profile-content">
+<ion-content padding>
 
-  <span ion-fixed class="profile-fixed" style="height: 100%; width: 100%">
-  <!--
-    <ion-item>
-      Validators:
-      <div *ngFor="let val of user?.validators" class="profileItem">
-        <img class="profile-item" src="{{val.profilePicURL}}">
-      </div>
-    </ion-item>-->
+  <ion-row>
+    <ion-col>
 
-    <div class="profile-pic">
-      <div class="circle-crop"
-        [ngStyle]="{'background-image': 'url(' + profilePicURL + ')'}">
-        <!--<img src="{{profilePicURL}}">-->
-      </div>
-      <button ion-button (click)="openCamera()">Open camera</button>
-      <button ion-button (click)="selectFromGallery()">Select from gallery</button>
-
-       <div class="user-name">
-        {{user?.displayName}}
-      </div>
-
-      <div class="balance">
-        {{user?.balance}} css
-      </div>
-
-    </div>
-
-    <ion-item>Greeting: {{user?.greeting}}</ion-item>
-
-    <ion-item>
-      <ion-segment [(ngModel)]="view" color="primary">
-        <ion-segment-button class="offer-segment-button" value="network" (ionSelect)="selectNetwork()">
-          Network
-        </ion-segment-button>
-        <ion-segment-button class="offer-segment-button" value="wants" (ionSelect)="selectNews()">
-          News
-        </ion-segment-button>
-        <ion-segment-button class="offer-segment-button" value="validators" (ionSelect)="selectValidators()">
-          Validators
-        </ion-segment-button>
-      </ion-segment>
-    </ion-item>
-
-    <ion-item>
-      Total received : {{user?.totalReceived}} | Total sent: {{user?.totalSent}}
-    </ion-item>
-
-    <ion-content overflow-scroll="true" class="scrolling-list">
-      <span *ngIf="selectedView == 'network' && user?.trustedUsers">
-        <ion-item *ngFor="let networkUser of networkList" (click)="goToUserDetail(networkUser)">
-          <ion-avatar style="width:48px;height:48px" item-left>
-            <img src="{{networkUser.profilePicURL}}">
-          </ion-avatar>
-          <h2>{{networkUser.displayName}}</h2>
-          <p>{{networkUser.greeting}}</p>
+      <form (ngSubmit)="saveProfile()">
+        <!-- First Name -->
+        <ion-item>
+          <ion-label stacked>First Name</ion-label>
+          <ion-input type="text" [value]="user?.firstName" name="firstname"></ion-input>
         </ion-item>
-      </span>
 
-      <span *ngIf="selectedView == 'news'">
-        <ion-item *ngFor="let newsItem of newsService.allnewsItemsReversed$ | async" (click)="goToNewsItem(newsItem)">
-          <news-card [newsItem]="newsItem"></news-card>
+        <!-- Last Name -->
+        <ion-item>
+          <ion-label stacked>Last Name</ion-label>
+          <ion-input type="text" [value]="user?.lastName" name="lastname"></ion-input>
         </ion-item>
-      </span>
 
-      <span *ngIf="selectedView == 'validators'">
-        <ion-item *ngFor="let validator of validatorList" (click)="goToValidatorDetail(validator)">
-          <ion-avatar style="width:48px;height:48px" item-left>
-            <img src="{{validator?.profilePicURL}}">
-          </ion-avatar>
-          <h2>{{validator?.displayName}}</h2>
-          <p>{{validator?.description}}</p>
+        <!-- Greeting -->
+        <ion-item>
+          <ion-label stacked>Greeting</ion-label>
+          <ion-input type="text" [value]="user?.greeting" name="title"></ion-input>
         </ion-item>
-      </span>
-    </ion-content>
+        <button ion-button type="submit" block>Save</button>
+      </form>
 
-  </span>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

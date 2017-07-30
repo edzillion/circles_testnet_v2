@@ -11,10 +11,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../providers/user-service/user-service';
 
 import { LoginPage } from '../pages/login/login';
-import { ProfilePage } from '../pages/profile/profile';
+import { HomePage } from '../pages/home/home';
 
 import { WalletPage } from '../pages/wallet/wallet';
 import { SettingsPage } from '../pages/settings/settings';
+import { ProfilePage } from '../pages/profile/profile';
 
 @Component({
   templateUrl: 'app.html'
@@ -48,7 +49,7 @@ private initSub$: Subscription;
       this.userService.authState$.subscribe(
         auth => {
           if (auth)
-            this.nav.setRoot(ProfilePage, { nav: this.nav })
+            this.nav.setRoot(HomePage, { nav: this.nav })
           else {}
             //todo: error here
         },
@@ -65,6 +66,10 @@ private initSub$: Subscription;
 
   private goToSettings() : void {
     this.nav.push(SettingsPage);
+  }
+
+  private goToProfile() : void {
+    this.nav.push(ProfilePage);
   }
 
   private logout() : void {
