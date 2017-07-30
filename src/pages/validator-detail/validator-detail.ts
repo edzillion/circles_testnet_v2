@@ -19,6 +19,7 @@ export class ValidatorDetailPage {
   private validator: Validator;
   private userSub$: Subscription;
   private trusted: boolean = false;
+  private applied: boolean = false;
 
   private trustedUsers: Array<User>;
 
@@ -39,7 +40,7 @@ export class ValidatorDetailPage {
   }
 
   private affordTrust() {
-    //this.userService.addTrustedUser(this.viewUser.$key);
+    this.applied = true;
     this.validatorService.applyForValidation(this.user, this.validator);
   }
 
@@ -53,10 +54,17 @@ export class ValidatorDetailPage {
             for (var tUserKey of v.trustedUsers) {
               let u = this.userService.users[tUserKey];
               this.trustedUsers.push(u);
-              if (tUserKey == this.validator.$key)
+              if (tUserKey == this.validator.$key) {
                 this.trusted = true;
+              }
             }
           }
+        }
+        if (this.validator.appliedUsers) {
+          debugger;
+          if (this.validator.appliedUsers.find(u => u === this.user.$key))
+            this.applied = true;
+
         }
       }
     );

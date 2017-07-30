@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
@@ -17,10 +17,12 @@ export class ValidatorService {
   public validators: Array<Validator>;
   private userSub$: Subscription;
 
+
   constructor(private db: AngularFireDatabase, private userService: UserService) {
     this.validators$ = this.db.list('/validators/');
     this.validators$.subscribe(
       valis => {
+        debugger;
         this.validators = [];
         for (let v of valis) {
           this.validators[v.$key] = v;
@@ -60,13 +62,13 @@ export class ValidatorService {
     });
   }
 
-  public applyForValidation(validator, user) {
-    // let     if (this.validator.trustedUsers)
-    //       this.validator.trustedUsers.push(this.user.$key);
-    //     else
-    //       this.validator.trustedUsers = [this.user.$key];
-    //     this.trusted = true;
+  public applyForValidation(user, validator) {
+    if (!validator.appliedUsers)
+      validator.appliedUsers = [user.$key];
+    else
+      validator.appliedUsers.push(user.$key);
 
+    this.db.object('/validators/' + validator.$key).set(validator);
   }
 
 }
