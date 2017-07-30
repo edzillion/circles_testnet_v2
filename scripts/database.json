@@ -37,7 +37,7 @@
     }
   },
   "static": {
-    "groupRequirements": {
+    "authProviders": {
       "email": {
         "displayName": "Email",
         "icon": "mail",
@@ -58,11 +58,6 @@
         "icon": "brush",
         "message": "You need to add your full name."
       },
-      "noconfirm": {
-        "displayName": "No Confirmation Needed",
-        "icon": "locked",
-        "message": "You can join this group instantly."
-      },
       "passport": {
         "displayName": "Passport",
         "icon": "document",
@@ -72,11 +67,6 @@
         "displayName": "Profile Photo",
         "icon": "contact",
         "message": "You need to add a profile photo."
-      },
-      "review": {
-        "displayName": "Application Review Required",
-        "icon": "clipboard",
-        "message": "This group will review your application."
       },
       "soundcloud": {
         "displayName": "SoundCloud",
@@ -92,6 +82,7 @@
   },
   "users": {
     "MdqRnUKHd1hrULQb11LxdtfG3O13": {
+			"authProviders": ["email","facebook","github"],
       "createdAt": 1497078643926,
       "balance": 100,
       "firstName": "Quentin",

@@ -27,7 +27,39 @@
           <ion-label stacked>Greeting</ion-label>
           <ion-input type="text" [value]="user?.greeting" name="title"></ion-input>
         </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Profile Picture</ion-label>
+          <div class="circle-crop" [ngStyle]="{'background-image': 'url(' + profilePicURL + ')'}">
+            <!--<img src="{{profilePicURL}}">-->
+          </div>
+        </ion-item>
+        <button ion-button (click)="openCamera()">Open camera</button>
+        <button ion-button (click)="selectFromGallery()">Select from gallery</button>
+
+        <ion-item>
+          <ion-label stacked>Trade Message</ion-label>
+          <ion-input type="text" [value]="user?.tradeMessage" name="title"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Authentication Providers</ion-label>
+          <div item-content>
+            <span *ngFor="let provider of allProviders">
+              <button ion-button outline *ngIf="!userProviders[provider.$key]">
+                <ion-icon name="{{provider.icon}}"></ion-icon>
+                {{provider.displayName}}
+              </button>
+              <button ion-button *ngIf="userProviders[provider.$key]">
+                <ion-icon name="{{provider.icon}}"></ion-icon>
+                {{provider.displayName}}
+              </button>
+            </span>
+          </div>
+        </ion-item>
         <button ion-button type="submit" block>Save</button>
+
+
       </form>
 
     </ion-col>
