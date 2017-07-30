@@ -59,7 +59,7 @@ export class UserService implements OnDestroy {
     this.authSub$ = this.afAuth.authState.subscribe(
       auth => {
         if (auth) {
-
+          this.validatorService.initialise();
           let userObs = this.db.object('/users/' + auth.uid);
           let userSub = userObs.subscribe(
             user => {

@@ -13,14 +13,16 @@ export class ValidatorService {
   public validators: Array<Validator>;
 
   constructor(private db: AngularFireDatabase) {
+  }
 
+  public initialise() {
     this.validators$ = this.db.list('/validators/');
     this.validators = [];
     this.validators$.subscribe(
       valis => {
-        for (let v of valis)
+        for (let v of valis) {
           this.validators[v.$key] = v;
-
+        }
       }
     );
   }
