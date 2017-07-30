@@ -51,6 +51,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { environment } from '../environments/environment';
 import { Keyobject } from '../pipes/key-object/key-object';
 import { ValidatorService } from '../providers/validator-service/validator-service';
+import { NewsCard } from '../components/news-card/news-card';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ValidatorService } from '../providers/validator-service/validator-servi
     WalletPage,
     ValidatorDetailPage,
     Keyobject,
-    SettingsPage
+    SettingsPage,
+    NewsCard
   ],
   imports: [
     AngularFireAuthModule,

@@ -119,22 +119,6 @@ export class TransactionService implements OnDestroy {
 
   }
 
-  public createPurchaseIntent(sellerUserId:string, offer: Offer): Promise<any> {
-    let p = new Promise( (resolve, reject) => {
-      this.userService.keyToUser$(sellerUserId).take(1).subscribe( (sellerUser) => {
-        if (this.transfer(sellerUser, offer.price)) {
-          this.logTransfer(sellerUser, offer, 'purchase');
-          this.newsService.addPurchase(offer);
-          resolve(true);
-        }
-        else
-          reject(new Error("Purchase Failed"));
-      });
-    });
-
-    return p;
-  }
-
   public createTransactionIntent(toUserId:string, amount:number, message?:string): Promise<any> {
     let p = new Promise( (resolve, reject) => {
       this.userService.keyToUser$(toUserId).take(1).subscribe( (toUser) => {

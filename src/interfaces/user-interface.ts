@@ -14,7 +14,7 @@ export interface User {
   firstName: string;
   greeting: string;
   lastName: string;
-  log: Array<NewsItem>;
+  news: Array<NewsItem>;
   offers: Array<Offer>;
   profilePicURL: string;
   pushID: string;

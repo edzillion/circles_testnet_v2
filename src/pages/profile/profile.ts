@@ -65,6 +65,7 @@ export class ProfilePage {
 
   private selectHistory(): void {
     this.selectedView = 'history';
+  //this.newsService.allnewsItemsReversed$.subscribe( ns => {debugger});
   }
 
   private selectValidators(): void {

@@ -13,6 +13,7 @@ import 'rxjs/add/operator/map';
 import { User } from '../../interfaces/user-interface';
 import { Coin } from '../../interfaces/coin-interface';
 import { Validator } from '../../interfaces/validator-interface';
+import { NewsItem } from '../../interfaces/news-item-interface';
 
 import { ValidatorService } from '../validator-service/validator-service';
 
@@ -66,6 +67,11 @@ export class UserService implements OnDestroy {
               if (!user.$exists()) {
                 //user doesn't exist, create user entry on db
                 this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
+                this.user.news = [{
+                  resolved: true,
+                  timestamp: this.user.createdAt,
+                  type: 'createAccount'
+                } as NewsItem];
                 this.user.authProviders = ["email"];
                 this.setInitialWallet(auth.uid);
                 this.user.totalReceived = 0;
@@ -82,6 +88,7 @@ export class UserService implements OnDestroy {
                 this.userSub$ = this.userFirebaseObj$.subscribe(
                   user => {
                     this.user = user;
+                    this.setBalance();
                     if (this.user.validators) {
                       this.validatorService.setUserValidators(this.user);
                     }

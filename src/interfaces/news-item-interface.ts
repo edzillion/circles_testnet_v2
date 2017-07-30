@@ -5,4 +5,6 @@ export interface NewsItem {
   title: string;
   to: string;
   type: string;
+  resolved: boolean;
+  decision: boolean;
 }
