@@ -104,7 +104,7 @@ export class NewsService implements OnDestroy {
     };
     this.dbNewsItems$.push(newsItem);
 
-    this.db.list('/users/'+toUser.$key+'/log/').push(newsItem);
+    this.db.list('/users/'+toUser.$key+'/news/').push(newsItem);
 
     //send push notification to other user
     //msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;
@@ -119,7 +119,7 @@ export class NewsService implements OnDestroy {
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      title: validator.displayName,
+      from: validator.$key,
       type: 'validatorRequest'
     };
     this.dbNewsItems$.push(newsItem);
@@ -132,21 +132,34 @@ export class NewsService implements OnDestroy {
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      title: user.displayName,
+      from: user.$key,
       type: 'trustRequest'
     };
     this.dbNewsItems$.push(newsItem);
   }
 
-  public addTrustUser(user: User):void {
+  public addTrust(user: User):void {
     //this.notificationsService.create('Join Success','','success');
-    let msg = 'You have trusted: ' +user.displayName;
+    let msg = 'You have started trusting: ' +user.displayName;
     this.notificationsService.create('Join', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      title: user.displayName,
+      to: user.$key,
       type: 'trustUser'
+    };
+    this.dbNewsItems$.push(newsItem);
+  }
+
+  public revokeTrust(userOrVali: User | Validator):void {
+    //this.notificationsService.create('Join Success','','success');
+    let msg = 'You have stopped trusting: ' +userOrVali.displayName;
+    this.notificationsService.create('Join', msg, 'info');
+
+    let newsItem = {
+      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+      to: userOrVali.$key,
+      type: 'revokeUser'
     };
     this.dbNewsItems$.push(newsItem);
   }

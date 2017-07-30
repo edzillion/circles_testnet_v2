@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { UserService } from '../../providers/user-service/user-service';
+import { NewsService } from '../../providers/news-service/news-service';
 import { User } from '../../interfaces/user-interface';
 
 import { Validator } from '../../interfaces/validator-interface';
@@ -27,6 +28,7 @@ export class ValidatorDetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private userService: UserService,
+    private newsService: NewsService,
     private validatorService: ValidatorService
   ) {
     this.validator = navParams.data;
@@ -37,10 +39,12 @@ export class ValidatorDetailPage {
       user => user !== this.user.$key
     );
     this.trusted = false;
+    this.newsService.revokeTrust(this.validator);
   }
 
   private affordTrust() {
     this.applied = true;
+    this.newsService.addValidatorTrustRequest(this.validator);
     this.validatorService.applyForValidation(this.user, this.validator);
   }
 
@@ -48,10 +52,11 @@ export class ValidatorDetailPage {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
+        this.trustedUsers = [];
         if (this.user.validators) {
-          for (var i in this.user.validators) {
-            let v = this.user.validators[i];
-            for (var tUserKey of v.trustedUsers) {
+          for (let vKey of this.user.validators) {
+            let v = this.validatorService.validators[vKey] as Validator;
+            for (let tUserKey of v.trustedUsers) {
               let u = this.userService.users[tUserKey];
               this.trustedUsers.push(u);
               if (tUserKey == this.validator.$key) {

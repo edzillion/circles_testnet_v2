@@ -60,7 +60,7 @@ export class NewsCard implements OnDestroy, OnInit {
       this.message = `You have requested validation from: ${this.newsItem.from}`;
     }
     else if (this.newsItem.type == 'trustRequest') {
-      this.message = `You have requested validation from: ${this.newsItem.from}`;
+      this.message = `You have requested trust from: ${this.newsItem.from}`;
     }
     else if (this.newsItem.type == 'trustUser') {
       this.message = `You have afforded trust to: ${this.newsItem.to}`;

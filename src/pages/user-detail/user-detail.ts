@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { UserService } from '../../providers/user-service/user-service';
+import { NewsService } from '../../providers/news-service/news-service';
 import { TransactionService } from '../../providers/transaction-service/transaction-service';
 import { User } from '../../interfaces/user-interface';
 
@@ -28,6 +29,7 @@ export class UserDetailPage {
     private navCtrl: NavController,
     public navParams: NavParams,
     private userService: UserService,
+    private newsService: NewsService,
     private transactionService: TransactionService
   ) {
     this.viewUser = navParams.data;
@@ -36,10 +38,13 @@ export class UserDetailPage {
   }
 
   private revokeTrust() {
+    this.newsService.revokeTrust(this.viewUser);
     this.userService.revokeTrust(this.viewUser.$key);
   }
 
   private affordTrust() {
+    this.newsService.addTrust(this.viewUser);
+    this.newsService.addTrustRequest(this.viewUser);
     this.userService.applyForTrust(this.viewUser.$key);
   }
 

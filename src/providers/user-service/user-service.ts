@@ -270,7 +270,7 @@ export class UserService implements OnDestroy {
   }
 
   public applyForTrust(userKey) {
-    this.addTrustedUser(userKey);
+    this.addTrustedUser(userKey);    
   }
 
   public revokeTrust(userKey) {

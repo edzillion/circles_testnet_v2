@@ -43,9 +43,9 @@ validator
           <ion-icon name="people" item-left></ion-icon>
           <ion-grid>
         		<ion-row>
-        			<ion-col *ngFor="let vali of trustedUsers | async">
+        			<ion-col *ngFor="let u of trustedUsers">
                 <ion-avatar style="width:48px;height:48px">
-                  <img src="{{vali.profilePicURL}}">
+                  <img src="{{u.profilePicURL}}">
                 </ion-avatar>
               </ion-col>
             </ion-row>

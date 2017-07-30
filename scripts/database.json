@@ -159,6 +159,28 @@
           "title": "JackCoin"
         }
       },
+      "news" : {
+        "0": {
+          "timestamp": 1496781495492,
+          "type": "createAccount"
+        },
+        "-KqKKBwfUwlzEqzT39cx" : {
+          "amount" : "22",
+          "from" : "yh2aAsNw2dZaLlTQpx2oFqDzVJx1",
+          "message" : "",
+          "timestamp" : 1501448949697,
+          "to" : "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+          "type" : "transaction"
+        },
+        "-KqKKBwcdok2DXcUZF19" : {
+          "amount" : "67",
+          "from" : "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+          "message" : "",
+          "timestamp" : 1501448949197,
+          "to" : "SKMdyuZc5cRdje6GHiXzcEL7wQs1",
+          "type" : "transaction"
+        }
+      },
       "weeklyReceived": 11,
       "weeklySent": 5,
       "trustedUsers": [

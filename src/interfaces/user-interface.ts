@@ -21,7 +21,7 @@ export interface User {
   totalSent: number;
   tradeMessage?:string;
   trustedUsers: Array<any>;
-  validators: Array<Validator>;
+  validators: Array<any>;
   wallet: {};
   weeklyReceived: number;
   weeklySent: number;
