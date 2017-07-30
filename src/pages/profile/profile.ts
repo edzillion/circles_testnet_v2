@@ -34,7 +34,7 @@ export class ProfilePage {
   private view: string = 'network';
 
   private networkList: Array<any> = [];
-  private historyList: Array<any> = [];
+  private newsList: Array<any> = [];
   private validatorList: Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private notificationsService: NotificationsService,
@@ -63,8 +63,8 @@ export class ProfilePage {
     this.selectedView = 'network';
   }
 
-  private selectHistory(): void {
-    this.selectedView = 'history';
+  private selectNews(): void {
+    this.selectedView = 'news';
   //this.newsService.allnewsItemsReversed$.subscribe( ns => {debugger});
   }
 
@@ -119,11 +119,15 @@ export class ProfilePage {
   ionViewDidLoad() {
     this.userSub$ = this.userService.initUserSubject$.subscribe(
       user => {
+        this.networkList = [];
+        this.validatorList = [];
         this.user = user;
         if (user.trustedUsers) {
           user.trustedUsers.map(
             key => {
-              this.userService.keyToUser$(key).subscribe(trustedUser => { this.networkList.push(trustedUser) })
+              this.userService.keyToUser$(key).subscribe(
+                trustedUser => { this.networkList.push(trustedUser) }
+              )
             }
           );
         }

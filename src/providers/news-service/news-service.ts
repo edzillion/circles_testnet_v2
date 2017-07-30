@@ -87,19 +87,24 @@ export class NewsService implements OnDestroy {
     return this.newsItemsReversed$;
   }
 
-  public addTransaction(txItem: any):void {
+  public addTransaction(toUser:User, amount:number, message?:string):void {
     //this will only be called for sending to someone else
-    this.notificationsService.create('Send Success','','success');
-    let msg = 'Sent ' + txItem.amount + ' Circles to ' + txItem.toUser.displayName;
-    this.notificationsService.create('Transaction', msg, 'info');
+
+    // this.notificationsService.create('Send Success','','success');
+    // let msg = 'Sent ' + txItem.amount + ' Circles to ' + txItem.toUser.displayName;
+    // this.notificationsService.create('Transaction', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      amount: txItem.amount,
-      to: txItem.to,
-      type: 'transaction'
+      from: this.user.$key,
+      amount: amount,
+      to: toUser.$key,
+      type: 'transaction',
+      message: message || ''
     };
     this.dbNewsItems$.push(newsItem);
+
+    this.db.list('/users/'+toUser.$key+'/log/').push(newsItem);
 
     //send push notification to other user
     //msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;

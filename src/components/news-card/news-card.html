@@ -3,7 +3,7 @@
 </ion-avatar>
 <h2>{{title}}</h2>
 <p>{{message}}</p>
-<span *ngIf="!newsItem.resolved">
+<span *ngIf="newsItem.unResolved">
   <button ion-button item-right color="danger">Reject</button>
   <button ion-button item-right color="secondary">Accept</button>
 </span>

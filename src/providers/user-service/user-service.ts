@@ -68,7 +68,6 @@ export class UserService implements OnDestroy {
                 //user doesn't exist, create user entry on db
                 this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
                 this.user.news = [{
-                  resolved: true,
                   timestamp: this.user.createdAt,
                   type: 'createAccount'
                 } as NewsItem];
@@ -76,6 +75,7 @@ export class UserService implements OnDestroy {
                 this.setInitialWallet(auth.uid);
                 this.user.totalReceived = 0;
                 this.user.totalSent = 0;
+                this.user.trustedUsers = [auth.uid];
                 this.user.weeklyReceived = 0;
                 this.user.weeklySent = 0;
                 userObs.set(this.user);

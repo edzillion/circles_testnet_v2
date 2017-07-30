@@ -101,10 +101,9 @@
       "news": {
         "0": {
           "timestamp": 1496781495492,
-          "type": "createProfile",
-					"resolved": true
+          "type": "createAccount"
         }
-      },      
+      },
       "totalReceived": 845,
       "totalSent": 233,
       "validators": [
@@ -141,6 +140,7 @@
       "weeklyReceived": 11,
       "weeklySent": 5,
       "trustedUsers": [
+				"MdqRnUKHd1hrULQb11LxdtfG3O13",
         "jSu2I20VwcgesCvTCsAb2wsTqNG2",
         "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
         "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
@@ -171,6 +171,7 @@
       "weeklyReceived": 11,
       "weeklySent": 5,
       "trustedUsers": [
+				"jSu2I20VwcgesCvTCsAb2wsTqNG2",
         "MdqRnUKHd1hrULQb11LxdtfG3O13",
         "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
         "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
@@ -188,7 +189,7 @@
       "news": {
         "0": {
           "timestamp": 1496781495492,
-          "type": "createProfile"
+          "type": "createAccount"
         }
       },
       "offers": [{
@@ -228,7 +229,7 @@
       "greeting": "Textile & Craft Wonderworker",
       "news": [{
         "timestamp": 1496952402440,
-        "type": "createProfile"
+        "type": "createAccount"
       }],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F7H0ByozNeBgwy2ZdQjWnTk2ZbCN2?alt=media&token=bb7fd08b-3a73-4b4e-a082-535e00c59580",
       "type": "individual"
@@ -243,7 +244,7 @@
       "greeting": "Don't just pay it forward, pay it Circles!",
       "news": [{
         "timestamp": 1496952177281,
-        "type": "createProfile"
+        "type": "createAccount"
       }],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef",
       "type": "individual"
@@ -257,7 +258,7 @@
       "lastName": "Blacksheep",
       "news": [{
         "timestamp": 1496952304626,
-        "type": "createProfile"
+        "type": "createAccount"
       }],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951",
       "type": "individual"
@@ -273,7 +274,7 @@
       "news": {
         "0": {
           "timestamp": 1497089064339,
-          "type": "createProfile"
+          "type": "createAccount"
         },
         "-KmGSw9A4o7RQzk1LzMh": {
           "timestamp": 1497089164875,
@@ -294,7 +295,7 @@
       "greeting": "Hallo",
       "news": [{
         "timestamp": 1497078641926,
-        "type": "createProfile"
+        "type": "createAccount"
       }],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FEa793jse7XNcSrMMmO8GvRPLlbU2?alt=media&token=9fec5f7a-3d2e-448c-8e2d-938eff38f50a",
       "type": "individual"
@@ -309,7 +310,7 @@
       "greeting": "Builder for hire",
       "news": [{
         "timestamp": 1497089879370,
-        "type": "createProfile"
+        "type": "createAccount"
       }],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FZSbGLxzQwgfYMQ5Xy98dyqlL8JA3?alt=media&token=ce6af920-2e35-4088-b1ba-6cd341c923f6",
       "type": "individual"
@@ -324,7 +325,7 @@
       "log": {
         "0": {
           "timestamp": 1497126941460,
-          "type": "createProfile"
+          "type": "createAccount"
         },
         "-KmIiN-OzdTMb5IRvpA0": {
           "timestamp": 1497127026875,

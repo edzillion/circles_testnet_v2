@@ -23,14 +23,9 @@ export class NewsCard implements OnDestroy, OnInit {
 
   private toast: Toast;
 
-  constructor(private toastCtrl: ToastController, private userService: UserService) {
-
-  }
-
-
+  constructor(private toastCtrl: ToastController, private userService: UserService) { }
 
   ngOnInit() {
-
     this.userSub$ = this.userService.user$.subscribe(
       user => this.user = user,
       error => {
@@ -49,7 +44,7 @@ export class NewsCard implements OnDestroy, OnInit {
       this.title = "Account Creation";
       this.message = "Your Circles account was created!";
     }
-    else if (this.newsItem.type == 'transaction' && !this.newsItem.from) {
+    else if (this.newsItem.type == 'transaction' && this.newsItem.from == this.user.$key) {
       this.title = "Sent Circles";
       this.userService.keyToUserName$(this.newsItem.to).subscribe(userName => {
         this.message = `You sent ${this.newsItem.amount} Circles to ${userName}`;
