@@ -25543,7 +25543,7 @@ button {
 }
 
 page-home #home-content {
-  background: linear-gradient(170deg, #4AA7EF 10%, #4788C8 51%, white 51%);
+  background: linear-gradient(170deg, #4AA7EF 10%, #4788C8 378px, white 300px);
   /* Standard syntax */
   height: 100%;
   pointer-events: visible;
@@ -25612,7 +25612,7 @@ page-home #balance-detail {
   background-color: white;
   color: #333;
   padding: 10px 0;
-  margin: 10px 60px;
+  margin: 10px 50px;
   border-radius: 10px;
   -webkit-box-shadow: 3px 3px 25px rgba(136, 136, 136, 0.5);
   box-shadow: 3px 3px 25px rgba(136, 136, 136, 0.5);
