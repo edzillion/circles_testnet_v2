@@ -26,7 +26,6 @@ export class DisclaimerPage {
 
   private agree() {
     let u = this.userService.createUserRecord(this.auth);
-    debugger;
     this.userObssever.set(u);
   }
 

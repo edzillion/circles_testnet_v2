@@ -48,7 +48,6 @@ export class ValidatorDetailPage {
       user => {
         this.user = user;
         if (this.user.validators) {
-          debugger;
           for (var i in this.user.validators) {
             let v = this.user.validators[i];
             for (var tUserKey of v.trustedUsers) {

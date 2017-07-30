@@ -65,7 +65,6 @@ export class UserService implements OnDestroy {
         this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key);
         this.userSub$ = this.userFirebaseObj$.subscribe(
           user => {
-            debugger;
             this.user = user;
             this.setBalance();
             if (this.user.validators) {
