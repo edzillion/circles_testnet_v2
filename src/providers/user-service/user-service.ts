@@ -212,14 +212,20 @@ export class UserService implements OnDestroy {
     this.setBalance();
   }
 
-
-
   public setBalance():void {
     let total = 0;
     for (let i in this.user.wallet) {
       total += this.user.wallet[i].amount;
     }
     this.user.balance = total;
+  }
+
+  public applyForTrust(userKey) {
+    this.addTrustedUser(userKey);
+  }
+
+  public revokeTrust(userKey) {
+    this.removeTrustedUser(userKey);
   }
 
   public signOut() {

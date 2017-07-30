@@ -34,4 +34,13 @@ export class ValidatorService {
     }
   }
 
+  public applyForValidation(validator,user) {
+    // let     if (this.validator.trustedUsers)
+    //       this.validator.trustedUsers.push(this.user.$key);
+    //     else
+    //       this.validator.trustedUsers = [this.user.$key];
+    //     this.trusted = true;
+
+  }
+
 }
