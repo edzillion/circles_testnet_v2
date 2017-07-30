@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
 import { NewsService } from '../../providers/news-service/news-service';
+import { ValidatorService } from '../../providers/validator-service/validator-service';
 import { User } from '../../interfaces/user-interface';
 
 import { SearchPage } from '../search/search';
@@ -43,7 +44,8 @@ export class HomePage {
     private ds: DomSanitizer,
     private toastCtrl: ToastController,
     private userService: UserService,
-    private newsService: NewsService
+    private newsService: NewsService,
+    private validatorService: ValidatorService
   ) { }
 
   private openSearch(): void {
@@ -134,9 +136,14 @@ export class HomePage {
           );
         }
         if (this.user.validators) {
-          for (let i in this.user.validators) {
-            this.validatorList.push(this.user.validators[i] );
-          }
+          this.validatorService.validators$.subscribe(
+            valis => {
+              for (let vKey of this.user.validators) {
+                let v = valis[vKey];
+                this.validatorList.push(v);
+              }
+            }
+          );
         }
       }
     );

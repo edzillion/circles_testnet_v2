@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
+import { NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Subscription } from 'rxjs/Subscription';
-
-import { UserService } from '../../providers/user-service/user-service';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Observable } from 'rxjs/Observable';
 import { User } from '../../interfaces/user-interface';
 
 import { Validator } from '../../interfaces/validator-interface'
@@ -13,39 +13,44 @@ import { Validator } from '../../interfaces/validator-interface'
 @Injectable()
 export class ValidatorService {
 
-  public validators$: FirebaseListObservable<Validator[]>;
+  public validatorsFirebaseObj$: FirebaseListObservable<Validator[]>;
   public validators: Array<Validator>;
-  private userSub$: Subscription;
+  public initValSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
+  public validators$: Observable<Validator[]>;
 
+  constructor(private db: AngularFireDatabase) {
 
-  constructor(private db: AngularFireDatabase, private userService: UserService) {
-    this.validators$ = this.db.list('/validators/');
-    this.validators$.subscribe(
+    this.validators$ = this.initValSubject$.asObservable();
+
+    this.validatorsFirebaseObj$ = this.db.list('/validators/');
+    this.validatorsFirebaseObj$.subscribe(
       valis => {
+
         this.validators = [];
         for (let v of valis) {
           this.validators[v.$key] = v;
         }
+        this.initValSubject$.next(this.validators);
       }
     );
 
-    this.userSub$ = this.userService.user$.subscribe(
-      user => {
-        if (user.validators) {
-          this.setUserValidators(user);
-        }
-      }
-    );
+    // this.userSub$ = this.userService.user$.subscribe(
+    //   user => {
+    //     if (user.validators) {
+    //       this.setUserValidators(user);
+    //     }
+    //   }
+    // );
   }
 
-  public setUserValidators(user) {
-    let vals = [...user.validators];
-    user.validators = [];
-    for (let i in vals) {
-      let key = vals[i];
-      user.validators[key] = this.validators[key];
-    }
-  }
+  // public setUserValidators(user) {
+  //   let vals = [...user.validators];
+  //   user.validators = [];
+  //   for (let i in vals) {
+  //     let key = vals[i];
+  //     user.validators[key] = this.validators[key];
+  //   }
+  // }
 
   public filterValidators$(searchTerm: string) {
     //if (!searchTerm)

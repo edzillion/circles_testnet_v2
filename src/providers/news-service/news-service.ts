@@ -133,9 +133,12 @@ export class NewsService implements OnDestroy {
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
       from: user.$key,
+      to: this.user.$key,
       type: 'trustRequest'
-    };
+    } as NewsItem;
     this.dbNewsItems$.push(newsItem);
+    newsItem.unResolved = true;
+    this.db.list('/users/'+user.$key+'/news/').push(newsItem);
   }
 
   public addTrust(user: User):void {
