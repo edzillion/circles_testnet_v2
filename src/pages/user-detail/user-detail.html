@@ -14,25 +14,35 @@
     </ion-card-title>
     <ion-card-content style="padding: 0;">
        <img src="{{profilePicURL}}">
-       <span *ngIf="trustTo">
-         <div class="horizontal-center-wrapper">
-            <ion-avatar style="width:85px;" item-center>
+       <span>
+         <div class="center-wrapper" *ngIf="(trustTo&&!trustFrom)||validatorTrust">
+           <div class="center-item"><span class="arrow">↑</span></div>
+           <div class="center-text" *ngIf="!validatorTrust">You trust</div>
+           <div class="center-text" *ngIf="validatorTrust">Trusts them</div>
+         </div>
+
+         <div class="center-wrapper" *ngIf="validatorTrust">
+           <ion-avatar class="center-item" style="width:85px;" item-center>
+             <img src="{{validatedBy.profilePicURL}}">
+            </ion-avatar>
+         </div>
+
+         <div class="center-wrapper" *ngIf="(trustFrom&&!trustTo)||validatorTrust">
+           <div class="center-item"><span class="arrow">↓</span></div>
+           <div class="center-text">Trusts you</div>
+         </div>
+
+         <div class="center-wrapper" *ngIf="(trustFrom&&trustTo)&&!validatorTrust">
+           <div class="center-item"><span class="arrow">↕</span></div>
+           <div class="center-text">Trust each other</div>
+         </div> 
+
+         <div class="center-wrapper" *ngIf="trustTo||trustFrom||validatorTrust">
+            <ion-avatar class="center-item" style="width:85px;" item-center>
               <img src="{{user.profilePicURL || genericProfilePicURL}}">
            </ion-avatar>
          </div>
        </span>
-       <span *ngIf="validatorTrust">
-          <div class="horizontal-center-wrapper">
-            <ion-avatar style="width:85px;" item-center>
-               <img src="{{validatedBy.profilePicURL}}">
-             </ion-avatar>
-             <ion-avatar style="width:85px;" item-center>
-               <img src="{{user.profilePicURL}}">
-             </ion-avatar>
-          </div>
-
-
-      </span>
        <ion-list no-lines>
          <ion-item>
            <ion-icon name="mail" item-left></ion-icon>
