@@ -12,9 +12,9 @@
       <h1>{{viewUser.displayName}}</h1>
       <h2>{{viewUser.greeting}}</h2>
     </ion-card-title>
-    <ion-card-content style="padding: 0;"> 
+    <ion-card-content style="padding: 0;">
        <img src="{{profilePicURL}}">
-       <span *ngIf="directTrust">
+       <span *ngIf="trustTo">
          <div class="horizontal-center-wrapper">
             <ion-avatar style="width:85px;" item-center>
               <img src="{{user.profilePicURL || genericProfilePicURL}}">
@@ -30,8 +30,8 @@
                <img src="{{user.profilePicURL}}">
              </ion-avatar>
           </div>
-         
-         
+
+
       </span>
        <ion-list no-lines>
          <ion-item>

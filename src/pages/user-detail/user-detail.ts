@@ -21,7 +21,8 @@ export class UserDetailPage {
   private user: User = {} as User;
   private viewUser: User;
   private userSub$: Subscription;
-  private directTrust: boolean = false;
+  private trustTo: boolean = false;
+  private trustFrom: boolean = false;
   private validatorTrust: boolean = false;
   private trusted: boolean = false;
   private validatedBy: Validator = {} as Validator;
@@ -65,8 +66,16 @@ export class UserDetailPage {
             return tUserKey == this.viewUser.$key;
           });
           if (dTrust) {
-            this.directTrust = true;
+            this.trustTo = true;
             this.trusted = true;
+          }
+        }
+        if (this.viewUser.trustedUsers) {
+          let dTrust = this.viewUser.trustedUsers.some(tUserKey => {
+            return tUserKey == this.user.$key;
+          });
+          if (dTrust) {
+            this.trustFrom = true;
           }
         }
         else if (this.user.validators) {

@@ -58,9 +58,8 @@ export class ValidatorService {
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
     // return this.validators$.map((valis) => {
     //   let l = this.validatorArray;
-    debugger;
     return this.validatorArray.filter(vali => {
-      debugger;
+
       if (!vali.displayName || vali.$key == 'undefined')
         return false;
       let s = searchTerm.toLowerCase();
