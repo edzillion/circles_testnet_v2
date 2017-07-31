@@ -7,9 +7,9 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  <ion-card style="box-shadow: 0 0;overflow:visible;">
      <img src="{{viewUser.profilePicURL}}">
-     <ion-card-content>
+     <ion-card-content style="padding: 0;">
       <ion-card-title>
        <h1>{{viewUser.displayName}}</h1>
        <p *ngIf="directTrust == true">Connection: {{user.displayName}} - {{viewUser.displayName}}
@@ -29,7 +29,7 @@
 
        </ion-list>
 
-       <ion-card>
+       <ion-card style="margin:12px 0;width:100%">
         <ion-card-header>
           Trade Message
         </ion-card-header>
@@ -50,7 +50,7 @@
          </ion-icon>
       </button>
 
-      <button ion-button full *ngIf="trusted" (click)="revokeTrust()">
+      <button ion-button full *ngIf="trusted" (click)="revokeTrust()" icon-end>
         Revoke Trust
         <ion-icon name="unlock" color="green" item-right>
         </ion-icon>
