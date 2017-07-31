@@ -251,7 +251,7 @@ export class UserService implements OnDestroy {
     let b = this.weeklyGrant - ((this.weeklyGrant / 7) * (diff));
     this.myCoins.amount = Math.round(b);
     this.myCoins.owner = userKey;
-    this.myCoins.title = (this.user.firstName) ? this.user.firstName + 'Coin' : 'CircleCoin';
+    this.myCoins.title = (this.user.firstName) ? this.user.firstName + ' Coin' : 'Circle Coin';
     //my coins are always the highest priority
     this.myCoins.priority = 0;
     this.allCoins = {
@@ -270,7 +270,7 @@ export class UserService implements OnDestroy {
   }
 
   public applyForTrust(userKey) {
-    this.addTrustedUser(userKey);    
+    this.addTrustedUser(userKey);
   }
 
   public revokeTrust(userKey) {
@@ -279,6 +279,11 @@ export class UserService implements OnDestroy {
 
   public signOut() {
     return this.afAuth.auth.signOut();
+  }
+
+  public clearUser() {
+    let blankUser = {} as User;
+    this.userSubject$.next(blankUser);
   }
 
   ngOnDestroy() {

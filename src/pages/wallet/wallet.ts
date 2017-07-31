@@ -83,7 +83,7 @@ export class WalletPage {
         this.user = user;
         this.displayWallet = [];
         for (let i in this.user.wallet) {
-          let w = this.user.wallet[i];
+          let w = Object.assign({},this.user.wallet[i]);
           this.userService.keyToUserName$(w.owner).subscribe(
             displayName => {
               w.owner = displayName;

@@ -63,8 +63,10 @@ private initSub$: Subscription;
               }
             );
           }
-          else {}
-            //todo: error here
+          else {
+            this.userService.clearUser();
+          }
+
         },
         error => console.error(error),
         () => { }

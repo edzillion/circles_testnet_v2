@@ -25,12 +25,13 @@ export class ProfilePage {
 
   private toast: Toast;
   private base64ImageData: string;
-  private profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
-  private user: User;
+  public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+
   private userSub$: Subscription;
   private providers$: Subscription;
   private allProviders: Array<any>;
   private userProviders: Array<boolean>;
+  private user: User = {} as User;
 
   constructor(
     private camera: Camera,
@@ -50,8 +51,6 @@ export class ProfilePage {
           provs => {
             this.allProviders = [];
             this.userProviders = [];
-            if (!user.authProviders)
-              return;
             for (let p of user.authProviders) {
               this.userProviders[p] = true;
             }
@@ -112,6 +111,8 @@ export class ProfilePage {
   }
 
   saveProfile() {
+    debugger;
+    this.db.object('/users/'+this.user.$key).set(this.user);
   }
 
 }

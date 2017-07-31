@@ -233,7 +233,7 @@ let UserService = class UserService {
         let b = this.weeklyGrant - ((this.weeklyGrant / 7) * (diff));
         this.myCoins.amount = Math.round(b);
         this.myCoins.owner = userKey;
-        this.myCoins.title = (this.user.firstName) ? this.user.firstName + 'Coin' : 'CircleCoin';
+        this.myCoins.title = (this.user.firstName) ? this.user.firstName + ' Coin' : 'Circle Coin';
         //my coins are always the highest priority
         this.myCoins.priority = 0;
         this.allCoins = {
@@ -257,6 +257,10 @@ let UserService = class UserService {
     }
     signOut() {
         return this.afAuth.auth.signOut();
+    }
+    clearUser() {
+        let blankUser = {};
+        this.userSubject$.next(blankUser);
     }
     ngOnDestroy() {
         this.authSub$.unsubscribe();
@@ -482,7 +486,7 @@ let UserDetailPage = class UserDetailPage {
 };
 UserDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-user-detail',template:/*ion-inline-start:"D:\dev\circles_testnet_v2\src\pages\user-detail\user-detail.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title></ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-card>\n\n     <img src="{{viewUser.profilePicURL}}">\n\n     <ion-card-content>\n\n      <ion-card-title>\n\n       <h1>{{viewUser.displayName}}</h1>\n\n       <p *ngIf="directTrust == true">Connection: {{user.displayName}} - {{viewUser.displayName}}\n\n       <p *ngIf="validatorTrust == true">Connection: {{user.displayName}} - {{this.validatedBy.displayName}} - {{viewUser.displayName}} </p>\n\n\n\n      </ion-card-title>\n\n       <ion-list no-lines>\n\n         <ion-item>\n\n           <ion-icon name="mail" item-left></ion-icon>\n\n           <p>{{viewUser.email}}</p>\n\n         </ion-item>\n\n\n\n         <ion-item>\n\n         <ion-icon name="phone-portrait" item-left></ion-icon>\n\n         + 49 1023893933\n\n         </ion-item>\n\n\n\n       </ion-list>\n\n\n\n      <button ion-button full *ngIf="trusted"  (click)="sendCircles()" icon-end>\n\n        Send Circles\n\n        <ion-icon name="arrow-dropright-circle">\n\n        </ion-icon>\n\n      </button>\n\n\n\n      <button ion-button full *ngIf="!trusted" (click)="affordTrust()" icon-end>\n\n          Afford Trust\n\n         <ion-icon name="lock" color="red">\n\n         </ion-icon>\n\n      </button>\n\n\n\n      <ion-item *ngIf="trusted" (click)="revokeTrust()">\n\n        Revoke Trust\n\n        <ion-icon name="unlock" color="green" item-right>\n\n        </ion-icon>\n\n      </ion-item>\n\n\n\n     </ion-card-content>\n\n\n\n   </ion-card>\n\n\n\n\n\n\n\n</ion-content>\n\n\n\n\n\n'/*ion-inline-end:"D:\dev\circles_testnet_v2\src\pages\user-detail\user-detail.html"*/,
+        selector: 'page-user-detail',template:/*ion-inline-start:"D:\dev\circles_testnet_v2\src\pages\user-detail\user-detail.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title></ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-card>\n\n     <img src="{{viewUser.profilePicURL}}">\n\n     <ion-card-content>\n\n      <ion-card-title>\n\n       <h1>{{viewUser.displayName}}</h1>\n\n       <p *ngIf="directTrust == true">Connection: {{user.displayName}} - {{viewUser.displayName}}\n\n       <p *ngIf="validatorTrust == true">Connection: {{user.displayName}} - {{this.validatedBy.displayName}} - {{viewUser.displayName}} </p>\n\n       <h2>{{viewUser.greeting}}</h2>\n\n      </ion-card-title>\n\n       <ion-list no-lines>\n\n         <ion-item>\n\n           <ion-icon name="mail" item-left></ion-icon>\n\n           <p>{{viewUser.email}}</p>\n\n         </ion-item>\n\n\n\n         <ion-item>\n\n         <ion-icon name="phone-portrait" item-left></ion-icon>\n\n         + 49 1023893933\n\n         </ion-item>\n\n\n\n       </ion-list>\n\n\n\n       <ion-card>\n\n        <ion-card-header>\n\n          Trade Message\n\n        </ion-card-header>\n\n        <ion-card-content>\n\n          {{viewUser.tradeMessage}}\n\n        </ion-card-content>\n\n      </ion-card>\n\n\n\n      <button ion-button full *ngIf="trusted"  (click)="sendCircles()" icon-end>\n\n        Send Circles\n\n        <ion-icon name="arrow-dropright-circle">\n\n        </ion-icon>\n\n      </button>\n\n\n\n      <button ion-button full *ngIf="!trusted" (click)="affordTrust()" icon-end>\n\n          Afford Trust\n\n         <ion-icon name="lock" color="red">\n\n         </ion-icon>\n\n      </button>\n\n\n\n      <button ion-button full *ngIf="trusted" (click)="revokeTrust()">\n\n        Revoke Trust\n\n        <ion-icon name="unlock" color="green" item-right>\n\n        </ion-icon>\n\n      </button>\n\n\n\n     </ion-card-content>\n\n   </ion-card>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\dev\circles_testnet_v2\src\pages\user-detail\user-detail.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
@@ -1368,7 +1372,7 @@ let WalletPage = class WalletPage {
             this.user = user;
             this.displayWallet = [];
             for (let i in this.user.wallet) {
-                let w = this.user.wallet[i];
+                let w = Object.assign({}, this.user.wallet[i]);
                 this.userService.keyToUserName$(w.owner).subscribe(displayName => {
                     w.owner = displayName;
                     this.displayWallet.push(w);
@@ -1388,7 +1392,7 @@ let WalletPage = class WalletPage {
 };
 WalletPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-wallet',template:/*ion-inline-start:"D:\dev\circles_testnet_v2\src\pages\wallet\wallet.html"*/'<!--\n\n  Generated template for the WalletPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>WalletPage</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <ion-grid>\n\n		<ion-row>\n\n			<ion-col col-3>\n\n				Coin\n\n			</ion-col>\n\n			<ion-col col-4>\n\n				Owner\n\n			</ion-col>\n\n      <ion-col col-3>\n\n				Amount\n\n			</ion-col>\n\n      <ion-col col-2>\n\n        Priority\n\n      </ion-col>\n\n		</ion-row>\n\n		<ion-row *ngFor="let coin of displayWallet">\n\n			<ion-col col-3>\n\n				{{coin.title}}\n\n			</ion-col>\n\n			<ion-col col-4>\n\n				{{coin.owner}}\n\n			</ion-col>\n\n			<ion-col col-2>\n\n				{{coin.amount}}\n\n			</ion-col>\n\n      <ion-col col-3>\n\n        <button [disabled]="coin.priority < 1" class="pButton" (click)="priorityUp(coin)">\n\n          &uarr;\n\n        </button>\n\n        {{coin.priority}}\n\n        <button [disabled]="coin.priority >= displayWallet.length-1" class="pButton" (click)="priorityDown(coin)">\n\n          &darr;\n\n        </button>\n\n      </ion-col>\n\n		</ion-row>\n\n	</ion-grid>\n\n  <button ion-button full (click)="save()">SAVE</button>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\dev\circles_testnet_v2\src\pages\wallet\wallet.html"*/,
+        selector: 'page-wallet',template:/*ion-inline-start:"D:\dev\circles_testnet_v2\src\pages\wallet\wallet.html"*/'<!--\n\n  Generated template for the WalletPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>WalletPage</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <ion-grid>\n\n		<ion-row>\n\n			<ion-col>\n\n				Coin\n\n			</ion-col>\n\n			<ion-col>\n\n				Owner\n\n			</ion-col>\n\n            <ion-col>\n\n				Amount\n\n			</ion-col>\n\n            <ion-col>\n\n                Priority\n\n            </ion-col>\n\n		</ion-row>\n\n		<ion-row *ngFor="let coin of displayWallet">\n\n			<ion-col col-3>\n\n				{{coin.title}}\n\n			</ion-col>\n\n			<ion-col col-4>\n\n				{{coin.owner}}\n\n			</ion-col>\n\n			<ion-col col-2>\n\n				{{coin.amount}}\n\n			</ion-col>\n\n      <ion-col col-3>\n\n        <button [disabled]="coin.priority < 1" class="pButton" (click)="priorityUp(coin)">\n\n          &uarr;\n\n        </button>\n\n        {{coin.priority}}\n\n        <button [disabled]="coin.priority >= displayWallet.length-1" class="pButton" (click)="priorityDown(coin)">\n\n          &darr;\n\n        </button>\n\n      </ion-col>\n\n		</ion-row>\n\n	</ion-grid>\n\n  <button ion-button full (click)="save()">SAVE</button>\n\n</ion-content>\n\n'/*ion-inline-end:"D:\dev\circles_testnet_v2\src\pages\wallet\wallet.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
@@ -1490,6 +1494,7 @@ let ProfilePage = class ProfilePage {
         this.toastCtrl = toastCtrl;
         this.userService = userService;
         this.profilePicURL = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+        this.user = {};
     }
     ionViewDidLoad() {
         console.log('ionViewDidLoad ProfilePage');
@@ -1498,8 +1503,6 @@ let ProfilePage = class ProfilePage {
             this.db.list('/static/authProviders/').subscribe(provs => {
                 this.allProviders = [];
                 this.userProviders = [];
-                if (!user.authProviders)
-                    return;
                 for (let p of user.authProviders) {
                     this.userProviders[p] = true;
                 }
@@ -1551,11 +1554,13 @@ let ProfilePage = class ProfilePage {
         });
     }
     saveProfile() {
+        debugger;
+        this.db.object('/users/' + this.user.$key).set(this.user);
     }
 };
 ProfilePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-profile',template:/*ion-inline-start:"D:\dev\circles_testnet_v2\src\pages\profile\profile.html"*/'<ion-header>\n\n  <ion-navbar color="secondary">\n\n    <ion-title>Update Profile</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <ion-row>\n\n    <ion-col>\n\n\n\n      <form (ngSubmit)="saveProfile()">\n\n        <!-- First Name -->\n\n        <ion-item>\n\n          <ion-label stacked>First Name</ion-label>\n\n          <ion-input type="text" [value]="user?.firstName" name="firstname"></ion-input>\n\n        </ion-item>\n\n\n\n        <!-- Last Name -->\n\n        <ion-item>\n\n          <ion-label stacked>Last Name</ion-label>\n\n          <ion-input type="text" [value]="user?.lastName" name="lastname"></ion-input>\n\n        </ion-item>\n\n\n\n        <!-- Greeting -->\n\n        <ion-item>\n\n          <ion-label stacked>Greeting</ion-label>\n\n          <ion-input type="text" [value]="user?.greeting" name="title"></ion-input>\n\n        </ion-item>\n\n\n\n        <ion-item>\n\n          <ion-label stacked>Profile Picture</ion-label>\n\n          <!-- <div class="circle-crop" [ngStyle]="{\'background-image\': \'url(\' + profilePicURL + \')\'}"> -->\n\n            <div item-content>\n\n              <img src="{{profilePicURL}}">\n\n            </div>\n\n        </ion-item>\n\n\n\n        <button ion-button (click)="openCamera()">Open camera</button>\n\n        <button ion-button (click)="selectFromGallery()">Select from gallery</button>\n\n\n\n        <ion-item>\n\n          <ion-label stacked>Trade Message</ion-label>\n\n          <ion-input type="text" [value]="user?.tradeMessage" name="title"></ion-input>\n\n        </ion-item>\n\n\n\n        <ion-item>\n\n          <ion-label stacked>Authentication Providers</ion-label>\n\n          <div item-content>\n\n            <span *ngFor="let provider of allProviders">\n\n              <button ion-button outline *ngIf="!userProviders[provider.$key]">\n\n                <ion-icon name="{{provider.icon}}"></ion-icon>\n\n                {{provider.displayName}}\n\n              </button>\n\n              <button ion-button *ngIf="userProviders[provider.$key]">\n\n                <ion-icon name="{{provider.icon}}"></ion-icon>\n\n                {{provider.displayName}}\n\n              </button>\n\n            </span>\n\n          </div>\n\n        </ion-item>\n\n        <button ion-button type="submit" block>Save</button>\n\n\n\n\n\n      </form>\n\n\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\dev\circles_testnet_v2\src\pages\profile\profile.html"*/,
+        selector: 'page-profile',template:/*ion-inline-start:"D:\dev\circles_testnet_v2\src\pages\profile\profile.html"*/'<ion-header>\n\n  <ion-navbar color="secondary">\n\n    <ion-title>Update Profile</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <ion-row>\n\n    <ion-col>\n\n\n\n      <form (ngSubmit)="saveProfile()">\n\n        <!-- First Name -->\n\n        <ion-item>\n\n          <ion-label stacked>First Name</ion-label>\n\n          <ion-input type="text" [(value)]="user.firstName" name="firstname"></ion-input>\n\n        </ion-item>\n\n\n\n        <!-- Last Name -->\n\n        <ion-item>\n\n          <ion-label stacked>Last Name</ion-label>\n\n          <ion-input type="text" [(value)]="user.lastName" name="lastname"></ion-input>\n\n        </ion-item>\n\n\n\n        <!-- Greeting -->\n\n        <ion-item>\n\n          <ion-label stacked>Greeting</ion-label>\n\n          <ion-input type="text" [(value)]="user.greeting" name="title"></ion-input>\n\n        </ion-item>\n\n\n\n        <ion-item>\n\n          <ion-label stacked>Profile Picture</ion-label>\n\n          <!-- <div class="circle-crop" [ngStyle]="{\'background-image\': \'url(\' + profilePicURL + \')\'}"> -->\n\n            <div item-content>\n\n              <img src="{{profilePicURL}}">\n\n            </div>\n\n        </ion-item>\n\n\n\n        <button ion-button (click)="openCamera()">Open camera</button>\n\n        <button ion-button (click)="selectFromGallery()">Select from gallery</button>\n\n\n\n        <ion-item>\n\n          <ion-label stacked>Trade Message</ion-label>\n\n          <ion-input type="text" [(value)]="user.tradeMessage" name="title"></ion-input>\n\n        </ion-item>\n\n\n\n        <ion-item>\n\n          <ion-label stacked>Authentication Providers</ion-label>\n\n          <div item-content>\n\n            <span *ngFor="let provider of allProviders">\n\n              <button ion-button outline *ngIf="!userProviders[provider.$key]">\n\n                <ion-icon name="{{provider.icon}}"></ion-icon>\n\n                {{provider.displayName}}\n\n              </button>\n\n              <button ion-button *ngIf="userProviders[provider.$key]">\n\n                <ion-icon name="{{provider.icon}}"></ion-icon>\n\n                {{provider.displayName}}\n\n              </button>\n\n            </span>\n\n          </div>\n\n        </ion-item>\n\n        <button ion-button type="submit" block>Save</button>\n\n\n\n\n\n      </form>\n\n\n\n    </ion-col>\n\n  </ion-row>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"D:\dev\circles_testnet_v2\src\pages\profile\profile.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__["a" /* Camera */],
         __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */],
@@ -1857,8 +1862,9 @@ let MyApp = class MyApp {
                         }
                     });
                 }
-                else { }
-                //todo: error here
+                else {
+                    this.userService.clearUser();
+                }
             }, error => console.error(error), () => { });
         });
     }
