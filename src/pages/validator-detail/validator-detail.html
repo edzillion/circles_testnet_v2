@@ -9,12 +9,17 @@ validator
 
 <ion-content padding>
   <ion-card class="shadowless-card">
-    <img src="{{validator.profilePicURL}}">
+    <ion-card-title>
+      <h1>{{validator.displayName}}</h1>
+      <h2>{{validator.greeting}}</h2>
+    </ion-card-title>
     <ion-card-content>
-      <ion-card-title>
-        <h1>{{validator.displayName}}</h1>
-        <p *ngIf="trusted == true">Connection: {{user.displayName}} - {{validator.displayName}}</p>
-      </ion-card-title>
+     <img src="{{validator.profilePicURL}}">
+     <span *ngIf="directTrust">
+       <ion-avatar style="width:48px;height:48px" item-center>
+         <img src="{{user.profilePicURL || genericProfilePicURL}}">
+       </ion-avatar>
+     </span>
       <ion-list no-lines>
         <ion-item>
           <ion-icon name="mail" item-left></ion-icon>

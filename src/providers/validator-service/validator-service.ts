@@ -15,6 +15,7 @@ export class ValidatorService {
 
   public validatorsFirebaseObj$: FirebaseListObservable<Validator[]>;
   public validators: Array<Validator>;
+  public validatorArray: Array<Validator>;
   public initValSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
   public validators$: Observable<Validator[]>;
 
@@ -25,7 +26,7 @@ export class ValidatorService {
     this.validatorsFirebaseObj$ = this.db.list('/validators/');
     this.validatorsFirebaseObj$.subscribe(
       valis => {
-
+        this.validatorArray = valis;
         this.validators = [];
         for (let v of valis) {
           this.validators[v.$key] = v;
@@ -52,18 +53,25 @@ export class ValidatorService {
   //   }
   // }
 
-  public filterValidators$(searchTerm: string) {
+  public filterValidators$(searchTerm: string): Array<Validator> {
     //if (!searchTerm)
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
-    return this.validators$.map((valis) => {
-      return valis.filter((vali) => {
-        if (!vali.displayName || vali.$key == 'undefined')
-          return false;
-        let s = searchTerm.toLowerCase();
-        let d = vali.displayName.toLowerCase();
-        return d.indexOf(s) > -1;
-      });
+    // return this.validators$.map((valis) => {
+    //   let l = this.validatorArray;
+    debugger;
+    return this.validatorArray.filter(vali => {
+      debugger;
+      if (!vali.displayName || vali.$key == 'undefined')
+        return false;
+      let s = searchTerm.toLowerCase();
+      let d = vali.displayName.toLowerCase();
+      return d.indexOf(s) > -1;
     });
+    // if (!Array.isArray(filt))
+    //   filt = [filt];
+    //
+    // return filt;
+    //});
   }
 
   public applyForValidation(user, validator) {
