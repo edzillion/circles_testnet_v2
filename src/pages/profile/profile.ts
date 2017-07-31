@@ -111,7 +111,6 @@ export class ProfilePage {
   }
 
   saveProfile() {
-    debugger;
     this.db.object('/users/'+this.user.$key).set(this.user);
   }
 

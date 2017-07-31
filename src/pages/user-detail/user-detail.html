@@ -7,10 +7,12 @@
 </ion-header>
 
 <ion-content padding>
-<<<<<<< HEAD
   <ion-card>
-    <h1>{{viewUser.displayName}}</h1>
-    <h2>{{viewUser.greeting}}</h2>
+    <ion-card-title>
+      <h1>{{viewUser.displayName}}</h1>
+      <h2>{{viewUser.greeting}}</h2>
+    </ion-card-title>
+         <ion-card-content> 
      <img src="{{profilePicURL}}">
      <span *ngIf="directTrust">
        <ion-avatar style="width:48px;height:48px" item-center>
@@ -25,18 +27,7 @@
          <img src="{{user.profilePicURL}}">
        </ion-avatar>
     </span>
-     <ion-card-content>
-=======
-  <ion-card style="box-shadow: 0 0;overflow:visible;">
-     <img src="{{viewUser.profilePicURL}}">
-     <ion-card-content style="padding: 0;">
->>>>>>> a92e4d55f65ffe06a7633ce30004f5589ed4412b
-      <ion-card-title>
 
-       <p *ngIf="directTrust == true">Connection: {{user.displayName}} - {{viewUser.displayName}}
-       <p *ngIf="validatorTrust == true">Connection: {{user.displayName}} - {{this.validatedBy.displayName}} - {{viewUser.displayName}} </p>
-
-      </ion-card-title>
        <ion-list no-lines>
          <ion-item>
            <ion-icon name="mail" item-left></ion-icon>

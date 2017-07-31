@@ -53,14 +53,12 @@ export class UserDetailPage {
   }
 
   private sendCircles () {
-    debugger;
     this.navCtrl.push(SendPage, this.viewUser);
   }
 
   ionViewDidLoad() {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
-        debugger;
         this.user = user;
         if (this.user.trustedUsers) {
           let dTrust = this.user.trustedUsers.some(tUserKey => {
