@@ -4,7 +4,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
 import { NewsService } from '../../providers/news-service/news-service';
 import { TransactionService } from '../../providers/transaction-service/transaction-service';
+import { ValidatorService } from '../../providers/validator-service/validator-service';
 import { User } from '../../interfaces/user-interface';
+import { Validator } from '../../interfaces/validator-interface';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -30,7 +32,8 @@ export class UserDetailPage {
     public navParams: NavParams,
     private userService: UserService,
     private newsService: NewsService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private validatorService: ValidatorService
   ) {
     this.viewUser = navParams.data;
 
@@ -64,12 +67,14 @@ export class UserDetailPage {
           this.trusted = true;
         }
         else if (this.user.validators) {
-          for (var validator of this.user.validators) {
-            for (var tUserKey of validator.trustedUsers) {
-              if (tUserKey == this.viewUser.$key)
+          for (let vKey of this.user.validators) {
+            let v = this.validatorService.validators[vKey] as Validator;
+            for (let tUserKey of v.trustedUsers) {
+              if (tUserKey == this.viewUser.$key) {
                 this.validatorTrust = true;
-                this.validatedBy = validator;
+                this.validatedBy = v;
                 this.trusted = true;
+              }
             }
           }
         }

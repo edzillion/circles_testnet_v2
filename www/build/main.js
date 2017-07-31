@@ -495,7 +495,8 @@ ValidatorDetailPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_news_service_news_service__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_transaction_service_transaction_service__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__send_send__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_validator_service_validator_service__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__send_send__ = __webpack_require__(305);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -511,13 +512,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 let UserDetailPage = class UserDetailPage {
-    constructor(navCtrl, navParams, userService, newsService, transactionService) {
+    constructor(navCtrl, navParams, userService, newsService, transactionService, validatorService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.userService = userService;
         this.newsService = newsService;
         this.transactionService = transactionService;
+        this.validatorService = validatorService;
         this.directTrust = false;
         this.validatorTrust = false;
         this.trusted = false;
@@ -534,7 +537,7 @@ let UserDetailPage = class UserDetailPage {
         this.userService.applyForTrust(this.viewUser.$key);
     }
     sendCircles() {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__send_send__["a" /* SendPage */], this.viewUser);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__send_send__["a" /* SendPage */], this.viewUser);
     }
     ionViewDidLoad() {
         this.userSub$ = this.userService.user$.subscribe(user => {
@@ -547,12 +550,14 @@ let UserDetailPage = class UserDetailPage {
                 this.trusted = true;
             }
             else if (this.user.validators) {
-                for (var validator of this.user.validators) {
-                    for (var tUserKey of validator.trustedUsers) {
-                        if (tUserKey == this.viewUser.$key)
+                for (let vKey of this.user.validators) {
+                    let v = this.validatorService.validators[vKey];
+                    for (let tUserKey of v.trustedUsers) {
+                        if (tUserKey == this.viewUser.$key) {
                             this.validatorTrust = true;
-                        this.validatedBy = validator;
-                        this.trusted = true;
+                            this.validatedBy = v;
+                            this.trusted = true;
+                        }
                     }
                 }
             }
@@ -563,13 +568,10 @@ UserDetailPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-user-detail',template:/*ion-inline-start:"E:\dev\circles_testnet_v2\src\pages\user-detail\user-detail.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title></ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-card>\n\n     <img src="{{viewUser.profilePicURL}}">\n\n     <ion-card-content>\n\n      <ion-card-title>\n\n       <h1>{{viewUser.displayName}}</h1>\n\n       <p *ngIf="directTrust == true">Connection: {{user.displayName}} - {{viewUser.displayName}}\n\n       <p *ngIf="validatorTrust == true">Connection: {{user.displayName}} - {{this.validatedBy.displayName}} - {{viewUser.displayName}} </p>\n\n\n\n      </ion-card-title>\n\n       <ion-list no-lines>\n\n         <ion-item>\n\n           <ion-icon name="mail" item-left></ion-icon>\n\n           <p>{{viewUser.email}}</p>\n\n         </ion-item>\n\n\n\n         <ion-item>\n\n         <ion-icon name="phone-portrait" item-left></ion-icon>\n\n         + 49 1023893933\n\n         </ion-item>\n\n\n\n       </ion-list>\n\n\n\n      <button ion-button full *ngIf="trusted"  (click)="sendCircles()" icon-end>\n\n        Send Circles\n\n        <ion-icon name="arrow-dropright-circle">\n\n        </ion-icon>\n\n      </button>\n\n\n\n      <button ion-button full *ngIf="!trusted" (click)="affordTrust()" icon-end>\n\n          Afford Trust\n\n         <ion-icon name="lock" color="red">\n\n         </ion-icon>\n\n      </button>\n\n\n\n      <ion-item *ngIf="trusted" (click)="revokeTrust()">\n\n        Revoke Trust\n\n        <ion-icon name="unlock" color="green" item-right>\n\n        </ion-icon>\n\n      </ion-item>\n\n\n\n     </ion-card-content>\n\n\n\n   </ion-card>\n\n\n\n\n\n\n\n</ion-content>\n\n\n\n\n\n'/*ion-inline-end:"E:\dev\circles_testnet_v2\src\pages\user-detail\user-detail.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserService */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_news_service_news_service__["a" /* NewsService */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_transaction_service_transaction_service__["a" /* TransactionService */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_user_service_user_service__["a" /* UserService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_news_service_news_service__["a" /* NewsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_news_service_news_service__["a" /* NewsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_transaction_service_transaction_service__["a" /* TransactionService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_transaction_service_transaction_service__["a" /* TransactionService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__providers_validator_service_validator_service__["a" /* ValidatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_validator_service_validator_service__["a" /* ValidatorService */]) === "function" && _f || Object])
 ], UserDetailPage);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=user-detail.js.map
 
 /***/ }),
