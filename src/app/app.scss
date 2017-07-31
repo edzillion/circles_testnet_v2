@@ -70,3 +70,13 @@ button{
   color: map-get($colors, primary);
   background-color: white;
 }
+
+.shadowless-card {
+  box-shadow: 0 0;
+  overflow:visible;
+}
+
+.horizontal-center-wrapper {
+  display: flex;
+  justify-content: center;
+}
