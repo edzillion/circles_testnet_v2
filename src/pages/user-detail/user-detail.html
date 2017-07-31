@@ -8,13 +8,28 @@
 
 <ion-content padding>
   <ion-card>
-     <img src="{{viewUser.profilePicURL}}">
+    <h1>{{viewUser.displayName}}</h1>
+    <h2>{{viewUser.greeting}}</h2>
+     <img src="{{profilePicURL}}">
+     <span *ngIf="directTrust">
+       <ion-avatar style="width:48px;height:48px" item-center>
+         <img src="{{user.profilePicURL || genericProfilePicURL}}">
+       </ion-avatar>
+     </span>
+     <span *ngIf="validatorTrust">
+       <ion-avatar style="width:48px;height:48px" item-center>
+         <img src="{{validatedBy.profilePicURL}}">
+       </ion-avatar>
+       <ion-avatar style="width:48px;height:48px" item-center>
+         <img src="{{user.profilePicURL}}">
+       </ion-avatar>
+    </span>
      <ion-card-content>
       <ion-card-title>
-       <h1>{{viewUser.displayName}}</h1>
+
        <p *ngIf="directTrust == true">Connection: {{user.displayName}} - {{viewUser.displayName}}
        <p *ngIf="validatorTrust == true">Connection: {{user.displayName}} - {{this.validatedBy.displayName}} - {{viewUser.displayName}} </p>
-       <h2>{{viewUser.greeting}}</h2>
+
       </ion-card-title>
        <ion-list no-lines>
          <ion-item>

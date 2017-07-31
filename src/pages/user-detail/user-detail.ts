@@ -18,14 +18,16 @@ import { SendPage } from '../send/send';
 })
 export class UserDetailPage {
 
-  private user: User;
+  private user: User = {} as User;
   private viewUser: User;
   private userSub$: Subscription;
   private directTrust: boolean = false;
   private validatorTrust: boolean = false;
   private trusted: boolean = false;
+  private validatedBy: Validator = {} as Validator;
 
-  private validatedBy: any;
+  private genericProfilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+  private profilePicURL: string = this.genericProfilePicURL;
 
   constructor(
     private navCtrl: NavController,
@@ -36,7 +38,6 @@ export class UserDetailPage {
     private validatorService: ValidatorService
   ) {
     this.viewUser = navParams.data;
-
     console.log(navParams.data);
   }
 
@@ -52,19 +53,23 @@ export class UserDetailPage {
   }
 
   private sendCircles () {
+    debugger;
     this.navCtrl.push(SendPage, this.viewUser);
   }
 
   ionViewDidLoad() {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
+        debugger;
         this.user = user;
-        let dTrust = this.user.trustedUsers.some(tUserKey => {
-          return tUserKey == this.viewUser.$key;
-        });
-        if (dTrust) {
-          this.directTrust = true;
-          this.trusted = true;
+        if (this.user.trustedUsers) {
+          let dTrust = this.user.trustedUsers.some(tUserKey => {
+            return tUserKey == this.viewUser.$key;
+          });
+          if (dTrust) {
+            this.directTrust = true;
+            this.trusted = true;
+          }
         }
         else if (this.user.validators) {
           for (let vKey of this.user.validators) {

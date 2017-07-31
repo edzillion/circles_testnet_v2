@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class ValidatorDetailPage {
 
   private user: User;
-  private validator: Validator;
+  private validator: Validator = {} as Validator;
   private userSub$: Subscription;
   private trusted: boolean = false;
   private applied: boolean = false;

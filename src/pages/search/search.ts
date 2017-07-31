@@ -56,8 +56,8 @@ export class SearchPage {
 
     Observable.combineLatest(uObs, vObs).first().subscribe(
       combined => {
-        let oneArray = [...combined[0], ...combined[1]];
-        this.searchSubject$.next(oneArray);
+        //let oneArray = [...combined[0], ...combined[1]];
+        this.searchSubject$.next(combined);
       }
     )
   }
