@@ -251,7 +251,7 @@ export class UserService implements OnDestroy {
     let b = this.weeklyGrant - ((this.weeklyGrant / 7) * (diff));
     this.myCoins.amount = Math.round(b);
     this.myCoins.owner = userKey;
-    this.myCoins.title = (this.user.firstName) ? this.user.firstName + 'Coin' : 'CircleCoin';
+    this.myCoins.title = (this.user.firstName) ? this.user.firstName + ' Coin' : 'Circle Coin';
     //my coins are always the highest priority
     this.myCoins.priority = 0;
     this.allCoins = {
