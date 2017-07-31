@@ -15,17 +15,23 @@
     <ion-card-content style="padding: 0;"> 
        <img src="{{profilePicURL}}">
        <span *ngIf="directTrust">
-         <ion-avatar style="width:48px;height:48px" item-center>
-           <img src="{{user.profilePicURL || genericProfilePicURL}}">
-         </ion-avatar>
+         <div class="horizontal-center-wrapper">
+            <ion-avatar style="width:85px;" item-center>
+              <img src="{{user.profilePicURL || genericProfilePicURL}}">
+           </ion-avatar>
+         </div>
        </span>
        <span *ngIf="validatorTrust">
-         <ion-avatar style="width:48px;height:48px" item-center>
-           <img src="{{validatedBy.profilePicURL}}">
-         </ion-avatar>
-         <ion-avatar style="width:48px;height:48px" item-center>
-           <img src="{{user.profilePicURL}}">
-         </ion-avatar>
+          <div class="horizontal-center-wrapper">
+            <ion-avatar style="width:85px;" item-center>
+               <img src="{{validatedBy.profilePicURL}}">
+             </ion-avatar>
+             <ion-avatar style="width:85px;" item-center>
+               <img src="{{user.profilePicURL}}">
+             </ion-avatar>
+          </div>
+         
+         
       </span>
        <ion-list no-lines>
          <ion-item>
