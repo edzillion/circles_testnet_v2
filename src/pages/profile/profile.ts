@@ -25,7 +25,7 @@ export class ProfilePage {
 
   private toast: Toast;
   private base64ImageData: string;
-  public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+  private profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
   private user: User;
   private userSub$: Subscription;
   private providers$: Subscription;
@@ -50,6 +50,8 @@ export class ProfilePage {
           provs => {
             this.allProviders = [];
             this.userProviders = [];
+            if (!user.authProviders)
+              return;
             for (let p of user.authProviders) {
               this.userProviders[p] = true;
             }

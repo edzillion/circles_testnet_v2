@@ -30,9 +30,10 @@
 
         <ion-item>
           <ion-label stacked>Profile Picture</ion-label>
-          <div class="circle-crop" [ngStyle]="{'background-image': 'url(' + profilePicURL + ')'}">
-            <!--<img src="{{profilePicURL}}">-->
-          </div>
+          <!-- <div class="circle-crop" [ngStyle]="{'background-image': 'url(' + profilePicURL + ')'}"> -->
+            <div item-content>
+              <img src="{{profilePicURL}}">
+            </div>
         </ion-item>
 
         <button ion-button (click)="openCamera()">Open camera</button>
