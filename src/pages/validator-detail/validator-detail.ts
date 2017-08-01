@@ -39,7 +39,7 @@ export class ValidatorDetailPage {
       user => user !== this.user.$key
     );
     this.trusted = false;
-    this.newsService.revokeTrust(this.validator);
+    this.newsService.revokeValidatorTrust(this.validator);
   }
 
   private affordTrust() {
@@ -68,9 +68,9 @@ export class ValidatorDetailPage {
           }
         }
         if (this.validator.appliedUsers) {
-          if (this.validator.appliedUsers.find(u => u === this.user.$key))
+          if (this.validator.appliedUsers.find(u => u === this.user.$key)) {
             this.applied = true;
-
+          }
         }
       }
     );

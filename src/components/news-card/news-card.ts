@@ -97,24 +97,34 @@ export class NewsCard implements OnDestroy, OnInit {
         this.message = `Validated by: ${validator.displayName}`;
       });
     }
-    else if (this.newsItem.type == 'trustRequest') {
-      this.title = "Trust Request";
-      this.itemIcon = "help-circle";
-      this.userService.keyToUser$(this.newsItem.from).subscribe(user => {
-        if (user.profilePicURL) {
-          this.profilePicURL = user.profilePicURL;
+    else if (this.newsItem.type == 'revokeValidator') {
+      this.title = "Revoke Validation";
+      this.itemIcon = "close-circle";
+      this.validatorService.keyToValidator$(this.newsItem.to).subscribe(validator => {
+        if (validator.profilePicURL) {
+          this.profilePicURL = validator.profilePicURL;
         }
-        this.message = `Requested trust from: ${user.displayName}`;
+        this.message = `No longer validated by ${validator.displayName}`;
       });
     }
     else if (this.newsItem.type == 'trustUser') {
       this.title = "Trust Accept";
       this.itemIcon = "checkmark-circle";
-      this.userService.keyToUser$(this.newsItem.from).subscribe(user => {
+      this.userService.keyToUser$(this.newsItem.to).subscribe(user => {
         if (user.profilePicURL) {
           this.profilePicURL = user.profilePicURL;
         }
         this.message = `Afforded trust to: ${user.displayName}`;
+      });
+    }
+    else if (this.newsItem.type == 'revokeUser') {
+      this.title = "Revoke Trust";
+      this.itemIcon = "close-circle";
+      this.userService.keyToUser$(this.newsItem.to).subscribe(user => {
+        if (user.profilePicURL) {
+          this.profilePicURL = user.profilePicURL;
+        }
+        this.message = `Stopped trusting: ${user.displayName}`;
       });
     }
 

@@ -190,7 +190,7 @@ export class UserService implements OnDestroy {
     this.user.balance = total;
   }
 
-  public applyForTrust(userKey) {
+  public affordTrust(userKey) {
     this.addTrustedUser(userKey);
   }
 

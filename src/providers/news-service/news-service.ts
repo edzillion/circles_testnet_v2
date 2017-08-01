@@ -125,22 +125,6 @@ export class NewsService implements OnDestroy {
     this.dbNewsItems$.push(newsItem);
   }
 
-  public addTrustRequest(user: User):void {
-    //this.notificationsService.create('Join Success','','success');
-    let msg = 'You have requested trust from: ' +user.displayName;
-    this.notificationsService.create('Join', msg, 'info');
-
-    let newsItem = {
-      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      from: user.$key,
-      to: this.user.$key,
-      type: 'trustRequest'
-    } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
-    newsItem.unResolved = true;
-    this.db.list('/users/'+user.$key+'/news/').push(newsItem);
-  }
-
   public addTrust(user: User):void {
     //this.notificationsService.create('Join Success','','success');
     let msg = 'You have started trusting: ' +user.displayName;
@@ -154,15 +138,28 @@ export class NewsService implements OnDestroy {
     this.dbNewsItems$.push(newsItem);
   }
 
-  public revokeTrust(userOrVali: User | Validator):void {
+  public revokeUserTrust(user: User):void {
     //this.notificationsService.create('Join Success','','success');
-    let msg = 'You have stopped trusting: ' +userOrVali.displayName;
+    let msg = 'You have stopped trusting: ' +user.displayName;
     this.notificationsService.create('Join', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      to: userOrVali.$key,
+      to: user.$key,
       type: 'revokeUser'
+    };
+    this.dbNewsItems$.push(newsItem);
+  }
+
+  public revokeValidatorTrust(vali: Validator):void {
+    //this.notificationsService.create('Join Success','','success');
+    let msg = 'You are no longer validated by: ' +vali.displayName;
+    this.notificationsService.create('Join', msg, 'info');
+
+    let newsItem = {
+      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+      to: vali.$key,
+      type: 'revokeValidator'
     };
     this.dbNewsItems$.push(newsItem);
   }

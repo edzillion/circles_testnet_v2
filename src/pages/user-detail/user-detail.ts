@@ -43,14 +43,13 @@ export class UserDetailPage {
   }
 
   private revokeTrust() {
-    this.newsService.revokeTrust(this.viewUser);
+    this.newsService.revokeUserTrust(this.viewUser);
     this.userService.revokeTrust(this.viewUser.$key);
   }
 
   private affordTrust() {
     this.newsService.addTrust(this.viewUser);
-    this.newsService.addTrustRequest(this.viewUser);
-    this.userService.applyForTrust(this.viewUser.$key);
+    this.userService.affordTrust(this.viewUser.$key);
   }
 
   private sendCircles () {
