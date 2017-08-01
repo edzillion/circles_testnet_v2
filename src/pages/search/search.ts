@@ -51,6 +51,7 @@ export class SearchPage {
       this.searchSubject$.next([]);
       return;
     }
+
     let uObs = this.userService.filterUsers$(this.searchTerm);
     let vObs = this.validatorService.filterValidators$(this.searchTerm);
 

@@ -53,24 +53,19 @@ export class ValidatorService {
   //   }
   // }
 
-  public filterValidators$(searchTerm: string): Array<Validator> {
+  public filterValidators$(searchTerm: string)  {
     //if (!searchTerm)
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
-    // return this.validators$.map((valis) => {
-    //   let l = this.validatorArray;
-    return this.validatorArray.filter(vali => {
+     return this.validatorsFirebaseObj$.map((valis) => {
+       return valis.filter(vali => {
 
-      if (!vali.displayName || vali.$key == 'undefined')
-        return false;
-      let s = searchTerm.toLowerCase();
-      let d = vali.displayName.toLowerCase();
-      return d.indexOf(s) > -1;
+        if (!vali.displayName || vali.$key == 'undefined')
+          return false;
+        let s = searchTerm.toLowerCase();
+        let d = vali.displayName.toLowerCase();
+        return d.indexOf(s) > -1;
+      });
     });
-    // if (!Array.isArray(filt))
-    //   filt = [filt];
-    //
-    // return filt;
-    //});
   }
 
   public applyForValidation(user, validator) {
