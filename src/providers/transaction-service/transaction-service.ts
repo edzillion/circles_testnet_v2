@@ -106,7 +106,6 @@ export class TransactionService implements OnDestroy {
   }
 
   public createTransactionIntent(toUserId:string, amount:number, message?:string): Promise<any> {
-    debugger;
     let p = new Promise( (resolve, reject) => {
       this.userService.keyToUser$(toUserId).take(1).subscribe( (toUser) => {
         if(this.transfer(toUser, amount)) {
