@@ -22,11 +22,8 @@
     <div class="home-pic">
       <div class="circle-crop"
         [ngStyle]="{'background-image': 'url(' + profilePicURL + ')'}">
-        <!--<img src="{{profilePicURL}}">-->
       </div>
-      <!--
-      <button ion-button (click)="openCamera()">Open camera</button>
-      <button ion-button (click)="selectFromGallery()">Select from gallery</button> -->
+
 
       <div class="user-name">
         {{user?.displayName}}
@@ -79,7 +76,7 @@
       </span>
 
       <span *ngIf="selectedView == 'news'">
-        <ion-item *ngFor="let newsItem of newsService.allnewsItemsReversed$ | async" (click)="goToNewsItem(newsItem)">
+        <ion-item *ngFor="let newsItem of newsService.allnewsItemsReversed$ | async">
           <news-card [newsItem]="newsItem"></news-card>
         </ion-item>
       </span>

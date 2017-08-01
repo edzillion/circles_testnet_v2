@@ -66,7 +66,6 @@ export class UserDetailPage {
           });
           if (dTrust) {
             this.trustTo = true;
-            this.trusted = true;
           }
         }
         if (this.viewUser.trustedUsers) {
@@ -75,6 +74,7 @@ export class UserDetailPage {
           });
           if (dTrust) {
             this.trustFrom = true;
+            this.trusted = true;
           }
         }
         else if (this.user.validators) {

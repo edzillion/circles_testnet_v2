@@ -22,6 +22,8 @@ import { SignupEmailPage } from '../pages/signup-email/signup-email';
 import { SendPage } from '../pages/send/send';
 import { DisclaimerPage } from '../pages/disclaimer/disclaimer';
 
+import { ConfirmModal } from '../pages/confirm-modal/confirm-modal';
+
 //side menu
 import { WalletPage } from '../pages/wallet/wallet';
 import { SettingsPage } from '../pages/settings/settings';
@@ -67,7 +69,8 @@ import { NewsCard } from '../components/news-card/news-card';
     Keyobject,
     SettingsPage,
     NewsCard,
-    DisclaimerPage
+    DisclaimerPage,
+    ConfirmModal
   ],
   imports: [
     AngularFireAuthModule,
@@ -93,7 +96,8 @@ import { NewsCard } from '../components/news-card/news-card';
     WalletPage,
     ValidatorDetailPage,
     SettingsPage,
-    DisclaimerPage
+    DisclaimerPage,
+    ConfirmModal
   ],
   providers: [
     AnalyticsService,

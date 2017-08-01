@@ -106,6 +106,7 @@ export class TransactionService implements OnDestroy {
   }
 
   public createTransactionIntent(toUserId:string, amount:number, message?:string): Promise<any> {
+    debugger;
     let p = new Promise( (resolve, reject) => {
       this.userService.keyToUser$(toUserId).take(1).subscribe( (toUser) => {
         if(this.transfer(toUser, amount)) {
@@ -126,11 +127,13 @@ export class TransactionService implements OnDestroy {
   private getTrustIntersection(sendingUser:User, receivingUser:User) {
     let ret = [];
     let sum = 0;
-    for (let u of receivingUser.trustedUsers) {
-      if (this.user.wallet[u]) {
-        sum += this.user.wallet[u].amount;
-        let p = this.user.wallet[u].priority;
-        ret[p] = this.user.wallet[u];
+    if (receivingUser.trustedUsers) {
+      for (let u of receivingUser.trustedUsers) {
+        if (this.user.wallet[u]) {
+          sum += this.user.wallet[u].amount;
+          let p = this.user.wallet[u].priority;
+          ret[p] = this.user.wallet[u];
+        }
       }
     }
     return {trustedCoins:ret,balance:sum};

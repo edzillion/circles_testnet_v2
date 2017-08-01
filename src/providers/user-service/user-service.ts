@@ -28,7 +28,6 @@ export class UserService implements OnDestroy {
   public users$ = this.usersSubject$.asObservable();
   public authState$: any;
 
-  private authSub$: Subscription;
   private userSub$: Subscription;
   private usersSub$: Subscription;
 
@@ -207,11 +206,13 @@ export class UserService implements OnDestroy {
     this.user = blankUser;
     if (this.userSubject$) {
       this.userSubject$.next(blankUser);
+      this.userSubject$.unsubscribe();
+      this.userSub$.unsubscribe();
+      this.usersSub$.unsubscribe();
     }
   }
 
   ngOnDestroy() {
-    this.authSub$.unsubscribe();
     this.userSub$.unsubscribe();
     this.usersSub$.unsubscribe();
   }
