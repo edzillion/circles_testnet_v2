@@ -17,12 +17,8 @@ export interface User {
   news: Array<NewsItem>;
   profilePicURL: string;
   pushID: string;
-  totalReceived: number;
-  totalSent: number;
   tradeMessage?:string;
   trustedUsers: Array<any>;
   validators: Array<any>;
   wallet: {};
-  weeklyReceived: number;
-  weeklySent: number;
 }

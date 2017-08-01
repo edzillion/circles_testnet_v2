@@ -3,7 +3,7 @@
     "-Kk1Xr2syRJ0V7NDKjSK": {
       "description": "Tinyhouse university is a Berlin-based NGO founded by Van Bo Le-Mentzel, designers, education activists and refugees. Our goal is to create new models of social neighborhoods. Our tools are architecture and the beliefs that make diversity a village stronger than common sense.",
       "displayName": "Tinyhouse University",
-      "email": "tinyhouseuni@tinyhouse.com"
+      "email": "tinyhouseuni@tinyhouse.com",
       "trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Ftinyu.png?alt=media&token=a61c66b6-d6af-46a8-ad73-3a5f853ba99e",
       "requirements": ["email", "name", "photo", "noconfirm"]
@@ -99,8 +99,6 @@
           "type": "createAccount"
         }
       },
-      "totalReceived": 845,
-      "totalSent": 233,
       "validators": [
         "-Kk1Xr2syRJ0V7NDKjSK",
         "-Kk1Xr2x-iftLqPsxscG",
@@ -132,8 +130,6 @@
           "title": "JaneCoin"
         }
       },
-      "weeklyReceived": 11,
-      "weeklySent": 5,
       "trustedUsers": [
 				"MdqRnUKHd1hrULQb11LxdtfG3O13",
         "jSu2I20VwcgesCvTCsAb2wsTqNG2",
@@ -155,8 +151,6 @@
       "greeting": "Greetings from New York!",
       "tradeMessage": "We sell all kinds of local produce including:\npots\npans\ntrinkets\nbananas",
       "uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
-      "totalReceived": 845,
-      "totalSent": 233,
       "wallet": {
         "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
           "amount": 100,
@@ -187,8 +181,6 @@
           "type" : "transaction"
         }
       },
-      "weeklyReceived": 11,
-      "weeklySent": 5,
       "trustedUsers": [
 				"jSu2I20VwcgesCvTCsAb2wsTqNG2",
         "MdqRnUKHd1hrULQb11LxdtfG3O13",

@@ -35,7 +35,7 @@
          <div class="center-wrapper" *ngIf="(trustFrom&&trustTo)&&!validatorTrust">
            <div class="center-item"><span class="arrow">↕</span></div>
            <div class="center-text">Trust each other</div>
-         </div> 
+         </div>
 
          <div class="center-wrapper" *ngIf="trustTo||trustFrom||validatorTrust">
             <ion-avatar class="center-item" style="width:85px;" item-center>
@@ -44,19 +44,19 @@
          </div>
        </span>
        <ion-list no-lines>
-         <ion-item>
+         <ion-item *ngIf="viewUser.email">
            <ion-icon name="mail" item-left></ion-icon>
            <p>{{viewUser.email}}</p>
          </ion-item>
 
-         <ion-item>
-         <ion-icon name="phone-portrait" item-left></ion-icon>
-         + 49 1023893933
+         <ion-item *ngIf="viewUser.phoneNum">
+           <ion-icon name="phone-portrait" item-left></ion-icon>
+           {{viewUser.phoneNum}}
          </ion-item>
 
        </ion-list>
 
-       <ion-card style="margin:12px 0;width:100%">
+       <ion-card *ngIf="viewUser.tradeMessage" style="margin:12px 0;width:100%">
         <ion-card-header>
           Trade Message
         </ion-card-header>
@@ -67,7 +67,7 @@
 
       <button ion-button full *ngIf="trusted"  (click)="sendCircles()" icon-end>
         Send Circles
-        <ion-icon name="arrow-dropright-circle">
+        <ion-icon name="send">
         </ion-icon>
       </button>
 

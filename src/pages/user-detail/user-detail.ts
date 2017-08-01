@@ -81,11 +81,13 @@ export class UserDetailPage {
         else if (this.user.validators) {
           for (let vKey of this.user.validators) {
             let v = this.validatorService.validators[vKey] as Validator;
-            for (let tUserKey of v.trustedUsers) {
-              if (tUserKey == this.viewUser.$key) {
-                this.validatorTrust = true;
-                this.validatedBy = v;
-                this.trusted = true;
+            if (v.trustedUsers) {
+              for (let tUserKey of v.trustedUsers) {
+                if (tUserKey == this.viewUser.$key) {
+                  this.validatorTrust = true;
+                  this.validatedBy = v;
+                  this.trusted = true;
+                }
               }
             }
           }

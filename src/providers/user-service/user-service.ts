@@ -85,78 +85,6 @@ export class UserService implements OnDestroy {
     )
   }
 
-
-    // this.authState$ = this.afAuth.authState;
-    // this.authSub$ = this.afAuth.authState.subscribe(
-    //   auth => {
-    //     if (auth) {
-          // this.validatorService.initialise();
-          // let userObs = this.db.object('/users/' + auth.uid);
-          // let userSub = userObs.subscribe(
-            // user => {
-              // if (!user.$exists()) {
-              //   //user doesn't exist, create user entry on db
-              //   this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
-              //   this.user.news = [{
-              //     timestamp: this.user.createdAt,
-              //     type: 'createAccount'
-              //   } as NewsItem];
-              //   this.user.authProviders = ["email"];
-              //   this.setInitialWallet(auth.uid);
-              //   this.user.totalReceived = 0;
-              //   this.user.totalSent = 0;
-              //   this.user.trustedUsers = [auth.uid];
-              //   this.user.weeklyReceived = 0;
-              //   this.user.weeklySent = 0;
-              //   userObs.set(this.user);
-              // }
-              // else {
-  //               this.userSubject$ = new BehaviorSubject(user);
-  //               this.user$ = this.userSubject$.asObservable();
-  //               // this.userSubject$ is our app wide current user Subscription
-  //               this.userFirebaseObj$ = this.db.object('/users/' + auth.uid);
-  //               this.userSub$ = this.userFirebaseObj$.subscribe(
-  //                 user => {
-  //                   this.user = user;
-  //                   this.setBalance();
-  //                   if (this.user.validators) {
-  //                     this.validatorService.setUserValidators(this.user);
-  //                   }
-  //                   this.initUserSubject$.next(user)
-  //                   this.userSubject$.next(user);
-  //                 },
-  //                 error => console.log('Could not load current user record.')
-  //               );
-  //
-  //               this.usersSub$ = this.db.list('/users/').subscribe(
-  //                 users => {
-  //                   this.users = [];
-  //                   for (let u of users) {
-  //                     this.users[u.$key] = u;
-  //                   }
-  //                   //clone the users array so that we don't change a user accidentally
-  //                   //Object.assign(this.dataStore.users, users);
-  //                   this.usersSubject$.next(users);
-  //                 },
-  //                 error => console.log('Could not load users.')
-  //               );
-  //               userSub.unsubscribe();
-  //             }
-  //           },
-  //           error => console.error(error),
-  //           () => { }
-  //         );
-  //       }
-  //       else { //auth=null
-  //         //wipe on logout
-  //         this.user = {} as User;
-  //       }
-  //     },
-  //     error => console.error(error),
-  //     () => { }
-  //   );
-  // }
-
   public createUserRecord(auth): User {
     //user doesn't exist, create user entry on db
     this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
@@ -168,17 +96,10 @@ export class UserService implements OnDestroy {
     this.user.email = auth.email || '';
     this.user.authProviders = ["email"];
     this.setInitialWallet(auth.uid);
-    this.user.totalReceived = 0;
-    this.user.totalSent = 0;
     this.user.trustedUsers = [auth.uid];
-    this.user.weeklyReceived = 0;
-    this.user.weeklySent = 0;
 
     return this.user;
-}
-
-
-
+  }
 
   public keyToUser$(key: string): Observable<User> {
     return this.users$.map(
@@ -283,7 +204,10 @@ export class UserService implements OnDestroy {
 
   public clearUser() {
     let blankUser = {} as User;
-    this.userSubject$.next(blankUser);
+    this.user = blankUser;
+    if (this.userSubject$) {
+      this.userSubject$.next(blankUser);
+    }
   }
 
   ngOnDestroy() {
