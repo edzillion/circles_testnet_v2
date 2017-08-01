@@ -38,6 +38,11 @@ export class HomePage {
   private newsList: Array<any> = [];
   private validatorList: Array<any> = [];
 
+  private myCoinBalance: number;
+  private allCoinBalance: number;
+  private myCoinName: string;
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private notificationsService: NotificationsService,
     private camera: Camera,
     private db: AngularFireDatabase,
@@ -123,6 +128,10 @@ export class HomePage {
         this.networkList = [];
         this.validatorList = [];
         this.user = user;
+        this.myCoinName = this.user.wallet[this.user.$key].title;
+        this.myCoinBalance = this.user.wallet[this.user.$key].amount;
+        this.allCoinBalance = this.user.balance;
+
         if (user.trustedUsers) {
           user.trustedUsers.map(
             key => {
