@@ -4,6 +4,7 @@ import { Toast, ToastController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
+import { ValidatorService } from '../../providers/validator-service/validator-service'
 import { User } from '../../interfaces/user-interface';
 import { NewsItem } from '../../interfaces/news-item-interface';
 
@@ -18,16 +19,27 @@ export class NewsCard implements OnDestroy, OnInit {
   private user: User;
   private title: string;
   private message: string;
+  private itemIcon: string;
   private subject: string;
+  private profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
   private userSub$: Subscription;
 
   private toast: Toast;
 
-  constructor(private toastCtrl: ToastController, private userService: UserService) { }
+  constructor(
+    private toastCtrl: ToastController,
+    private userService: UserService,
+    private validatorService: ValidatorService
+  ) { }
 
   ngOnInit() {
     this.userSub$ = this.userService.user$.subscribe(
-      user => this.user = user,
+      user => {
+        this.user = user;
+        if (this.user.profilePicURL) {
+          this.profilePicURL = this.user.profilePicURL;
+        }
+      },
       error => {
         this.toast = this.toastCtrl.create({
           message: 'Error getting user: ' + error,
@@ -42,28 +54,68 @@ export class NewsCard implements OnDestroy, OnInit {
 
     if (this.newsItem.type == 'createAccount') {
       this.title = "Account Creation";
+      this.itemIcon = "add-circle";
       this.message = "Your Circles account was created!";
     }
     else if (this.newsItem.type == 'transaction' && this.newsItem.from == this.user.$key) {
       this.title = "Sent Circles";
-      this.userService.keyToUserName$(this.newsItem.to).subscribe(userName => {
-        this.message = `You sent ${this.newsItem.amount} Circles to ${userName}`;
+      this.itemIcon = "arrow-dropright-circle";
+      this.userService.keyToUser$(this.newsItem.to).subscribe(user => {
+        if (user.profilePicURL) {
+          this.profilePicURL = user.profilePicURL;
+        }
+        this.message = `${this.newsItem.amount} Circles to ${user.displayName}`;
       });
     }
     else if (this.newsItem.type == 'transaction' && this.user.$key == this.newsItem.to) {
       this.title = "Received Circles";
-      this.userService.keyToUserName$(this.newsItem.from).subscribe(userName => {
-        this.message = `You received ${this.newsItem.amount} Circles from ${userName}`;
+      this.itemIcon = "arrow-dropleft-circle";
+      this.userService.keyToUser$(this.newsItem.from).subscribe(user => {
+        if (user.profilePicURL) {
+          this.profilePicURL = user.profilePicURL;
+        }
+        this.message = `${this.newsItem.amount} Circles from ${user.displayName}`;
       });
     }
     else if (this.newsItem.type == 'validatorRequest') {
-      this.message = `You have requested validation from: ${this.newsItem.from}`;
+      this.title = "Validator Request";
+      this.itemIcon = "help-circle";
+      this.validatorService.keyToValidator$(this.newsItem.from).subscribe(validator => {
+        if (validator.profilePicURL) {
+          this.profilePicURL = validator.profilePicURL;
+        }
+        this.message = `Requested validation from: ${validator.displayName}`;
+      });
+    }
+    else if (this.newsItem.type == 'validatorAccept') {
+      this.title = "Validator Accept";
+      this.itemIcon = "checkmark-circle";
+      this.validatorService.keyToValidator$(this.newsItem.from).subscribe(validator => {
+        if (validator.profilePicURL) {
+          this.profilePicURL = validator.profilePicURL;
+        }
+        this.message = `Validated by: ${validator.displayName}`;
+      });
     }
     else if (this.newsItem.type == 'trustRequest') {
-      this.message = `You have requested trust from: ${this.newsItem.from}`;
+      this.title = "Trust Request";
+      this.itemIcon = "help-circle";
+      this.userService.keyToUser$(this.newsItem.from).subscribe(user => {
+        if (user.profilePicURL) {
+          this.profilePicURL = user.profilePicURL;
+        }
+        this.message = `Requested trust from: ${user.displayName}`;
+      });
     }
     else if (this.newsItem.type == 'trustUser') {
-      this.message = `You have afforded trust to: ${this.newsItem.to}`;
+      this.title = "Trust Accept";
+      this.itemIcon = "checkmark-circle";
+      this.userService.keyToUser$(this.newsItem.from).subscribe(user => {
+        if (user.profilePicURL) {
+          this.profilePicURL = user.profilePicURL;
+        }
+        this.message = `Afforded trust to: ${user.displayName}`;
+      });
     }
 
   }

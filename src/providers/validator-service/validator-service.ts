@@ -34,24 +34,21 @@ export class ValidatorService {
         this.initValSubject$.next(this.validators);
       }
     );
-
-    // this.userSub$ = this.userService.user$.subscribe(
-    //   user => {
-    //     if (user.validators) {
-    //       this.setUserValidators(user);
-    //     }
-    //   }
-    // );
   }
 
-  // public setUserValidators(user) {
-  //   let vals = [...user.validators];
-  //   user.validators = [];
-  //   for (let i in vals) {
-  //     let key = vals[i];
-  //     user.validators[key] = this.validators[key];
-  //   }
-  // }
+  public keyToValidatorName$(key: string): Observable<string> {
+    return this.validatorsFirebaseObj$.map(valis => {
+      let v = valis.find(vali => vali.$key === key);
+      return v.displayName;
+    });
+  }
+
+  public keyToValidator$(key: string): Observable<Validator> {
+    return this.validatorsFirebaseObj$.map(valis => {
+      let v = valis.find(vali => vali.$key === key);
+      return v;
+    });
+  }
 
   public filterValidators$(searchTerm: string)  {
     //if (!searchTerm)

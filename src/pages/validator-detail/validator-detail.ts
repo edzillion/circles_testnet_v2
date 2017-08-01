@@ -56,11 +56,13 @@ export class ValidatorDetailPage {
         if (this.user.validators) {
           for (let vKey of this.user.validators) {
             let v = this.validatorService.validators[vKey] as Validator;
-            for (let tUserKey of v.trustedUsers) {
-              let u = this.userService.users[tUserKey];
-              this.trustedUsers.push(u);
-              if (tUserKey == this.validator.$key) {
-                this.trusted = true;
+            if (v.trustedUsers) {
+              for (let tUserKey of v.trustedUsers) {
+                let u = this.userService.users[tUserKey];
+                this.trustedUsers.push(u);
+                if (tUserKey == this.validator.$key) {
+                  this.trusted = true;
+                }
               }
             }
           }
