@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-row>
+    <ion-col col-8 offset-2>
+      Apply for Validation from {{validator.displayName}}
+    </ion-col>
+  </ion-row>
+
+  <ion-card-content [ngStyle]="{'height' : contentHeight+'px' }" padding>
+      <p>{{validator.description}}</p>
+      <ion-item-divider></ion-item-divider>
+      <ion-row>
+        <ion-col class="requirements-text-col" left col-4>
+          <span>REQUIREMENTS</span>
+        </ion-col>
+        <ion-col class="icon-col" col-1 *ngFor="let req of validator.requirements$ | async">
+          <ion-icon icon-only name="{{req.icon}}" [ngClass]="{'req-not-met': !req.isComplete, 'req-met': req.isComplete}"></ion-icon>
+        </ion-col>
+        <ion-col text-right *ngIf="!isAMember">
+          <button class="group-button" ion-button [disabled]="!allRequirementsMet" (click)="apply()" >
+            <span *ngIf="!hasApplied">Apply</span>
+            <span *ngIf="hasApplied">Applied</span>
+          </button>
+        </ion-col>
+      </ion-row>
+  </ion-card>
+</ion-content>

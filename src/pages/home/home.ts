@@ -123,6 +123,8 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    this.networkList = [];
+    this.validatorList = [];
     this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.networkList = [];
@@ -157,5 +159,4 @@ export class HomePage {
       }
     );
   }
-
 }
