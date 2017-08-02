@@ -11,6 +11,7 @@ validator
   <ion-card class="shadowless-card">
     <ion-card-title>
       <h1>{{validator.displayName}}</h1>
+      <ion-badge>Trust each other</ion-badge>
       <h2>{{validator.greeting}}</h2>
     </ion-card-title>
     <ion-card-content>
@@ -25,16 +26,7 @@ validator
           <ion-icon name="mail" item-left></ion-icon>
           <p>{{validator.email}}</p>
         </ion-item>
-        <ion-item *ngIf="trusted" (click)="revokeTrust()">
-          Revoke Trust Validation
-          <ion-icon name="unlock" color="green" item-right>
-          </ion-icon>
-        </ion-item>
-        <ion-item *ngIf="trusted">
-          <ion-badge>Trusted</ion-badge>
-          <ion-icon name="send" item-right>
-          </ion-icon>
-        </ion-item>
+
         <ion-card style="margin:12px 0;width:100%">
         <ion-card-header>
             Description
@@ -44,9 +36,18 @@ validator
           </ion-card-content>
         </ion-card>
         <div class="horizontal-center-wrapper">
-          <button ion-button *ngIf="!trusted" (click)="checkRequirements()" icon-end>
-            <span *ngIf="!applied">Check Validator Requirements</span>
-            <ion-icon name="lock" color="red" item-right></ion-icon>
+          <button ion-button *ngIf="!trusted && !applied" (click)="checkRequirements()" icon-end>
+            Check Validator Requirements
+            <ion-icon name="unlock" item-right></ion-icon>
+          </button>
+          <button ion-button *ngIf="!trusted && applied" disabled outline icon-end>
+            Application Pending
+            <ion-icon name="time" item-right></ion-icon>
+          </button>
+          <button ion-button *ngIf="trusted" (click)="revokeTrust()" icon-end>
+            Revoke Trust Validation
+            <ion-icon name="unlock" item-right>
+            </ion-icon>
           </button>
         </div>
         <ion-item>

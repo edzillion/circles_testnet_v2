@@ -150,9 +150,12 @@ export class HomePage {
         if (this.user.validators) {
           this.validatorService.validators$.subscribe(
             valis => {
-              for (let vKey of this.user.validators) {
-                let v = valis[vKey];
-                this.validatorList.push(v);
+              this.validatorList = [];
+              if (this.user.validators) {
+                for (let vKey of this.user.validators) {
+                  let v = valis[vKey];
+                  this.validatorList.push(v);
+                }
               }
             }
           );

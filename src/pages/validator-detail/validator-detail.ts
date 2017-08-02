@@ -41,6 +41,7 @@ export class ValidatorDetailPage {
       user => user !== this.user.$key
     );
     this.trusted = false;
+    this.validatorService.revokeValidation(this.user,this.validator);
     this.newsService.revokeValidatorTrust(this.validator);
   }
 
@@ -52,20 +53,21 @@ export class ValidatorDetailPage {
   ionViewDidLoad() {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
+        debugger;
         this.user = user;
         this.trustedUsers = [];
+        this.trusted = false;
+        this.applied = false;
         if (this.user.validators) {
           for (let vKey of this.user.validators) {
-            let v = this.validatorService.validators[vKey] as Validator;
-            if (v.trustedUsers) {
-              for (let tUserKey of v.trustedUsers) {
-                let u = this.userService.users[tUserKey];
-                this.trustedUsers.push(u);
-                if (tUserKey == this.validator.$key) {
-                  this.trusted = true;
-                }
-              }
-            }
+            if (this.validator.$key == vKey)
+              this.trusted = true;
+          }
+        }
+        if (this.validator.trustedUsers) {
+          for (let tUserKey of this.validator.trustedUsers) {
+            let u = this.userService.users[tUserKey];
+            this.trustedUsers.push(u);
           }
         }
         if (this.validator.appliedUsers) {

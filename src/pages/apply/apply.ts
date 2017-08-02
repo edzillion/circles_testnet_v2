@@ -42,16 +42,14 @@ export class ApplyPage {
           this.applied = true;
       }
     }
-
   }
-
 
   private apply() {
     let msg = "You are about to apply for validation from  "+this.validator.displayName;
     let conf = this.modalController.create(ConfirmModal, { title: 'Confirm Apply', message: msg });
     conf.present();
     conf.onDidDismiss((confirm) => {
-      this.newsService.addValidatorTrustRequest(this.validator);
+
       if (confirm) {
         this.loading = this.loadingCtrl.create({
           content: 'Applying ...'
@@ -59,11 +57,20 @@ export class ApplyPage {
         this.loading.present();
 
         this.validatorService.applyForValidation(this.user, this.validator);
-        setTimeout(() => {
-          this.newsService.addValidatorTrustAccept(this.validator);
+        this.newsService.addValidatorTrustRequest(this.validator);
+        if (this.validator.autoAccept) {
+          setTimeout(() => {
+
+            this.validatorService.completeValidation(this.user, this.validator);
+            this.newsService.addValidatorTrustAccept(this.validator);
+            this.loading.dismiss();
+            this.navCtrl.pop();
+          }, 2000);
+        }
+        else {
           this.loading.dismiss();
           this.navCtrl.pop();
-        }, 2000);
+        }
 
       }
       else {

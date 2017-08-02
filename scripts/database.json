@@ -1,6 +1,7 @@
 {
   "validators": {
     "-Kk1Xr2syRJ0V7NDKjSK": {
+      "autoAccept": true,
       "description": "Tinyhouse university is a Berlin-based NGO founded by Van Bo Le-Mentzel, designers, education activists and refugees. Our goal is to create new models of social neighborhoods. Our tools are architecture and the beliefs that make diversity a village stronger than common sense.",
       "displayName": "Tinyhouse University",
       "email": "tinyhouseuni@tinyhouse.com",
@@ -9,6 +10,7 @@
       "requirements": ["email", "name", "photo"]
     },
     "-Kk1Xr2x-iftLqPsxscG": {
+      "autoAccept": false,
       "description": "Berlin Basic Income is a local group that explores strategies to implement a universal basic income (UBI), including unconventional methods that may start outside of the usual political process (e.g. the basic income cryptocurrency Circles). ",
       "displayName": "Berlin Basic Income Lab",
       "email": "basicincomeberlin@gmail.com",
@@ -17,6 +19,7 @@
       "requirements": ["email", "name", "photo", "facebook"]
     },
     "-Kk1Xr2ytzY1xPWUVXWP": {
+      "autoAccept": false,
       "description": "Kreuzberg Music co-op is a group dedicated to sharing the means of music production. If you are a musician or a music lover this is the place for you.",
       "displayName": "Kreuzberg Music Co-op",
       "email": "KZBRG@funnow.com",
@@ -25,14 +28,16 @@
       "requirements": ["email", "name", "photo", "facebook", "soundcloud"]
     },
     "-Kk1Xr2ytzY1xPWUVXWQ": {
+      "autoAccept": false,
       "description": "Radwerk is a collective of Berlin bike shops. We share resources, time and knowledge :)",
       "displayName": "Radwerk",
       "email": "Radwerk@Radwerk.com",
       "trustedUsers": ["HiBpAZosB6hq4AuBK9N12OVpItq2"],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Frepair.png?alt=media&token=4d837bc7-7f92-4255-943a-5b34778e5a7d",
-      "requirements": ["name", "photo", "review"]
+      "requirements": ["name", "photo"]
     },
     "-Kk1Xr2ytzY1xPWdcEEf": {
+      "autoAccept": false,
       "description": "For hardcore gamerz only!",
       "displayName": "Gamer",
       "trustedUsers": [],
@@ -105,7 +110,6 @@
         }
       },
       "validators": [
-        "-Kk1Xr2syRJ0V7NDKjSK",
         "-Kk1Xr2x-iftLqPsxscG",
         "-Kk1Xr2ytzY1xPWUVXWQ"
       ],
@@ -144,7 +148,8 @@
         "Ea793jse7XNcSrMMmO8GvRPLlbU2",
         "J56XFbhioecI8PTQb90NKe5bwB13",
         "tnwww1c9bMhbfexodcBwYCdu3gQ2"
-      ]
+      ],
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
     },
     "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
       "balance": 100,

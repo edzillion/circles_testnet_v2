@@ -105,13 +105,60 @@ export class ValidatorService {
     });
   }
 
+  public revokeValidation(user, validator) {
+    if (!validator.trustedUsers) {
+    //todo:error
+    }
+    else {
+      validator.trustedUsers = validator.trustedUsers.filter(userKey => {
+        return userKey !== user.$key;
+      });
+    }
+
+    if (!user.validators) {
+    //todo:error
+    }
+    else {
+      user.validators = user.validators.filter(valiKey => {
+        return valiKey !== validator.$key;
+      });
+    }
+    this.db.object('/users/' + user.$key).update({validators:user.validators});
+    this.db.object('/validators/' + validator.$key).set(validator);
+  }
+
   public applyForValidation(user, validator) {
     if (!validator.appliedUsers)
       validator.appliedUsers = [user.$key];
     else
       validator.appliedUsers.push(user.$key);
 
-    this.db.object('/validators/' + validator.$key).set(validator);    
+    this.db.object('/validators/' + validator.$key).set(validator);
+  }
+
+  public completeValidation(user, validator) {
+    if (!validator.appliedUsers) {
+    //todo:error
+    }
+    else {
+      validator.appliedUsers = validator.appliedUsers.filter(userKey => {
+        return userKey !== user.$key;
+      });
+    }
+
+    if (!validator.trustedUsers)
+      validator.trustedUsers = [user.$key];
+    else
+      validator.trustedUsers.push(user.$key);
+
+    if (!user.validators)
+      user.validators = [validator.$key];
+    else
+      user.validators.push(validator.$key);
+
+    this.db.object('/users/' + user.$key).update({validators:user.validators});
+    this.db.object('/validators/' + validator.$key).set(validator);
+
   }
 
 }
