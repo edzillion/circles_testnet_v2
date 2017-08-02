@@ -1,5 +1,12 @@
 page-home {
 
+  .item-ios{
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    .item-inner{
+      border: none !important;
+    }
+  }
+
   .toolbar{
     height: 120px;
     align-items: flex-start;
@@ -75,7 +82,7 @@ page-home {
     background-color: white;
     color: #333;
     padding: 10px 0;
-    margin: 10px 50px;
+    margin: 10px 20px;
     border-radius: 10px;
     box-shadow: 3px 3px 25px rgba(136,136,136,.5);
     text-align: center;
@@ -108,7 +115,7 @@ page-home {
   .scrolling-list{
     flex: 1 1 auto;
     background-color: transparent;
-    margin-top: -10px;
+    margin: -10px 0 -10px 0;
     &::after {
       background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 10%); /* Standard syntax */
       content: "";

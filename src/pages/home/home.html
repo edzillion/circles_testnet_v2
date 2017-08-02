@@ -76,9 +76,9 @@
       </span>
 
       <span *ngIf="selectedView == 'news'">
-        <ion-item *ngFor="let newsItem of newsService.allnewsItemsReversed$ | async">
-          <news-card [newsItem]="newsItem"></news-card>
-        </ion-item>
+        <!--<ion-item *ngFor="let newsItem of newsService.allnewsItemsReversed$ | async"> -->
+          <news-card [newsItem]="newsItem" *ngFor="let newsItem of newsService.allnewsItemsReversed$ | async"></news-card>
+        <!--</ion-item>-->
       </span>
 
       <span *ngIf="selectedView == 'validators'">
