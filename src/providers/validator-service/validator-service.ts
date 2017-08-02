@@ -84,8 +84,8 @@ export class ValidatorService {
 
   public keyToValidatorName(key: string): string {
     let d = this.validators[key];
-    if (!d)
-      debugger;
+    //if (!d)
+      //todo:error message
     return d.displayName;
   }
 
@@ -98,8 +98,8 @@ export class ValidatorService {
 
   public keyToValidator(key: string): Validator {
     let d = this.validators[key];
-    if (!d)
-      debugger;
+    //if (!d)
+      //todo:error message
     return d;
   }
 

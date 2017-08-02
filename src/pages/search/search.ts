@@ -54,7 +54,6 @@ export class SearchPage {
 
     let uObs = this.userService.filterUsers$(this.searchTerm);
     let vObs = this.validatorService.filterValidators$(this.searchTerm);
-    debugger;
     Observable.combineLatest(uObs, vObs).first().subscribe(
       combined => {
         let search = [];
@@ -69,7 +68,7 @@ export class SearchPage {
         this.searchSubject$.next(search);
       },
       error => console.log(error),
-      () => {debugger;}
+      () => {}
     )
   }
 

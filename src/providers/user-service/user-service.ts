@@ -116,8 +116,8 @@ export class UserService implements OnDestroy {
 
   public keyToUser(key: string): User {
     let u = this.users[key];
-    if (!u)
-      debugger;
+    //if (!u)
+      //todo:error message
     return u;
   }
 
@@ -130,8 +130,8 @@ export class UserService implements OnDestroy {
 
   public keyToUserName(key: string): string {
     let d = this.users[key];
-    if (!d)
-      debugger;
+    //if (!d)
+      //todo:error message
     return d.displayName;
   }
 
