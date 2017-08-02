@@ -71,7 +71,6 @@ export class HomePage {
 
   private selectNews(): void {
     this.selectedView = 'news';
-  //this.newsService.allnewsItemsReversed$.subscribe( ns => {debugger});
   }
 
   private selectValidators(): void {
@@ -83,29 +82,24 @@ export class HomePage {
     this.validatorList = [];
     this.userSub$ = this.userService.user$.subscribe(
       user => {
-        debugger;
         this.user = {} as User;
         this.networkList = [];
         this.validatorList = [];
         this.user = user;
         if (this.user.profilePicURL)
           this.profilePicURL = this.user.profilePicURL;
-        this.myCoinName = this.user.wallet[this.user.$key].title;
-        this.myCoinBalance = this.user.wallet[this.user.$key].amount;
+        this.myCoinName = this.user.wallet[this.user.uid].title;
+        this.myCoinBalance = this.user.wallet[this.user.uid].amount;
         this.allCoinBalance = this.user.balance;
 
         if (user.trustedUsers) {
           user.trustedUsers.map(
             key => {
-              if (this.user.$key == key) {
+              if (this.user.uid == key) {
                 return;
               }
-              this.userService.keyToUser$(key).take(1).subscribe(
-                trustedUser => {
-                  debugger;
-                  this.networkList.push(trustedUser)
-                }
-              )
+              let trustedUser = this.userService.keyToUser(key);
+              this.networkList.push(trustedUser)
             }
           );
         }

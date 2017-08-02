@@ -35,13 +35,13 @@ export class PushService implements OnDestroy {
   }
 
   public async initialise() {
-    this.user = await this.userService.user$.take(1).toPromise();
-    if (this.user.pushID)
-      return;
-
-    let ids = await this.oneSignal.getIds();
-    let updateObject = {pushID: ids.userId};
-    return await this.userService.update(updateObject);
+    // this.user = await this.userService.user$.take(1).toPromise();
+    // if (this.user.pushID)
+    //   return;
+    //
+    // let ids = await this.oneSignal.getIds();
+    // let updateObject = {pushID: ids.userId};
+    // return await this.userService.update(updateObject);
   }
 
   public async pushToUser(toUser: User, message: string) {

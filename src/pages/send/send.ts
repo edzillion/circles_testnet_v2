@@ -21,10 +21,6 @@ import { ConfirmModal } from '../../pages/confirm-modal/confirm-modal';
 })
 export class SendPage {
 
-  private searchTerm: string = '';
-  private searchUsers$: Observable<User[]> | boolean;
-  private searchControl: FormControl;
-
   private sendForm: FormGroup;
   private toUser: User;
   private user: User;
@@ -48,10 +44,8 @@ export class SendPage {
 
     this.toUser = navParams.data;
 
-    this.searchControl = new FormControl();
-
     this.sendForm = formBuilder.group({
-      toUserKey: [this.toUser.$key, Validators.required],
+      toUserKey: [this.toUser.uid, Validators.required],
       amount: [null, Validators.required],
       message: [null]
     });
@@ -69,30 +63,29 @@ export class SendPage {
       return;
     }
 
-    this.userService.keyToUserName$(formData.toUserKey).take(1).subscribe( toUserName => {
-
-      let msg = "You are about to send "+formData.amount+" to "+toUserName;
-      let conf = this.modalController.create(ConfirmModal, { title: 'Confirm Send', message: msg });
-      conf.present();
-      conf.onDidDismiss((confirm) => {
-        if (confirm) {
-          this.loading = this.loadingCtrl.create({
-            content: 'Sending ...'
-          });
-          this.loading.present();
-          if (this.transactionService.createTransactionIntent(formData.toUserKey, formData.amount, formData.message)) {
-            //reset the recipient field
-            this.toUser = null;
-            this.sendForm.reset();
-            this.loading.dismiss();
-            this.navCtrl.pop();
-          }
-          else {
-            this.loading.dismiss();
-            this.navCtrl.pop()
-          }
+    let toUserName = this.userService.keyToUserName(formData.toUserKey);
+    let msg = "You are about to send "+formData.amount+" to "+toUserName;
+    let conf = this.modalController.create(ConfirmModal, { title: 'Confirm Send', message: msg });
+    conf.present();
+    conf.onDidDismiss((confirm) => {
+      if (confirm) {
+        this.loading = this.loadingCtrl.create({
+          content: 'Sending ...'
+        });
+        this.loading.present();
+        if (this.transactionService.createTransactionIntent(formData.toUserKey, formData.amount, formData.message)) {
+          //reset the recipient field
+          this.toUser = null;
+          this.sendForm.reset();
+          this.userService.saveUser();
+          this.loading.dismiss();
+          this.navCtrl.pop();
         }
-      });
+        else {
+          this.loading.dismiss();
+          this.navCtrl.pop()
+        }
+      }
     });
   }
 
@@ -116,8 +109,6 @@ export class SendPage {
 
   ionViewWillUnload() {
     this.userSub$.unsubscribe();
-    if (this.searchUsers$ && typeof this.searchUsers$ !== "boolean")
-      this.searchUsers$.subscribe().unsubscribe();
   }
 
 }

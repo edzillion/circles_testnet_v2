@@ -38,11 +38,13 @@ export class ValidatorDetailPage {
 
   private revokeTrust() {
     this.validator.trustedUsers.filter(
-      user => user !== this.user.$key
+      user => user !== this.user.uid
     );
     this.trusted = false;
     this.validatorService.revokeValidation(this.user,this.validator);
     this.newsService.revokeValidatorTrust(this.validator);
+    this.userService.saveUser();
+    this.validatorService.saveValidator(this.validator);
   }
 
   private checkRequirements() {
@@ -53,7 +55,7 @@ export class ValidatorDetailPage {
   ionViewDidLoad() {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
-        debugger;
+
         this.user = user;
         this.trustedUsers = [];
         this.trusted = false;
@@ -71,7 +73,7 @@ export class ValidatorDetailPage {
           }
         }
         if (this.validator.appliedUsers) {
-          if (this.validator.appliedUsers.find(u => u === this.user.$key)) {
+          if (this.validator.appliedUsers.find(u => u === this.user.uid)) {
             this.applied = true;
           }
         }

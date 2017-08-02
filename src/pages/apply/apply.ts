@@ -5,6 +5,8 @@ import { ValidatorService } from '../../providers/validator-service/validator-se
 import { Validator } from '../../interfaces/validator-interface'
 import { User } from '../../interfaces/user-interface';
 import { NewsService } from '../../providers/news-service/news-service';
+import { UserService } from '../../providers/user-service/user-service';
+
 
 import { ConfirmModal } from '../../pages/confirm-modal/confirm-modal';
 
@@ -26,6 +28,7 @@ export class ApplyPage {
     public navParams: NavParams,
     private modalController: ModalController,
     private loadingCtrl: LoadingController,
+    private userService: UserService,
     private validatorService: ValidatorService,
     private newsService: NewsService
   ) {
@@ -38,7 +41,7 @@ export class ApplyPage {
     }
     if (this.validator.appliedUsers) {
       for (let key of this.validator.appliedUsers) {
-        if (this.user.$key == key)
+        if (this.user.uid == key)
           this.applied = true;
       }
     }
@@ -60,7 +63,6 @@ export class ApplyPage {
         this.newsService.addValidatorTrustRequest(this.validator);
         if (this.validator.autoAccept) {
           setTimeout(() => {
-
             this.validatorService.completeValidation(this.user, this.validator);
             this.newsService.addValidatorTrustAccept(this.validator);
             this.loading.dismiss();
@@ -71,7 +73,8 @@ export class ApplyPage {
           this.loading.dismiss();
           this.navCtrl.pop();
         }
-
+        this.userService.saveUser();
+        this.validatorService.saveValidator(this.validator);
       }
       else {
         this.loading.dismiss();

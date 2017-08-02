@@ -63,15 +63,7 @@ export class WalletPage {
       this.user.wallet[c.owner] = c;
     }
 
-    try {
-      let a = await this.db.object('/users/'+this.user.$key).update({
-        wallet: this.user.wallet
-      });
-    }
-    catch (error) {
-      console.error(error);
-      throw new Error("Purchase fail");
-    }
+    this.userService.saveUser();
   }
 
   ionViewDidLoad() {
@@ -84,12 +76,9 @@ export class WalletPage {
         this.displayWallet = [];
         for (let i in this.user.wallet) {
           let w = Object.assign({},this.user.wallet[i]);
-          this.userService.keyToUserName$(w.owner).take(1).subscribe(
-            displayName => {
-              w.owner = displayName;
-              this.displayWallet.push(w);
-            }
-          );
+          let displayName = this.userService.keyToUserName(w.owner);
+          w.owner = displayName;
+          this.displayWallet.push(w);
         }
         this.orderByPriority();
       },

@@ -48,6 +48,9 @@ export class ProfilePage {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
+        if (this.user.profilePicURL) {
+          this.profilePicURL = this.user.profilePicURL;
+        }
         this.providers = this.validatorService.getUserProviders(user);
       }
     );
@@ -99,7 +102,7 @@ export class ProfilePage {
 
   saveProfile() {
     this.user.displayName = this.user.firstName + ' ' + this.user.lastName;
-    this.db.object('/users/'+this.user.$key).set(this.user);
+    this.userService.saveUser();
     this.navCtrl.pop();
   }
 

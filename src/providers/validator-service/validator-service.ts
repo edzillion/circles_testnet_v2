@@ -39,14 +39,13 @@ export class ValidatorService {
       }
     );
 
-    this.db.list('/static/authProviders/').subscribe(
+    this.db.list('/static/authProviders/').take(1).subscribe(
       provs => {
         for (let p of provs) {
           this.allProviders[p.$key] = p;
         }
       }
     );
-
   }
 
   public getUserProviders(user: User) {
@@ -83,11 +82,25 @@ export class ValidatorService {
     });
   }
 
+  public keyToValidatorName(key: string): string {
+    let d = this.validators[key];
+    if (!d)
+      debugger;
+    return d.displayName;
+  }
+
   public keyToValidator$(key: string): Observable<Validator> {
     return this.validatorsFirebaseObj$.map(valis => {
       let v = valis.find(vali => vali.$key === key);
       return v;
     });
+  }
+
+  public keyToValidator(key: string): Validator {
+    let d = this.validators[key];
+    if (!d)
+      debugger;
+    return d;
   }
 
   public filterValidators$(searchTerm: string) {
@@ -111,7 +124,7 @@ export class ValidatorService {
     }
     else {
       validator.trustedUsers = validator.trustedUsers.filter(userKey => {
-        return userKey !== user.$key;
+        return userKey !== user.uid;
       });
     }
 
@@ -123,17 +136,14 @@ export class ValidatorService {
         return valiKey !== validator.$key;
       });
     }
-    this.db.object('/users/' + user.$key).update({validators:user.validators});
-    this.db.object('/validators/' + validator.$key).set(validator);
   }
 
   public applyForValidation(user, validator) {
     if (!validator.appliedUsers)
-      validator.appliedUsers = [user.$key];
+      validator.appliedUsers = [user.uid];
     else
-      validator.appliedUsers.push(user.$key);
+      validator.appliedUsers.push(user.uid);
 
-    this.db.object('/validators/' + validator.$key).set(validator);
   }
 
   public completeValidation(user, validator) {
@@ -142,23 +152,24 @@ export class ValidatorService {
     }
     else {
       validator.appliedUsers = validator.appliedUsers.filter(userKey => {
-        return userKey !== user.$key;
+        return userKey !== user.uid;
       });
     }
 
     if (!validator.trustedUsers)
-      validator.trustedUsers = [user.$key];
+      validator.trustedUsers = [user.uid];
     else
-      validator.trustedUsers.push(user.$key);
+      validator.trustedUsers.push(user.uid);
 
     if (!user.validators)
       user.validators = [validator.$key];
     else
       user.validators.push(validator.$key);
 
-    this.db.object('/users/' + user.$key).update({validators:user.validators});
-    this.db.object('/validators/' + validator.$key).set(validator);
+  }
 
+  public saveValidator(validator: Validator) {
+    this.validatorsFirebaseObj$.update(validator.$key, validator);
   }
 
 }

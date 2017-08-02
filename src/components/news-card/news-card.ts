@@ -57,75 +57,69 @@ export class NewsCard implements OnDestroy, OnInit {
       this.itemIcon = "add-circle";
       this.message = "Your Circles account was created!";
     }
-    else if (this.newsItem.type == 'transaction' && this.newsItem.from == this.user.$key) {
+    else if (this.newsItem.type == 'transaction' && this.newsItem.from == this.user.uid) {
       this.title = "Sent Circles";
       this.itemIcon = "arrow-dropright-circle";
-      this.userService.keyToUser$(this.newsItem.to).take(1).subscribe(user => {
-        if (user.profilePicURL) {
-          this.profilePicURL = user.profilePicURL;
-        }
-        this.message = `${this.newsItem.amount} Circles to ${user.displayName}`;
-      });
+      let user = this.userService.keyToUser(this.newsItem.to);
+      if (user.profilePicURL) {
+        this.profilePicURL = user.profilePicURL;
+      }
+      this.message = `${this.newsItem.amount} Circles to ${user.displayName}`;
     }
-    else if (this.newsItem.type == 'transaction' && this.user.$key == this.newsItem.to) {
+    else if (this.newsItem.type == 'transaction' && this.user.uid == this.newsItem.to) {
       this.title = "Received Circles";
       this.itemIcon = "arrow-dropleft-circle";
-      this.userService.keyToUser$(this.newsItem.from).take(1).subscribe(user => {
+      let user = this.userService.keyToUser(this.newsItem.from);
         if (user.profilePicURL) {
           this.profilePicURL = user.profilePicURL;
         }
         this.message = `${this.newsItem.amount} Circles from ${user.displayName}`;
-      });
-    }
+      }
+
     else if (this.newsItem.type == 'validatorRequest') {
       this.title = "Validator Request";
       this.itemIcon = "help-circle";
-      this.validatorService.keyToValidator$(this.newsItem.from).take(1).subscribe(validator => {
-        if (validator.profilePicURL) {
-          this.profilePicURL = validator.profilePicURL;
-        }
-        this.message = `Requested validation from: ${validator.displayName}`;
-      });
+      let validator = this.validatorService.keyToValidator(this.newsItem.from);
+      if (validator.profilePicURL) {
+        this.profilePicURL = validator.profilePicURL;
+      }
+      this.message = `Requested validation from: ${validator.displayName}`;
     }
     else if (this.newsItem.type == 'validatorAccept') {
       this.title = "Validator Accept";
       this.itemIcon = "checkmark-circle";
-      this.validatorService.keyToValidator$(this.newsItem.from).take(1).subscribe(validator => {
-        if (validator.profilePicURL) {
-          this.profilePicURL = validator.profilePicURL;
-        }
-        this.message = `Validated by: ${validator.displayName}`;
-      });
+      let validator = this.validatorService.keyToValidator(this.newsItem.from);
+      if (validator.profilePicURL) {
+        this.profilePicURL = validator.profilePicURL;
+      }
+      this.message = `Validated by: ${validator.displayName}`;
     }
     else if (this.newsItem.type == 'revokeValidator') {
       this.title = "Revoke Validation";
       this.itemIcon = "close-circle";
-      this.validatorService.keyToValidator$(this.newsItem.to).take(1).subscribe(validator => {
-        if (validator.profilePicURL) {
-          this.profilePicURL = validator.profilePicURL;
-        }
-        this.message = `No longer validated by ${validator.displayName}`;
-      });
+      let validator = this.validatorService.keyToValidator(this.newsItem.to);
+      if (validator.profilePicURL) {
+        this.profilePicURL = validator.profilePicURL;
+      }
+      this.message = `No longer validated by ${validator.displayName}`;
     }
     else if (this.newsItem.type == 'trustUser') {
       this.title = "Trust Accept";
       this.itemIcon = "checkmark-circle";
-      this.userService.keyToUser$(this.newsItem.to).take(1).subscribe(user => {
-        if (user.profilePicURL) {
-          this.profilePicURL = user.profilePicURL;
-        }
-        this.message = `Afforded trust to: ${user.displayName}`;
-      });
+      let user = this.userService.keyToUser(this.newsItem.to);
+      if (user.profilePicURL) {
+        this.profilePicURL = user.profilePicURL;
+      }
+      this.message = `Afforded trust to: ${user.displayName}`;
     }
     else if (this.newsItem.type == 'revokeUser') {
       this.title = "Revoke Trust";
       this.itemIcon = "close-circle";
-      this.userService.keyToUser$(this.newsItem.to).take(1).subscribe(user => {
-        if (user.profilePicURL) {
-          this.profilePicURL = user.profilePicURL;
-        }
-        this.message = `Stopped trusting: ${user.displayName}`;
-      });
+      let user = this.userService.keyToUser(this.newsItem.to);
+      if (user.profilePicURL) {
+        this.profilePicURL = user.profilePicURL;
+      }
+      this.message = `Stopped trusting: ${user.displayName}`;
     }
 
   }

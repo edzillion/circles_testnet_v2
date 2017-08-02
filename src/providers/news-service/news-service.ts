@@ -48,7 +48,7 @@ export class NewsService implements OnDestroy {
   private setupDBQuery(user: User):void {
     // sets up a db list binding that will initially return all messages from the last
     // two minutes and then any added to the list after that.
-    this.dbNewsItems$ = this.db.list('/users/' + user.$key + '/news/');
+    this.dbNewsItems$ = this.db.list('/users/' + user.uid + '/news/');
     let twoMinsAgo = Date.now() - 120000;
     this.dbNewsItems$.$ref
       .orderByChild('timestamp')
@@ -56,11 +56,10 @@ export class NewsService implements OnDestroy {
       .on('child_added', (firebaseObj,index) => {
         let latestNewsItem = firebaseObj.val();
         //receiving from someone
-        if (latestNewsItem.type == 'transaction' && latestNewsItem.to == user.$key) {
-          this.userService.keyToUser$(latestNewsItem.from).take(1).subscribe((fromUser) => {
-            let msg = 'Receieved ' + latestNewsItem.amount + ' Circles from ' + fromUser.displayName;
-            this.notificationsService.create('Transaction', msg, 'info');
-          });
+        if (latestNewsItem.type == 'transaction' && latestNewsItem.to == user.uid) {
+          let fromUser = this.userService.keyToUser(latestNewsItem.from);
+          let msg = 'Receieved ' + latestNewsItem.amount + ' Circles from ' + fromUser.displayName;
+          this.notificationsService.create('Transaction', msg, 'info');
         }
       });
 
@@ -96,15 +95,15 @@ export class NewsService implements OnDestroy {
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      from: this.user.$key,
+      from: this.user.uid,
       amount: amount,
-      to: toUser.$key,
+      to: toUser.uid,
       type: 'transaction',
       message: message || ''
-    };
+    } as NewsItem;
     this.dbNewsItems$.push(newsItem);
 
-    this.db.list('/users/'+toUser.$key+'/news/').push(newsItem);
+    this.db.list('/users/'+toUser.uid+'/news/').push(newsItem);
 
     //send push notification to other user
     //msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;
@@ -121,7 +120,18 @@ export class NewsService implements OnDestroy {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
       from: validator.$key,
       type: 'validatorRequest'
-    };
+    } as NewsItem;
+    this.dbNewsItems$.push(newsItem);
+  }
+
+  public addCreateUser(user: User):void {
+    //this.notificationsService.create('Join Success','','success');
+    let msg = 'Welcome to Circles ' +user.displayName +'!';
+    this.notificationsService.create('User Created', msg, 'success');
+    let newsItem = {
+      timestamp: user.createdAt,
+      type: 'createAccount'
+    } as NewsItem;
     this.dbNewsItems$.push(newsItem);
   }
 
@@ -134,7 +144,7 @@ export class NewsService implements OnDestroy {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
       from: validator.$key,
       type: 'validatorAccept'
-    };
+    } as NewsItem;
     this.dbNewsItems$.push(newsItem);
   }
 
@@ -145,9 +155,9 @@ export class NewsService implements OnDestroy {
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      to: user.$key,
+      to: user.uid,
       type: 'trustUser'
-    };
+    } as NewsItem;
     this.dbNewsItems$.push(newsItem);
   }
 
@@ -158,9 +168,9 @@ export class NewsService implements OnDestroy {
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-      to: user.$key,
+      to: user.uid,
       type: 'revokeUser'
-    };
+    } as NewsItem;
     this.dbNewsItems$.push(newsItem);
   }
 
@@ -173,7 +183,7 @@ export class NewsService implements OnDestroy {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
       to: vali.$key,
       type: 'revokeValidator'
-    };
+    } as NewsItem;
     this.dbNewsItems$.push(newsItem);
   }
 

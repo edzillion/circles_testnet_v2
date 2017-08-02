@@ -96,203 +96,227 @@
   },
   "users": {
     "HiBpAZosB6hq4AuBK9N12OVpItq2": {
-			"authProviders": ["email","name","photo"],
-      "createdAt": 1497078643926,
-      "balance": 100,
-      "firstName": "Quentin",
-      "lastName": "Quinn",
-      "displayName": "Quentin Quinn",
-      "email": "q@q.com",
+      "userData": {
+        "uid": "HiBpAZosB6hq4AuBK9N12OVpItq2",
+        "authProviders": ["email", "name", "photo"],
+        "createdAt": 1497078643926,
+        "balance": 100,
+        "firstName": "Quentin",
+        "lastName": "Quinn",
+        "displayName": "Quentin Quinn",
+        "email": "q@q.com",
+        "validators": [
+          "-Kk1Xr2x-iftLqPsxscG",
+          "-Kk1Xr2ytzY1xPWUVXWQ"
+        ],
+        "wallet": {
+          "HiBpAZosB6hq4AuBK9N12OVpItq2": {
+            "amount": 100,
+            "owner": "HiBpAZosB6hq4AuBK9N12OVpItq2",
+            "priority": 0,
+            "title": "QuentinCoin"
+          },
+          "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
+            "amount": 60,
+            "owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+            "priority": 1,
+            "title": "JackCoin"
+          },
+          "Ea793jse7XNcSrMMmO8GvRPLlbU2": {
+            "amount": 20,
+            "owner": "Ea793jse7XNcSrMMmO8GvRPLlbU2",
+            "priority": 2,
+            "title": "ChristianCoin"
+          },
+          "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
+            "amount": 3,
+            "owner": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+            "priority": 3,
+            "title": "JaneCoin"
+          }
+        },
+        "trustedUsers": [
+          "HiBpAZosB6hq4AuBK9N12OVpItq2",
+          "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+          "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+          "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+          "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
+          "Ea793jse7XNcSrMMmO8GvRPLlbU2",
+          "J56XFbhioecI8PTQb90NKe5bwB13",
+          "tnwww1c9bMhbfexodcBwYCdu3gQ2"
+        ],
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
+      },
       "news": {
         "0": {
           "timestamp": 1496781495492,
           "type": "createAccount"
         }
-      },
-      "validators": [
-        "-Kk1Xr2x-iftLqPsxscG",
-        "-Kk1Xr2ytzY1xPWUVXWQ"
-      ],
-      "wallet": {
-        "HiBpAZosB6hq4AuBK9N12OVpItq2": {
-          "amount": 100,
-          "owner": "HiBpAZosB6hq4AuBK9N12OVpItq2",
-          "priority": 0,
-          "title": "QuentinCoin"
-        },
-        "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
-          "amount": 60,
-          "owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
-          "priority": 1,
-          "title": "JackCoin"
-        },
-        "Ea793jse7XNcSrMMmO8GvRPLlbU2": {
-          "amount": 20,
-          "owner": "Ea793jse7XNcSrMMmO8GvRPLlbU2",
-          "priority": 2,
-          "title": "ChristianCoin"
-        },
-        "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
-          "amount": 3,
-          "owner": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
-          "priority": 3,
-          "title": "JaneCoin"
-        }
-      },
-      "trustedUsers": [
-				"HiBpAZosB6hq4AuBK9N12OVpItq2",
-        "jSu2I20VwcgesCvTCsAb2wsTqNG2",
-        "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
-        "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
-        "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
-        "Ea793jse7XNcSrMMmO8GvRPLlbU2",
-        "J56XFbhioecI8PTQb90NKe5bwB13",
-        "tnwww1c9bMhbfexodcBwYCdu3gQ2"
-      ],
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
+      }
     },
     "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
-      "balance": 100,
-      "createdAt": 1497078643916,
-      "firstName": "Jack",
-      "lastName": "Kalish",
-      "displayName": "Jack Kalish",
-      "email": "jack@jackkalish.com",
-      "greeting": "Greetings from New York!",
-      "tradeMessage": "We sell all kinds of local produce including:\npots\npans\ntrinkets\nbananas",
-      "uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
-      "wallet": {
-        "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
-          "amount": 100,
-          "owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
-          "priority": 0,
-          "title": "JackCoin"
-        }
+      "userData": {
+        "uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+        "balance": 100,
+        "createdAt": 1497078643916,
+        "firstName": "Jack",
+        "lastName": "Kalish",
+        "displayName": "Jack Kalish",
+        "email": "jack@jackkalish.com",
+        "greeting": "Greetings from New York!",
+        "tradeMessage": "We sell all kinds of local produce including:\npots\npans\ntrinkets\nbananas",
+        "uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+        "wallet": {
+          "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
+            "amount": 100,
+            "owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+            "priority": 0,
+            "title": "JackCoin"
+          }
+        },
+        "trustedUsers": [
+          "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+          "HiBpAZosB6hq4AuBK9N12OVpItq2",
+          "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+          "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+          "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
+          "Ea793jse7XNcSrMMmO8GvRPLlbU2",
+          "J56XFbhioecI8PTQb90NKe5bwB13",
+          "tnwww1c9bMhbfexodcBwYCdu3gQ2"
+        ],
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
       },
-      "news" : {
+      "news": {
         "0": {
           "timestamp": 1496781495492,
           "type": "createAccount"
         },
-        "-KqKKBwfUwlzEqzT39cx" : {
-          "amount" : "22",
-          "from" : "yh2aAsNw2dZaLlTQpx2oFqDzVJx1",
-          "message" : "",
-          "timestamp" : 1501448949697,
-          "to" : "jSu2I20VwcgesCvTCsAb2wsTqNG2",
-          "type" : "transaction"
+        "-KqKKBwfUwlzEqzT39cx": {
+          "amount": "22",
+          "from": "yh2aAsNw2dZaLlTQpx2oFqDzVJx1",
+          "message": "",
+          "timestamp": 1501448949697,
+          "to": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+          "type": "transaction"
         },
-        "-KqKKBwcdok2DXcUZF19" : {
-          "amount" : "67",
-          "from" : "jSu2I20VwcgesCvTCsAb2wsTqNG2",
-          "message" : "",
-          "timestamp" : 1501448949197,
-          "to" : "SKMdyuZc5cRdje6GHiXzcEL7wQs1",
-          "type" : "transaction"
+        "-KqKKBwcdok2DXcUZF19": {
+          "amount": "67",
+          "from": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
+          "message": "",
+          "timestamp": 1501448949197,
+          "to": "SKMdyuZc5cRdje6GHiXzcEL7wQs1",
+          "type": "transaction"
         }
-      },
-      "trustedUsers": [
-				"jSu2I20VwcgesCvTCsAb2wsTqNG2",
-        "HiBpAZosB6hq4AuBK9N12OVpItq2",
-        "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
-        "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
-        "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
-        "Ea793jse7XNcSrMMmO8GvRPLlbU2",
-        "J56XFbhioecI8PTQb90NKe5bwB13",
-        "tnwww1c9bMhbfexodcBwYCdu3gQ2"
-      ],
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
+      }
     },
     "5jrFiCphYKbDZ4FeSMFuhMM8wzw2": {
-      "balance": 650,
-      "createdAt": 1496781495492,
-      "displayName": "Cafe Grundeinkommen",
-      "email": "basicincomeberlin@gmail.com",
+      "userData": {
+        "uid": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+        "balance": 650,
+        "createdAt": 1496781495492,
+        "displayName": "Cafe Grundeinkommen",
+        "email": "basicincomeberlin@gmail.com",
+        "offers": [{
+          "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fcoffee.jpg?alt=media&token=201f2112-cbc2-4951-84a9-8ea694100be3",
+          "price": 50,
+          "priceDescription": "For One",
+          "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+          "timestamp": 1496952402440,
+          "title": "Hot Cup of Coffee"
+        }, {
+          "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fmuffin.jpg?alt=media&token=a0f53c7e-5f47-44f9-9ea9-69e165bf68ad",
+          "price": 30,
+          "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+          "priceDescription": "For One",
+          "timestamp": 1496952402440,
+          "title": "Vegan Muffin"
+        }],
+        "organisation": "Cafe Grundeinkommen",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FI4V4vhOejVNSkoJSj3LOMKCYoGh1?alt=media&token=719e5232-0766-4a7f-aab3-f7587813f52c",
+        "greeting": "Basic Income Now!",
+        "type": "organisation",
+        "wants": [{
+          "price": 150,
+          "quantityDescription": "Per Kilo",
+          "timestamp": 1496952402440,
+          "title": "Fairtrade Coffee Beans"
+        }],
+        "website": "www.cafe-grundeinkommen.org"
+      },
       "news": {
         "0": {
           "timestamp": 1496781495492,
           "type": "createAccount"
         }
-      },
-      "offers": [{
-        "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fcoffee.jpg?alt=media&token=201f2112-cbc2-4951-84a9-8ea694100be3",
-        "price": 50,
-        "priceDescription": "For One",
-        "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
-        "timestamp": 1496952402440,
-        "title": "Hot Cup of Coffee"
-      }, {
-        "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fmuffin.jpg?alt=media&token=a0f53c7e-5f47-44f9-9ea9-69e165bf68ad",
-        "price": 30,
-        "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
-        "priceDescription": "For One",
-        "timestamp": 1496952402440,
-        "title": "Vegan Muffin"
-      }],
-      "organisation": "Cafe Grundeinkommen",
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FI4V4vhOejVNSkoJSj3LOMKCYoGh1?alt=media&token=719e5232-0766-4a7f-aab3-f7587813f52c",
-      "greeting": "Basic Income Now!",
-      "type": "organisation",
-      "wants": [{
-        "price": 150,
-        "quantityDescription": "Per Kilo",
-        "timestamp": 1496952402440,
-        "title": "Fairtrade Coffee Beans"
-      }],
-      "website": "www.cafe-grundeinkommen.org"
+      }
     },
+
     "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
-      "balance": 143,
-      "createdAt": 1496952402440,
-      "displayName": "Jane Smith",
-      "email": "fafafa@fafa.com",
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "greeting": "Textile & Craft Wonderworker",
+      "userData": {
+        "uid": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+        "balance": 143,
+        "createdAt": 1496952402440,
+        "displayName": "Jane Smith",
+        "email": "fafafa@fafa.com",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "greeting": "Textile & Craft Wonderworker",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F7H0ByozNeBgwy2ZdQjWnTk2ZbCN2?alt=media&token=bb7fd08b-3a73-4b4e-a082-535e00c59580",
+        "type": "individual"
+      },
       "news": [{
         "timestamp": 1496952402440,
         "type": "createAccount"
-      }],
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F7H0ByozNeBgwy2ZdQjWnTk2ZbCN2?alt=media&token=bb7fd08b-3a73-4b4e-a082-535e00c59580",
-      "type": "individual"
+      }]
     },
     "J56XFbhioecI8PTQb90NKe5bwB13": {
-      "balance": 143,
-      "createdAt": 1496952177281,
-      "displayName": "Ed Murphy",
-      "email": "edzillion@gmail.com",
-      "firstName": "Ed",
-      "lastName": "Murphy",
-      "greeting": "Don't just pay it forward, pay it Circles!",
+      "userData": {
+        "uid": "J56XFbhioecI8PTQb90NKe5bwB13",
+        "balance": 143,
+        "createdAt": 1496952177281,
+        "displayName": "Ed Murphy",
+        "email": "edzillion@gmail.com",
+        "firstName": "Ed",
+        "lastName": "Murphy",
+        "greeting": "Don't just pay it forward, pay it Circles!",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef",
+        "type": "individual"
+      },
       "news": [{
         "timestamp": 1496952177281,
         "type": "createAccount"
-      }],
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef",
-      "type": "individual"
+      }]
     },
     "SKMdyuZc5cRdje6GHiXzcEL7wQs1": {
-      "balance": 143,
-      "createdAt": 1496952304626,
-      "displayName": "Baba Blacksheep",
-      "email": "baba@baba.com",
-      "firstName": "Baba",
-      "lastName": "Blacksheep",
+      "userData": {
+        "uid": "SKMdyuZc5cRdje6GHiXzcEL7wQs1",
+        "balance": 143,
+        "createdAt": 1496952304626,
+        "displayName": "Baba Blacksheep",
+        "email": "baba@baba.com",
+        "firstName": "Baba",
+        "lastName": "Blacksheep",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951",
+        "type": "individual"
+      },
       "news": [{
         "timestamp": 1496952304626,
         "type": "createAccount"
-      }],
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951",
-      "type": "individual"
+      }]
     },
     "8tmyxjdsXOWQM6YLCGeYwLfqU4I3": {
-      "balance": 857,
-      "createdAt": 1497089064339,
-      "displayName": "Carl Ambroselli",
-      "email": "basicincomeberlin@carl-ambroselli.de",
-      "firstName": "Carl",
-      "lastName": "Ambroselli",
-      "greeting": "Wie Gehts?",
+      "userData": {
+        "uid": "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
+        "balance": 857,
+        "createdAt": 1497089064339,
+        "displayName": "Carl Ambroselli",
+        "email": "basicincomeberlin@carl-ambroselli.de",
+        "firstName": "Carl",
+        "lastName": "Ambroselli",
+        "greeting": "Wie Gehts?",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F8tmyxjdsXOWQM6YLCGeYwLfqU4I3?alt=media&token=ebf12adb-7b9b-419d-a884-2cf05378f61b",
+        "type": "individual"
+      },
       "news": {
         "0": {
           "timestamp": 1497089064339,
@@ -303,48 +327,55 @@
           "title": "Tinyhouse University Group",
           "type": "groupJoin"
         }
-      },
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F8tmyxjdsXOWQM6YLCGeYwLfqU4I3?alt=media&token=ebf12adb-7b9b-419d-a884-2cf05378f61b",
-      "type": "individual"
+      }
     },
     "Ea793jse7XNcSrMMmO8GvRPLlbU2": {
-      "balance": 857,
-      "createdAt": 1497078641926,
-      "displayName": "Christian Eisenhofer",
-      "email": "christian@plasticwood.de",
-      "firstName": "Christian",
-      "lastName": "Eisenhofer",
-      "greeting": "Hallo",
+      "userData": {
+        "uid": "Ea793jse7XNcSrMMmO8GvRPLlbU2",
+        "balance": 857,
+        "createdAt": 1497078641926,
+        "displayName": "Christian Eisenhofer",
+        "email": "christian@plasticwood.de",
+        "firstName": "Christian",
+        "lastName": "Eisenhofer",
+        "greeting": "Hallo",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FEa793jse7XNcSrMMmO8GvRPLlbU2?alt=media&token=9fec5f7a-3d2e-448c-8e2d-938eff38f50a",
+        "type": "individual"
+      },
       "news": [{
         "timestamp": 1497078641926,
         "type": "createAccount"
-      }],
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FEa793jse7XNcSrMMmO8GvRPLlbU2?alt=media&token=9fec5f7a-3d2e-448c-8e2d-938eff38f50a",
-      "type": "individual"
+      }]
     },
     "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3": {
-      "balance": 857,
-      "createdAt": 1497089879370,
-      "displayName": "Brian Heussen ",
-      "email": "brian.heussen@gmail.com",
-      "firstName": "Brian",
-      "lastName": "Heussen ",
-      "greeting": "Builder for hire",
+      "userData": {
+        "uid": "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3",
+        "balance": 857,
+        "createdAt": 1497089879370,
+        "displayName": "Brian Heussen ",
+        "email": "brian.heussen@gmail.com",
+        "firstName": "Brian",
+        "lastName": "Heussen ",
+        "greeting": "Builder for hire",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FZSbGLxzQwgfYMQ5Xy98dyqlL8JA3?alt=media&token=ce6af920-2e35-4088-b1ba-6cd341c923f6",
+        "type": "individual"
+      },
       "news": [{
         "timestamp": 1497089879370,
         "type": "createAccount"
-      }],
-      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FZSbGLxzQwgfYMQ5Xy98dyqlL8JA3?alt=media&token=ce6af920-2e35-4088-b1ba-6cd341c923f6",
-      "type": "individual"
+      }]
     },
     "tnwww1c9bMhbfexodcBwYCdu3gQ2": {
-      "balance": 857,
-      "createdAt": 1497126941460,
-      "displayName": "Lu Isa",
-      "email": "luisa.bilke@hotmail.de",
-      "firstName": "Lu",
-      "lastName": "Isa",
-      "log": {
+      "userData": {
+        "uid": "tnwww1c9bMhbfexodcBwYCdu3gQ2",
+        "balance": 857,
+        "createdAt": 1497126941460,
+        "displayName": "Lu Isa",
+        "email": "luisa.bilke@hotmail.de",
+        "firstName": "Lu",
+        "lastName": "Isa"
+      },
+      "news": {
         "0": {
           "timestamp": 1497126941460,
           "type": "createAccount"

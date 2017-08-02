@@ -20,7 +20,6 @@ export class TransactionService implements OnDestroy {
 
   private user: User;
   private userSub$: Subscription;
-  private toUserLog$: FirebaseListObservable<NewsItem[]>;
   private transactionLog$: FirebaseListObservable<LogItem[]>;
 
   constructor(
@@ -75,19 +74,14 @@ export class TransactionService implements OnDestroy {
     }
 
     try {
-      let a = await this.db.object('/users/'+this.user.$key).update({
-        wallet: this.user.wallet,
-        balance: this.user.balance
-      });
-
-      let b = await this.db.object('/users/'+toUser.$key).update({
+      await this.db.object('/users/'+toUser.uid).update({
         wallet: toUser.wallet,
         balance: toUser.balance
       });
     }
     catch (error) {
       console.error(error);
-      throw new Error("Purchase fail");
+      throw new Error("Send fail");
     }
     return true;
   }
@@ -95,8 +89,8 @@ export class TransactionService implements OnDestroy {
   private logTransfer(toUser:User, amount:number):void {
 
     let logItem = {
-      "from" : this.user.$key,
-      "to" : toUser.$key,
+      "from" : this.user.uid,
+      "to" : toUser.uid,
       "timestamp" : firebase.database['ServerValue']['TIMESTAMP'],
       "amount" : amount
     } as LogItem;
@@ -107,16 +101,15 @@ export class TransactionService implements OnDestroy {
 
   public createTransactionIntent(toUserId:string, amount:number, message?:string): Promise<any> {
     let p = new Promise( (resolve, reject) => {
-      this.userService.keyToUser$(toUserId).take(1).subscribe( (toUser) => {
-        if(this.transfer(toUser, amount)) {
+      let toUser = this.userService.keyToUser(toUserId);
+      if(this.transfer(toUser, amount)) {
 
-          this.logTransfer(toUser, amount);
-          this.newsService.addTransaction(toUser, amount, message);
-          resolve(true);
-        }
-        else
-          reject(new Error("Transfer Failed"));
-      });
+        this.logTransfer(toUser, amount);
+        this.newsService.addTransaction(toUser, amount, message);
+        resolve(true);
+      }
+      else
+        reject(new Error("Transfer Failed"));
     });
 
     return p;
@@ -140,7 +133,6 @@ export class TransactionService implements OnDestroy {
 
   ngOnDestroy() {
     this.userSub$.unsubscribe();
-    this.toUserLog$.subscribe().unsubscribe();
   }
 
 }

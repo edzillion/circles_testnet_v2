@@ -14,11 +14,11 @@ export interface User {
   firstName: string;
   greeting?: string;
   lastName: string;
-  news: Array<NewsItem>;
   profilePicURL: string;
   pushID: string;
   tradeMessage?:string;
   trustedUsers: Array<any>;
+  uid: string;
   validators: Array<any>;
   wallet: {};
 }

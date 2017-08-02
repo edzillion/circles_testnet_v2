@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { FirebaseObjectObservable } from 'angularfire2/database';
 
 import { UserService } from '../../providers/user-service/user-service';
+import { NewsService } from '../../providers/news-service/news-service';
 import { User } from '../../interfaces/user-interface';
 
 @Component({
@@ -18,7 +19,8 @@ export class DisclaimerPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public userService: UserService
+    public userService: UserService,
+    public newsService: NewsService
   ) {
     this.userObssever = navParams.data.obs;
     this.auth = navParams.data.auth;
@@ -26,9 +28,9 @@ export class DisclaimerPage {
 
   private agree() {
     //todo: problem here on relogin without refresh
-    debugger;
-    let u = this.userService.createUserRecord(this.auth);
-    this.userObssever.set(u);
+    let user = this.userService.createUserRecord(this.auth);
+    this.newsService.addCreateUser(user)
+    this.userObssever.set(user);
   }
 
   ionViewDidLoad() {

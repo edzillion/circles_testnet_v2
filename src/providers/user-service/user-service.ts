@@ -21,7 +21,7 @@ export class UserService implements OnDestroy {
   public initUserSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   private userSubject$: ReplaySubject<User> = new ReplaySubject<User>(1);
-  private usersSubject$: ReplaySubject<Array<User>> = new ReplaySubject<Array<User>>(1);
+  private usersSubject$: ReplaySubject<Array<any>> = new ReplaySubject<Array<any>>(1);
 
   public user$: Observable<User>;
   public userFirebaseObj$: FirebaseObjectObservable<User>;
@@ -49,17 +49,26 @@ export class UserService implements OnDestroy {
     private db: AngularFireDatabase
   ) {
 
+    this.usersSub$ = this.db.list('/users/').subscribe(
+      users => {
+        this.users = [];
+        for (let u of users) {
+          this.users[u.$key] = u.userData;
+        }
+        this.usersSubject$.next(users);
+      },
+      error => console.log('Could not load users.')
+    );
+
     this.user.createdAt = 0;
     this.authState$ = this.afAuth.authState;
     this.initUserSubject$.take(1).subscribe(
       initUser => {
-        debugger;
         this.user$ = this.userSubject$.asObservable();
         // this.userSubject$ is our app wide current user Subscription
-        this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key);
+        this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key + '/userData');
         this.userSub$ = this.userFirebaseObj$.subscribe(
           user => {
-            debugger;
             this.user = user;
             this.setBalance();
             //this.initUserSubject$.unsubscribe();
@@ -67,23 +76,9 @@ export class UserService implements OnDestroy {
           },
           error => console.log('Could not load current user record.')
         );
-
-        this.usersSub$ = this.db.list('/users/').subscribe(
-          users => {
-            this.users = [];
-            for (let u of users) {
-              this.users[u.$key] = u;
-            }
-            //clone the users array so that we don't change a user accidentally
-            //Object.assign(this.dataStore.users, users);
-            this.usersSubject$.next(users);
-          },
-          error => console.log('Could not load users.')
-        );
-//        this.initUserSubject$.unsubscribe();
       },
       error => console.log(error),
-      () => {debugger;}
+      () => {}
     )
   }
 
@@ -99,12 +94,8 @@ export class UserService implements OnDestroy {
   public createUserRecord(auth): User {
     //user doesn't exist, create user entry on db
     this.user = {} as User;
+    this.user.uid = auth.uid;
     this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
-    this.user.news = [{
-      timestamp: this.user.createdAt,
-      type: 'createAccount'
-    } as NewsItem];
-
     this.user.email = auth.email || '';
     this.user.firstName = this.createUserData.firstName || '';
     this.user.lastName = this.createUserData.lastName || '';
@@ -119,39 +110,47 @@ export class UserService implements OnDestroy {
 
   public keyToUser$(key: string): Observable<User> {
     return this.users$.map(
-      users => users.find(user => user.$key === key)
+      users => users.find(user => user.uid === key)
     );
+  }
+
+  public keyToUser(key: string): User {
+    let u = this.users[key];
+    if (!u)
+      debugger;
+    return u;
   }
 
   public keyToUserName$(key: string): Observable<string> {
     return this.users$.map(users => {
-      let u = users.find(user => user.$key === key);
+      let u = users.find(user => user.uid === key);
       return u.displayName;
     });
+  }
+
+  public keyToUserName(key: string): string {
+    let d = this.users[key];
+    if (!d)
+      debugger;
+    return d.displayName;
   }
 
   public filterUsers$(searchTerm: string) {
     //if (!searchTerm)
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
     return this.users$.map((users) => {
+      users = users.map((userRecord) => {
+        return userRecord.userData;
+      });
       return users.filter((user) => {
-        if (!user.displayName || user.$key == 'undefined' || (user.$key == this.user.$key))
+        //let user = userRecord.userData as User;
+        if (!user.displayName || user.uid == 'undefined' || (user.uid == this.user.uid))
           return false;
         let s = searchTerm.toLowerCase();
         let d = user.displayName.toLowerCase();
         return d.indexOf(s) > -1;
       });
     });
-  }
-
-  public async update(updateObject: Object) {
-    try {
-      let result = await this.userFirebaseObj$.update(updateObject);
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-      throw new Error("userService update fail");
-    }
   }
 
   public signInEmail(email, password) {
@@ -162,18 +161,14 @@ export class UserService implements OnDestroy {
     return this.afAuth.auth.signInWithRedirect(provider);
   }
 
-  public async addTrustedUser(userKey) {
+  public addTrustedUser(userKey) {
     this.user.trustedUsers.push(userKey);
-    let userObs = this.db.object('/users/' + this.user.$key);
-    userObs.update({ trustedUsers: this.user.trustedUsers });
   }
 
-  public async removeTrustedUser(userKey) {
-    let arr = this.user.trustedUsers.filter(user =>
-	     user != userKey
-    );
-    let userObs = this.db.object('/users/' + this.user.$key);
-    await userObs.update({ trustedUsers: arr });
+  public removeTrustedUser(userKey) {
+    this.user.trustedUsers = this.user.trustedUsers.filter(user => {
+	     return user != userKey;
+    });
   }
 
   private setInitialWallet(userKey): void {
@@ -219,6 +214,26 @@ export class UserService implements OnDestroy {
     this.user = blankUser;
     if (this.userSubject$) {
       this.userSubject$.next(blankUser);
+    }
+  }
+
+  public async updateUser(updateObject: Object) {
+    try {
+      let result = await this.userFirebaseObj$.update(updateObject);
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      throw new Error("userService update fail");
+    }
+  }
+
+  public async saveUser() {
+    try {
+      let result = await this.userFirebaseObj$.set(this.user);
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      throw new Error("userService save fail");
     }
   }
 
