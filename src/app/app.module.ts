@@ -20,6 +20,7 @@ import { LoginPage } from '../pages/login/login';
 import { LoginEmailPage } from '../pages/login-email/login-email';
 import { SignupEmailPage } from '../pages/signup-email/signup-email';
 import { SendPage } from '../pages/send/send';
+import { ApplyPage } from '../pages/apply/apply';
 import { DisclaimerPage } from '../pages/disclaimer/disclaimer';
 
 import { ConfirmModal } from '../pages/confirm-modal/confirm-modal';
@@ -70,7 +71,8 @@ import { NewsCard } from '../components/news-card/news-card';
     SettingsPage,
     NewsCard,
     DisclaimerPage,
-    ConfirmModal
+    ConfirmModal,
+    ApplyPage
   ],
   imports: [
     AngularFireAuthModule,
@@ -97,7 +99,8 @@ import { NewsCard } from '../components/news-card/news-card';
     ValidatorDetailPage,
     SettingsPage,
     DisclaimerPage,
-    ConfirmModal
+    ConfirmModal,
+    ApplyPage
   ],
   providers: [
     AnalyticsService,

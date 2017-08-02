@@ -81,6 +81,11 @@
         "displayName": "Steam",
         "icon": "steam",
         "message": "You need to confirm your Steam account."
+      },
+      "github": {
+        "displayName": "Github",
+        "icon": "guthub",
+        "message": "You need to confirm your Github account."
       }
     }
   },

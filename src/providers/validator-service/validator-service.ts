@@ -17,7 +17,10 @@ export class ValidatorService {
   public validators: Array<Validator>;
   public validatorArray: Array<Validator>;
   public initValSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
-  public validators$: Observable<Validator[]>;
+  public validators$: Observable<Validator[]>
+
+  public allProviders: Array<any> = [];
+  public userProviders: Array<any>;
 
   constructor(private db: AngularFireDatabase) {
 
@@ -34,6 +37,29 @@ export class ValidatorService {
         this.initValSubject$.next(this.validators);
       }
     );
+
+    this.db.list('/static/authProviders/').subscribe(
+      provs => {
+        for (let p of provs) {
+          this.allProviders[p.$key] = p;
+        }
+      }
+    );
+
+  }
+
+  public getUserProviders(user: User) {
+
+    this.userProviders = [];
+    for (let pKey in this.allProviders) {
+      let p = Object.assign({},this.allProviders[pKey]);
+      let f = user.authProviders.find(aKey => pKey == aKey);
+      if (f) {
+        p.completed = true;
+      }
+      this.userProviders.push(p);
+    }
+    return this.userProviders;
   }
 
   public keyToValidatorName$(key: string): Observable<string> {
@@ -49,6 +75,7 @@ export class ValidatorService {
       return v;
     });
   }
+
 
   public filterValidators$(searchTerm: string)  {
     //if (!searchTerm)

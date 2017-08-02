@@ -44,9 +44,8 @@ validator
           </ion-card-content>
         </ion-card>
         <div class="horizontal-center-wrapper">
-          <button ion-button [disabled]="applied" *ngIf="!trusted" (click)="affordTrust()" icon-end>
-            <span *ngIf="!applied">Apply For Trust Validation</span>
-            <span *ngIf="applied">Applied</span>
+          <button ion-button *ngIf="!trusted" (click)="checkRequirements()" icon-end>
+            <span *ngIf="!applied">Check Validator Requirements</span>
             <ion-icon name="lock" color="red" item-right></ion-icon>
           </button>
         </div>

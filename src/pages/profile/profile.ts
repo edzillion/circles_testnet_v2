@@ -11,11 +11,12 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
 import { NewsService } from '../../providers/news-service/news-service';
+import { ValidatorService } from '../../providers/validator-service/validator-service';
 import { User } from '../../interfaces/user-interface';
 
 import { SearchPage } from '../search/search';
 import { UserDetailPage } from '../user-detail/user-detail';
-import { ValidatorDetailPage } from '../validator-detail/validator-detail';
+
 
 @Component({
   selector: 'page-profile',
@@ -28,9 +29,7 @@ export class ProfilePage {
   public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
 
   private userSub$: Subscription;
-  private providers$: Subscription;
-  private allProviders: Array<any>;
-  private userProviders: Array<boolean>;
+  private providers: Array<any>;
   private user: User = {} as User;
 
   constructor(
@@ -38,7 +37,8 @@ export class ProfilePage {
     private db: AngularFireDatabase,
     private ds: DomSanitizer,
     private toastCtrl: ToastController,
-    private userService: UserService
+    private userService: UserService,
+    private validatorService: ValidatorService
   ) { }
 
   ionViewDidLoad() {
@@ -47,21 +47,7 @@ export class ProfilePage {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
-        this.db.list('/static/authProviders/').subscribe(
-          provs => {
-            this.allProviders = [];
-            this.userProviders = [];
-            for (let p of user.authProviders) {
-              this.userProviders[p] = true;
-            }
-            for (let p2 of provs) {
-              if (this.userProviders[p2.$key]) {
-                p2.completed = true;
-              }
-              this.allProviders.push(p2);
-            }
-          }
-        );
+        this.providers = this.validatorService.getUserProviders(user);
       }
     );
   }

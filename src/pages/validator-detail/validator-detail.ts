@@ -5,6 +5,8 @@ import { UserService } from '../../providers/user-service/user-service';
 import { NewsService } from '../../providers/news-service/news-service';
 import { User } from '../../interfaces/user-interface';
 
+import { ApplyPage } from '../../pages/apply/apply';
+
 import { Validator } from '../../interfaces/validator-interface';
 import { ValidatorService } from '../../providers/validator-service/validator-service';
 
@@ -42,10 +44,8 @@ export class ValidatorDetailPage {
     this.newsService.revokeValidatorTrust(this.validator);
   }
 
-  private affordTrust() {
-    this.applied = true;
-    this.newsService.addValidatorTrustRequest(this.validator);
-    this.validatorService.applyForValidation(this.user, this.validator);
+  private checkRequirements() {
+    this.navCtrl.push(ApplyPage, {validator:this.validator, user:this.user});
   }
 
   ionViewDidLoad() {
