@@ -78,50 +78,6 @@ export class HomePage {
     this.selectedView = 'validators';
   }
 
-  private selectFromGallery(): void {
-    var options = {
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL
-    };
-    this.camera.getPicture(options).then(
-      imageData => {
-        // imageData is a base64 encoded string
-        this.base64ImageData = imageData;
-        this.profilePicURL = "data:image/jpeg;base64," + imageData;
-      },
-      error => {
-        this.toast = this.toastCtrl.create({
-          message: 'Error selecting from gallery: ' + error,
-          duration: 3000,
-          position: 'middle'
-        });
-        console.error(error);
-        this.toast.present();
-      });
-  }
-
-  private openCamera(): void {
-    var options = {
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.DATA_URL
-    };
-    this.camera.getPicture(options).then(
-      imageData => {
-        // imageData is a base64 encoded string
-        this.base64ImageData = imageData;
-        this.profilePicURL = "data:image/jpeg;base64," + imageData;
-      },
-      error => {
-        this.toast = this.toastCtrl.create({
-          message: 'Error opening camera: ' + error,
-          duration: 3000,
-          position: 'middle'
-        });
-        console.error(error);
-        this.toast.present();
-      });
-  }
-
   ionViewDidLoad() {
     this.networkList = [];
     this.validatorList = [];
@@ -131,6 +87,8 @@ export class HomePage {
         this.networkList = [];
         this.validatorList = [];
         this.user = user;
+        if (this.user.profilePicURL)
+          this.profilePicURL = this.user.profilePicURL;
         this.myCoinName = this.user.wallet[this.user.$key].title;
         this.myCoinBalance = this.user.wallet[this.user.$key].amount;
         this.allCoinBalance = this.user.balance;

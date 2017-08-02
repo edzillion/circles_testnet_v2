@@ -60,6 +60,8 @@ export class UserDetailPage {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
+        if (this.viewUser.profilePicURL)
+          this.profilePicURL = this.viewUser.profilePicURL;
         if (this.user.trustedUsers) {
           let dTrust = this.user.trustedUsers.some(tUserKey => {
             return tUserKey == this.viewUser.$key;

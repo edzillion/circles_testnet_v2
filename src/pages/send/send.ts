@@ -85,11 +85,11 @@ export class SendPage {
             this.toUser = null;
             this.sendForm.reset();
             this.loading.dismiss();
-            return;
+            this.navCtrl.pop();
           }
           else {
             this.loading.dismiss();
-            return;
+            this.navCtrl.pop()
           }
         }
       });

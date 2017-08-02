@@ -11,7 +11,7 @@ validator
   <ion-card class="shadowless-card">
     <ion-card-title>
       <h1>{{validator.displayName}}</h1>
-      <ion-badge>Trust each other</ion-badge>
+      <ion-badge *ngIf="trusted">Validated</ion-badge>
       <h2>{{validator.greeting}}</h2>
     </ion-card-title>
     <ion-card-content>
