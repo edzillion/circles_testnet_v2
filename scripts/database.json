@@ -4,7 +4,7 @@
       "description": "Tinyhouse university is a Berlin-based NGO founded by Van Bo Le-Mentzel, designers, education activists and refugees. Our goal is to create new models of social neighborhoods. Our tools are architecture and the beliefs that make diversity a village stronger than common sense.",
       "displayName": "Tinyhouse University",
       "email": "tinyhouseuni@tinyhouse.com",
-      "trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
+      "trustedUsers": [],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Ftinyu.png?alt=media&token=a61c66b6-d6af-46a8-ad73-3a5f853ba99e",
       "requirements": ["email", "name", "photo"]
     },
@@ -195,7 +195,8 @@
         "Ea793jse7XNcSrMMmO8GvRPLlbU2",
         "J56XFbhioecI8PTQb90NKe5bwB13",
         "tnwww1c9bMhbfexodcBwYCdu3gQ2"
-      ]
+      ],
+      "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
     },
     "5jrFiCphYKbDZ4FeSMFuhMM8wzw2": {
       "balance": 650,

@@ -50,21 +50,22 @@ private initSub$: Subscription;
       this.userService.authState$.subscribe(
         auth => {
           if (auth) {
-            let userObs = this.db.object('/users/' + auth.uid);
-            let userSub = userObs.subscribe(
+            let userObs$ = this.db.object('/users/' + auth.uid);
+            let userSub$ = userObs$.subscribe(
               user => {
                 if (!user.$exists()) {
-                  this.nav.push(DisclaimerPage, { obs: userObs, auth:auth });
+                  this.nav.push(DisclaimerPage, { obs: userObs$, auth:auth });
                 }
                 else {
+                  userSub$.unsubscribe();
                   this.userService.initUserSubject$.next(user)
-                  this.nav.setRoot(HomePage);
+                  this.nav.setRoot(HomePage);                  
                 }
               }
             );
           }
           else {
-            //this.userService.clearUser();
+            //this.nav.setRoot(LoginPage);
           }
 
         },
@@ -89,6 +90,7 @@ private initSub$: Subscription;
 
   private logout() : void {
     //close subscriptions?? close services??
+
     this.userService.signOut().then(
       (user) => {
       console.log('logout success');

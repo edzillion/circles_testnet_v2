@@ -109,6 +109,7 @@ export class UserService implements OnDestroy {
     this.user.lastName = this.createUserData.lastName || '';
     this.user.displayName = this.user.firstName + ' ' + this.user.lastName;
     this.user.authProviders = ["email","name"];
+    console.log('auth uid',auth.uid);
     this.setInitialWallet(auth.uid);
     this.user.trustedUsers = [auth.uid];
 
@@ -208,10 +209,11 @@ export class UserService implements OnDestroy {
   }
 
   public signOut() {
+    //this.clearUser();
     return this.afAuth.auth.signOut();
   }
 
-  public clearUser() {
+  private clearUser() {
     let blankUser = {} as User;
     this.user = blankUser;
     if (this.userSubject$) {
