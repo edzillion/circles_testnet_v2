@@ -50,9 +50,11 @@ private initSub$: Subscription;
       this.userService.authState$.subscribe(
         auth => {
           if (auth) {
+            debugger;
             let userObs$ = this.db.object('/users/' + auth.uid);
             let userSub$ = userObs$.subscribe(
               user => {
+                debugger;
                 if (!user.$exists()) {
                   this.nav.push(DisclaimerPage, { obs: userObs$, auth:auth });
                 }

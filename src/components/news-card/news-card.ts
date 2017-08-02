@@ -60,7 +60,7 @@ export class NewsCard implements OnDestroy, OnInit {
     else if (this.newsItem.type == 'transaction' && this.newsItem.from == this.user.$key) {
       this.title = "Sent Circles";
       this.itemIcon = "arrow-dropright-circle";
-      this.userService.keyToUser$(this.newsItem.to).subscribe(user => {
+      this.userService.keyToUser$(this.newsItem.to).take(1).subscribe(user => {
         if (user.profilePicURL) {
           this.profilePicURL = user.profilePicURL;
         }
@@ -70,7 +70,7 @@ export class NewsCard implements OnDestroy, OnInit {
     else if (this.newsItem.type == 'transaction' && this.user.$key == this.newsItem.to) {
       this.title = "Received Circles";
       this.itemIcon = "arrow-dropleft-circle";
-      this.userService.keyToUser$(this.newsItem.from).subscribe(user => {
+      this.userService.keyToUser$(this.newsItem.from).take(1).subscribe(user => {
         if (user.profilePicURL) {
           this.profilePicURL = user.profilePicURL;
         }
@@ -80,7 +80,7 @@ export class NewsCard implements OnDestroy, OnInit {
     else if (this.newsItem.type == 'validatorRequest') {
       this.title = "Validator Request";
       this.itemIcon = "help-circle";
-      this.validatorService.keyToValidator$(this.newsItem.from).subscribe(validator => {
+      this.validatorService.keyToValidator$(this.newsItem.from).take(1).subscribe(validator => {
         if (validator.profilePicURL) {
           this.profilePicURL = validator.profilePicURL;
         }
@@ -90,7 +90,7 @@ export class NewsCard implements OnDestroy, OnInit {
     else if (this.newsItem.type == 'validatorAccept') {
       this.title = "Validator Accept";
       this.itemIcon = "checkmark-circle";
-      this.validatorService.keyToValidator$(this.newsItem.from).subscribe(validator => {
+      this.validatorService.keyToValidator$(this.newsItem.from).take(1).subscribe(validator => {
         if (validator.profilePicURL) {
           this.profilePicURL = validator.profilePicURL;
         }
@@ -100,7 +100,7 @@ export class NewsCard implements OnDestroy, OnInit {
     else if (this.newsItem.type == 'revokeValidator') {
       this.title = "Revoke Validation";
       this.itemIcon = "close-circle";
-      this.validatorService.keyToValidator$(this.newsItem.to).subscribe(validator => {
+      this.validatorService.keyToValidator$(this.newsItem.to).take(1).subscribe(validator => {
         if (validator.profilePicURL) {
           this.profilePicURL = validator.profilePicURL;
         }
@@ -110,7 +110,7 @@ export class NewsCard implements OnDestroy, OnInit {
     else if (this.newsItem.type == 'trustUser') {
       this.title = "Trust Accept";
       this.itemIcon = "checkmark-circle";
-      this.userService.keyToUser$(this.newsItem.to).subscribe(user => {
+      this.userService.keyToUser$(this.newsItem.to).take(1).subscribe(user => {
         if (user.profilePicURL) {
           this.profilePicURL = user.profilePicURL;
         }
@@ -120,7 +120,7 @@ export class NewsCard implements OnDestroy, OnInit {
     else if (this.newsItem.type == 'revokeUser') {
       this.title = "Revoke Trust";
       this.itemIcon = "close-circle";
-      this.userService.keyToUser$(this.newsItem.to).subscribe(user => {
+      this.userService.keyToUser$(this.newsItem.to).take(1).subscribe(user => {
         if (user.profilePicURL) {
           this.profilePicURL = user.profilePicURL;
         }

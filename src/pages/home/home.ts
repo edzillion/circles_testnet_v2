@@ -83,6 +83,7 @@ export class HomePage {
     this.validatorList = [];
     this.userSub$ = this.userService.user$.subscribe(
       user => {
+        debugger;
         this.user = {} as User;
         this.networkList = [];
         this.validatorList = [];
@@ -99,8 +100,11 @@ export class HomePage {
               if (this.user.$key == key) {
                 return;
               }
-              this.userService.keyToUser$(key).subscribe(
-                trustedUser => { this.networkList.push(trustedUser) }
+              this.userService.keyToUser$(key).take(1).subscribe(
+                trustedUser => {
+                  debugger;
+                  this.networkList.push(trustedUser)
+                }
               )
             }
           );

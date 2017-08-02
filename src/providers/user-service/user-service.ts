@@ -53,14 +53,15 @@ export class UserService implements OnDestroy {
     this.authState$ = this.afAuth.authState;
     this.initUserSubject$.take(1).subscribe(
       initUser => {
+        debugger;
         this.user$ = this.userSubject$.asObservable();
         // this.userSubject$ is our app wide current user Subscription
         this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key);
         this.userSub$ = this.userFirebaseObj$.subscribe(
           user => {
+            debugger;
             this.user = user;
             this.setBalance();
-
             //this.initUserSubject$.unsubscribe();
             this.userSubject$.next(this.user);
           },
@@ -80,7 +81,9 @@ export class UserService implements OnDestroy {
           error => console.log('Could not load users.')
         );
 //        this.initUserSubject$.unsubscribe();
-      }
+      },
+      error => console.log(error),
+      () => {debugger;}
     )
   }
 

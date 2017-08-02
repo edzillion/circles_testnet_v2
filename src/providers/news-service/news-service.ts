@@ -57,7 +57,7 @@ export class NewsService implements OnDestroy {
         let latestNewsItem = firebaseObj.val();
         //receiving from someone
         if (latestNewsItem.type == 'transaction' && latestNewsItem.to == user.$key) {
-          this.userService.keyToUser$(latestNewsItem.from).subscribe((fromUser) => {
+          this.userService.keyToUser$(latestNewsItem.from).take(1).subscribe((fromUser) => {
             let msg = 'Receieved ' + latestNewsItem.amount + ' Circles from ' + fromUser.displayName;
             this.notificationsService.create('Transaction', msg, 'info');
           });
