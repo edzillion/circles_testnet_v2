@@ -19,7 +19,6 @@ export class ApplyPage {
     this.validator = navParams.get('validator');
     this.user = navParams.get('user');
     this.requirements = navParams.get('reqs');
-    debugger;
     if (this.validator.appliedUsers) {
       for (let key of this.validator.appliedUsers) {
         if (this.user.$key == key)

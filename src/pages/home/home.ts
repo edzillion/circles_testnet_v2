@@ -131,7 +131,6 @@ export class HomePage {
         this.networkList = [];
         this.validatorList = [];
         this.user = user;
-        debugger;
         this.myCoinName = this.user.wallet[this.user.$key].title;
         this.myCoinBalance = this.user.wallet[this.user.$key].amount;
         this.allCoinBalance = this.user.balance;

@@ -20,7 +20,7 @@ export class UserService implements OnDestroy {
 
   public initUserSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
 
-  private userSubject$: BehaviorSubject<User>;
+  private userSubject$: ReplaySubject<User> = new ReplaySubject<User>(1);
   private usersSubject$: ReplaySubject<Array<User>> = new ReplaySubject<Array<User>>(1);
 
   public user$: Observable<User>;
@@ -53,7 +53,6 @@ export class UserService implements OnDestroy {
     this.authState$ = this.afAuth.authState;
     this.initUserSubject$.take(1).subscribe(
       initUser => {
-        this.userSubject$ = new BehaviorSubject(initUser);
         this.user$ = this.userSubject$.asObservable();
         // this.userSubject$ is our app wide current user Subscription
         this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key);
@@ -96,8 +95,7 @@ export class UserService implements OnDestroy {
 
   public createUserRecord(auth): User {
     //user doesn't exist, create user entry on db
-    //this.user = {} as User;
-    debugger;
+    this.user = {} as User;
     this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
     this.user.news = [{
       timestamp: this.user.createdAt,

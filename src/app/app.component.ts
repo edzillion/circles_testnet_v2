@@ -59,7 +59,7 @@ private initSub$: Subscription;
                 else {
                   userSub$.unsubscribe();
                   this.userService.initUserSubject$.next(user)
-                  this.nav.setRoot(HomePage);                  
+                  this.nav.setRoot(HomePage);
                 }
               }
             );
