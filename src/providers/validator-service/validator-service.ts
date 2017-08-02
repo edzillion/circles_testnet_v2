@@ -67,7 +67,6 @@ export class ValidatorService {
     for (let req of vali.requirements) {
       let r = Object.assign({}, this.allProviders[req]);
       if (user.authProviders.find(auth => {
-        debugger;
         return req == auth;
       })) {
         r.completed = true;
@@ -91,7 +90,6 @@ export class ValidatorService {
     });
   }
 
-
   public filterValidators$(searchTerm: string) {
     //if (!searchTerm)
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
@@ -113,7 +111,7 @@ export class ValidatorService {
     else
       validator.appliedUsers.push(user.$key);
 
-    this.db.object('/validators/' + validator.$key).set(validator);
+    this.db.object('/validators/' + validator.$key).set(validator);    
   }
 
 }

@@ -115,7 +115,7 @@ export class NewsService implements OnDestroy {
   public addValidatorTrustRequest(validator: Validator):void {
     //this.notificationsService.create('Join Success','','success');
     let msg = 'You applied for validation from: ' +validator.displayName;
-    this.notificationsService.create('Join', msg, 'info');
+    this.notificationsService.create('Apply', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
@@ -125,10 +125,23 @@ export class NewsService implements OnDestroy {
     this.dbNewsItems$.push(newsItem);
   }
 
+  public addValidatorTrustAccept(validator: Validator):void {
+    //this.notificationsService.create('Join Success','','success');
+    let msg = 'You have been validated by: ' +validator.displayName;
+    this.notificationsService.create('Validation', msg, 'success');
+
+    let newsItem = {
+      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+      from: validator.$key,
+      type: 'validatorAccept'
+    };
+    this.dbNewsItems$.push(newsItem);
+  }
+
   public addTrust(user: User):void {
     //this.notificationsService.create('Join Success','','success');
     let msg = 'You have started trusting: ' +user.displayName;
-    this.notificationsService.create('Join', msg, 'info');
+    this.notificationsService.create('Trust', msg, 'info');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
@@ -141,7 +154,7 @@ export class NewsService implements OnDestroy {
   public revokeUserTrust(user: User):void {
     //this.notificationsService.create('Join Success','','success');
     let msg = 'You have stopped trusting: ' +user.displayName;
-    this.notificationsService.create('Join', msg, 'info');
+    this.notificationsService.create('Revoke', msg, 'warn');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],
@@ -154,7 +167,7 @@ export class NewsService implements OnDestroy {
   public revokeValidatorTrust(vali: Validator):void {
     //this.notificationsService.create('Join Success','','success');
     let msg = 'You are no longer validated by: ' +vali.displayName;
-    this.notificationsService.create('Join', msg, 'info');
+    this.notificationsService.create('Revoke', msg, 'warn');
 
     let newsItem = {
       timestamp: firebase.database['ServerValue']['TIMESTAMP'],

@@ -12,7 +12,7 @@
       "description": "Berlin Basic Income is a local group that explores strategies to implement a universal basic income (UBI), including unconventional methods that may start outside of the usual political process (e.g. the basic income cryptocurrency Circles). ",
       "displayName": "Berlin Basic Income Lab",
       "email": "basicincomeberlin@gmail.com",
-      "trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
+      "trustedUsers": ["HiBpAZosB6hq4AuBK9N12OVpItq2"],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Flab.png?alt=media&token=062c962c-9826-4714-98df-ba6c9d4fb166",
       "requirements": ["email", "name", "photo", "facebook"]
     },
@@ -28,7 +28,7 @@
       "description": "Radwerk is a collective of Berlin bike shops. We share resources, time and knowledge :)",
       "displayName": "Radwerk",
       "email": "Radwerk@Radwerk.com",
-      "trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
+      "trustedUsers": ["HiBpAZosB6hq4AuBK9N12OVpItq2"],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Frepair.png?alt=media&token=4d837bc7-7f92-4255-943a-5b34778e5a7d",
       "requirements": ["name", "photo", "review"]
     },
@@ -90,8 +90,8 @@
     }
   },
   "users": {
-    "MdqRnUKHd1hrULQb11LxdtfG3O13": {
-			"authProviders": ["email","facebook","github"],
+    "HiBpAZosB6hq4AuBK9N12OVpItq2": {
+			"authProviders": ["email","name","photo"],
       "createdAt": 1497078643926,
       "balance": 100,
       "firstName": "Quentin",
@@ -110,9 +110,9 @@
         "-Kk1Xr2ytzY1xPWUVXWQ"
       ],
       "wallet": {
-        "MdqRnUKHd1hrULQb11LxdtfG3O13": {
+        "HiBpAZosB6hq4AuBK9N12OVpItq2": {
           "amount": 100,
-          "owner": "MdqRnUKHd1hrULQb11LxdtfG3O13",
+          "owner": "HiBpAZosB6hq4AuBK9N12OVpItq2",
           "priority": 0,
           "title": "QuentinCoin"
         },
@@ -136,7 +136,7 @@
         }
       },
       "trustedUsers": [
-				"MdqRnUKHd1hrULQb11LxdtfG3O13",
+				"HiBpAZosB6hq4AuBK9N12OVpItq2",
         "jSu2I20VwcgesCvTCsAb2wsTqNG2",
         "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
         "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
@@ -188,7 +188,7 @@
       },
       "trustedUsers": [
 				"jSu2I20VwcgesCvTCsAb2wsTqNG2",
-        "MdqRnUKHd1hrULQb11LxdtfG3O13",
+        "HiBpAZosB6hq4AuBK9N12OVpItq2",
         "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
         "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
         "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
