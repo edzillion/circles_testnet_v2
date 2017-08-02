@@ -21,6 +21,7 @@ export class ValidatorService {
 
   public allProviders: Array<any> = [];
   public userProviders: Array<any>;
+  public valRequirements: Array<any>;
 
   constructor(private db: AngularFireDatabase) {
 
@@ -52,14 +53,25 @@ export class ValidatorService {
 
     this.userProviders = [];
     for (let pKey in this.allProviders) {
-      let p = Object.assign({},this.allProviders[pKey]);
-      let f = user.authProviders.find(aKey => pKey == aKey);
-      if (f) {
+      let p = Object.assign({}, this.allProviders[pKey]);
+      if (user.authProviders.find(aKey => pKey == aKey)) {
         p.completed = true;
       }
       this.userProviders.push(p);
     }
     return this.userProviders;
+  }
+
+  public getValidatorRequirements(vali: Validator, user: User) {
+    this.valRequirements = [];
+    for (let req of vali.requirements) {
+      let r = Object.assign({}, this.allProviders[req]);
+      if (user.authProviders.find(auth => req == auth)) {
+        r.completed = true;
+      }
+      this.valRequirements.push(r);
+    }
+    return this.valRequirements;
   }
 
   public keyToValidatorName$(key: string): Observable<string> {
@@ -77,11 +89,11 @@ export class ValidatorService {
   }
 
 
-  public filterValidators$(searchTerm: string)  {
+  public filterValidators$(searchTerm: string) {
     //if (!searchTerm)
     //  return Observable.empty(); //todo: should this return an observable(false) or something?
-     return this.validatorsFirebaseObj$.map((valis) => {
-       return valis.filter(vali => {
+    return this.validatorsFirebaseObj$.map((valis) => {
+      return valis.filter(vali => {
 
         if (!vali.displayName || vali.$key == 'undefined')
           return false;

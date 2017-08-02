@@ -26,6 +26,7 @@ export class DisclaimerPage {
 
   private agree() {
     //todo: problem here on relogin without refresh
+    debugger;
     let u = this.userService.createUserRecord(this.auth);
     this.userObssever.set(u);
   }

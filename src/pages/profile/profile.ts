@@ -33,6 +33,7 @@ export class ProfilePage {
   private user: User = {} as User;
 
   constructor(
+    private navCtrl: NavController,
     private camera: Camera,
     private db: AngularFireDatabase,
     private ds: DomSanitizer,
@@ -97,7 +98,9 @@ export class ProfilePage {
   }
 
   saveProfile() {
+    this.user.displayName = this.user.firstName + ' ' + this.user.lastName;
     this.db.object('/users/'+this.user.$key).set(this.user);
+    this.navCtrl.pop();
   }
 
 }

@@ -31,7 +31,8 @@ export class UserService implements OnDestroy {
   private userSub$: Subscription;
   private usersSub$: Subscription;
 
-  //private createdAt: number;
+  public createUserData: any = {};
+
   private weeklyGrant: number = 100;
 
   private myCoins: Coin = {} as Coin;
@@ -84,8 +85,19 @@ export class UserService implements OnDestroy {
     )
   }
 
+  public async createUser(firstName, lastName, email, password) {
+    let u = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+    this.createUserData = {
+      email: u.email,
+      firstName: firstName,
+      lastName: lastName
+    }
+  }
+
   public createUserRecord(auth): User {
     //user doesn't exist, create user entry on db
+    //this.user = {} as User;
+    debugger;
     this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
     this.user.news = [{
       timestamp: this.user.createdAt,
@@ -93,7 +105,10 @@ export class UserService implements OnDestroy {
     } as NewsItem];
 
     this.user.email = auth.email || '';
-    this.user.authProviders = ["email"];
+    this.user.firstName = this.createUserData.firstName || '';
+    this.user.lastName = this.createUserData.lastName || '';
+    this.user.displayName = this.user.firstName + ' ' + this.user.lastName;
+    this.user.authProviders = ["email","name"];
     this.setInitialWallet(auth.uid);
     this.user.trustedUsers = [auth.uid];
 
@@ -143,11 +158,6 @@ export class UserService implements OnDestroy {
 
   public signInRedirect(provider) {
     return this.afAuth.auth.signInWithRedirect(provider);
-  }
-
-  public async createUser(email, password) {
-    let u = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-    this.user.email = u.email;
   }
 
   public async addTrustedUser(userKey) {
@@ -206,9 +216,6 @@ export class UserService implements OnDestroy {
     this.user = blankUser;
     if (this.userSubject$) {
       this.userSubject$.next(blankUser);
-      this.userSubject$.unsubscribe();
-      this.userSub$.unsubscribe();
-      this.usersSub$.unsubscribe();
     }
   }
 

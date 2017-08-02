@@ -45,7 +45,8 @@ export class ValidatorDetailPage {
   }
 
   private checkRequirements() {
-    this.navCtrl.push(ApplyPage, {validator:this.validator, user:this.user});
+    let rqs = this.validatorService.getValidatorRequirements(this.validator, this.user);
+    this.navCtrl.push(ApplyPage, {validator:this.validator, user:this.user, reqs: rqs});
   }
 
   ionViewDidLoad() {

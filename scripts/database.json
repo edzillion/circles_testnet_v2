@@ -6,7 +6,7 @@
       "email": "tinyhouseuni@tinyhouse.com",
       "trustedUsers": ["MdqRnUKHd1hrULQb11LxdtfG3O13"],
       "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Ftinyu.png?alt=media&token=a61c66b6-d6af-46a8-ad73-3a5f853ba99e",
-      "requirements": ["email", "name", "photo", "noconfirm"]
+      "requirements": ["email", "name", "photo"]
     },
     "-Kk1Xr2x-iftLqPsxscG": {
       "description": "Berlin Basic Income is a local group that explores strategies to implement a universal basic income (UBI), including unconventional methods that may start outside of the usual political process (e.g. the basic income cryptocurrency Circles). ",

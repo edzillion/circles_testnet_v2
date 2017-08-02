@@ -41,7 +41,7 @@ private initSub$: Subscription;
     //aprivate analytics: AnalyticsService,
     private loadingCtrl: LoadingController
   ) {
-    platform.ready()      .then(() => {
+    platform.ready().then(() => {
 
       if (this.platform.is('cordova')) {
 
@@ -64,7 +64,7 @@ private initSub$: Subscription;
             );
           }
           else {
-            this.userService.clearUser();
+            //this.userService.clearUser();
           }
 
         },
@@ -88,15 +88,14 @@ private initSub$: Subscription;
   }
 
   private logout() : void {
-  //close subscriptions?? close services??
-  this.userService.signOut().then(
-    (user) => {
-    console.log('logout success');
+    //close subscriptions?? close services??
+    this.userService.signOut().then(
+      (user) => {
+      console.log('logout success');
 
-    this.nav.setRoot(LoginPage);
-  }, function(error) {
-    console.log('logout fail:', error);
-  });
-
+      this.nav.setRoot(LoginPage);
+    }, function(error) {
+      console.log('logout fail:', error);
+    });
   }
 }
