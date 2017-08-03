@@ -114,25 +114,25 @@
             "amount": 100,
             "owner": "HiBpAZosB6hq4AuBK9N12OVpItq2",
             "priority": 0,
-            "title": "QuentinCoin"
+            "title": "Quentin Coin"
           },
           "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
             "amount": 60,
             "owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
             "priority": 1,
-            "title": "JackCoin"
+            "title": "Jack Coin"
           },
           "Ea793jse7XNcSrMMmO8GvRPLlbU2": {
             "amount": 20,
             "owner": "Ea793jse7XNcSrMMmO8GvRPLlbU2",
             "priority": 2,
-            "title": "ChristianCoin"
+            "title": "Christian Coin"
           },
           "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
             "amount": 3,
             "owner": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
             "priority": 3,
-            "title": "JaneCoin"
+            "title": "Jane Coin"
           }
         },
         "trustedUsers": [
@@ -145,7 +145,7 @@
           "J56XFbhioecI8PTQb90NKe5bwB13",
           "tnwww1c9bMhbfexodcBwYCdu3gQ2"
         ],
-        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FnjX9lU1sqzRPldh5IicL52PFlqk1?alt=media&token=f2a8186c-8aa7-4e30-bd21-e90c0d3fb823"
       },
       "news": {
         "0": {
@@ -171,7 +171,7 @@
             "amount": 100,
             "owner": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
             "priority": 0,
-            "title": "JackCoin"
+            "title": "Jack Coin"
           }
         },
         "trustedUsers": [
@@ -184,7 +184,7 @@
           "J56XFbhioecI8PTQb90NKe5bwB13",
           "tnwww1c9bMhbfexodcBwYCdu3gQ2"
         ],
-        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951"
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FPPLrEzk9ZpaeLPjQ5d6ZI5EbLXf1?alt=media&token=4d4d82fd-f76d-428c-b029-fac71e5a676d"
       },
       "news": {
         "0": {
@@ -216,31 +216,18 @@
         "createdAt": 1496781495492,
         "displayName": "Cafe Grundeinkommen",
         "email": "basicincomeberlin@gmail.com",
-        "offers": [{
-          "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fcoffee.jpg?alt=media&token=201f2112-cbc2-4951-84a9-8ea694100be3",
-          "price": 50,
-          "priceDescription": "For One",
-          "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
-          "timestamp": 1496952402440,
-          "title": "Hot Cup of Coffee"
-        }, {
-          "picURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/tradepics%2Fmuffin.jpg?alt=media&token=a0f53c7e-5f47-44f9-9ea9-69e165bf68ad",
-          "price": 30,
-          "seller": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
-          "priceDescription": "For One",
-          "timestamp": 1496952402440,
-          "title": "Vegan Muffin"
-        }],
         "organisation": "Cafe Grundeinkommen",
-        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FI4V4vhOejVNSkoJSj3LOMKCYoGh1?alt=media&token=719e5232-0766-4a7f-aab3-f7587813f52c",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F7H0ByozNeBgwy2ZdQjWnTk2ZbCN2?alt=media&token=bb7fd08b-3a73-4b4e-a082-535e00c59580",
         "greeting": "Basic Income Now!",
         "type": "organisation",
-        "wants": [{
-          "price": 150,
-          "quantityDescription": "Per Kilo",
-          "timestamp": 1496952402440,
-          "title": "Fairtrade Coffee Beans"
-        }],
+        "wallet": {
+          "5jrFiCphYKbDZ4FeSMFuhMM8wzw2": {
+            "amount": 100,
+            "owner": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
+            "priority": 0,
+            "title": "Grundeinkommen Coin"
+          }
+        },
         "website": "www.cafe-grundeinkommen.org"
       },
       "news": {
@@ -250,7 +237,6 @@
         }
       }
     },
-
     "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
       "userData": {
         "uid": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
@@ -261,8 +247,16 @@
         "firstName": "Jane",
         "lastName": "Smith",
         "greeting": "Textile & Craft Wonderworker",
-        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F7H0ByozNeBgwy2ZdQjWnTk2ZbCN2?alt=media&token=bb7fd08b-3a73-4b4e-a082-535e00c59580",
-        "type": "individual"
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FTwDQjDv5NTTNSI2YWn7HyBVhttB3?alt=media&token=19d0a728-ce98-442a-bc1d-f79dfdeffd6f",
+        "type": "individual",
+        "wallet": {
+          "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
+            "amount": 100,
+            "owner": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
+            "priority": 0,
+            "title": "Jane Coin"
+          }
+        }
       },
       "news": [{
         "timestamp": 1496952402440,
@@ -279,8 +273,16 @@
         "firstName": "Ed",
         "lastName": "Murphy",
         "greeting": "Don't just pay it forward, pay it Circles!",
-        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef",
-        "type": "individual"
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FuYtJ8ztAVHN5B3TZKaV8ekNQU2C3?alt=media&token=aad3fa0a-5753-44a0-8854-a25cafd7c28c",
+        "type": "individual",
+        "wallet": {
+          "J56XFbhioecI8PTQb90NKe5bwB13": {
+            "amount": 100,
+            "owner": "J56XFbhioecI8PTQb90NKe5bwB13",
+            "priority": 0,
+            "title": "Ed Coin"
+          }
+        }
       },
       "news": [{
         "timestamp": 1496952177281,
@@ -292,12 +294,20 @@
         "uid": "SKMdyuZc5cRdje6GHiXzcEL7wQs1",
         "balance": 143,
         "createdAt": 1496952304626,
-        "displayName": "Baba Blacksheep",
-        "email": "baba@baba.com",
-        "firstName": "Baba",
-        "lastName": "Blacksheep",
-        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FSKMdyuZc5cRdje6GHiXzcEL7wQs1?alt=media&token=55d8de36-d8f1-4094-a663-47c8adfe4951",
-        "type": "individual"
+        "displayName": "Wayne Texaco",
+        "email": "waynesworld@baba.com",
+        "firstName": "Wayne",
+        "lastName": "Texaco",
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FBgWhvqsOUNT8ugASlAHmR6vE34w1?alt=media&token=af7f47c0-9540-4850-95ee-c586d960064a",
+        "type": "individual",
+        "wallet": {
+          "SKMdyuZc5cRdje6GHiXzcEL7wQs1": {
+            "amount": 100,
+            "owner": "SKMdyuZc5cRdje6GHiXzcEL7wQs1",
+            "priority": 0,
+            "title": "Wayne Coin"
+          }
+        }
       },
       "news": [{
         "timestamp": 1496952304626,
@@ -314,8 +324,16 @@
         "firstName": "Carl",
         "lastName": "Ambroselli",
         "greeting": "Wie Gehts?",
-        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F8tmyxjdsXOWQM6YLCGeYwLfqU4I3?alt=media&token=ebf12adb-7b9b-419d-a884-2cf05378f61b",
-        "type": "individual"
+        "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2F2k3wDKbyBVchBHP7qgZyO80vm102?alt=media&token=e45e2aba-1424-46b1-857b-9146350f01b2",
+        "type": "individual",
+        "wallet": {
+          "8tmyxjdsXOWQM6YLCGeYwLfqU4I3": {
+            "amount": 100,
+            "owner": "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
+            "priority": 0,
+            "title": "Carl Coin"
+          }
+        }
       },
       "news": {
         "0": {
@@ -340,7 +358,15 @@
         "lastName": "Eisenhofer",
         "greeting": "Hallo",
         "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FEa793jse7XNcSrMMmO8GvRPLlbU2?alt=media&token=9fec5f7a-3d2e-448c-8e2d-938eff38f50a",
-        "type": "individual"
+        "type": "individual",
+        "wallet": {
+          "Ea793jse7XNcSrMMmO8GvRPLlbU2": {
+            "amount": 100,
+            "owner": "Ea793jse7XNcSrMMmO8GvRPLlbU2",
+            "priority": 0,
+            "title": "Christian Coin"
+          }
+        }
       },
       "news": [{
         "timestamp": 1497078641926,
@@ -352,39 +378,25 @@
         "uid": "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3",
         "balance": 857,
         "createdAt": 1497089879370,
-        "displayName": "Brian Heussen ",
+        "displayName": "Brian Heussen",
         "email": "brian.heussen@gmail.com",
         "firstName": "Brian",
         "lastName": "Heussen ",
         "greeting": "Builder for hire",
         "profilePicURL": "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FZSbGLxzQwgfYMQ5Xy98dyqlL8JA3?alt=media&token=ce6af920-2e35-4088-b1ba-6cd341c923f6",
-        "type": "individual"
-      },
-      "news": [{
-        "timestamp": 1497089879370,
-        "type": "createAccount"
-      }]
-    },
-    "tnwww1c9bMhbfexodcBwYCdu3gQ2": {
-      "userData": {
-        "uid": "tnwww1c9bMhbfexodcBwYCdu3gQ2",
-        "balance": 857,
-        "createdAt": 1497126941460,
-        "displayName": "Lu Isa",
-        "email": "luisa.bilke@hotmail.de",
-        "firstName": "Lu",
-        "lastName": "Isa"
-      },
-      "news": {
-        "0": {
-          "timestamp": 1497126941460,
-          "type": "createAccount"
+        "type": "individual",
+        "wallet": {
+          "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3": {
+            "amount": 100,
+            "owner": "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3",
+            "priority": 0,
+            "title": "Brian Coin"
+          }
         },
-        "-KmIiN-OzdTMb5IRvpA0": {
-          "timestamp": 1497127026875,
-          "title": "Tinyhouse University Group",
-          "type": "groupJoin"
-        }
+        "news": [{
+          "timestamp": 1497089879370,
+          "type": "createAccount"
+        }]
       }
     }
   }

@@ -30,7 +30,7 @@ export class DisclaimerPage {
     //todo: problem here on relogin without refresh
     let user = this.userService.createUserRecord(this.auth);
     this.newsService.addCreateUser(user)
-    this.userObssever.set(user);
+    this.userObssever.set({userData:user});
   }
 
   ionViewDidLoad() {

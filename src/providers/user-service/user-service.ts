@@ -51,21 +51,13 @@ export class UserService implements OnDestroy {
 
     this.user.createdAt = 0;
     this.authState$ = this.afAuth.authState;
-    this.user$ = this.userSubject$.asObservable();
+
 
     this.initUserSubject$.take(1).subscribe(
       initUser => {
+
+        this.user$ = this.userSubject$.asObservable();
         // this.userSubject$ is our app wide current user Subscription
-        this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key + '/userData');
-        this.userSub$ = this.userFirebaseObj$.subscribe(
-          user => {
-            this.user = user;
-            this.setBalance();
-            //this.initUserSubject$.unsubscribe();
-            this.userSubject$.next(this.user);
-          },
-          error => console.log('Could not load current user record.')
-        );
 
         this.usersSub$ = this.db.list('/users/').subscribe(
           users => {
@@ -77,6 +69,18 @@ export class UserService implements OnDestroy {
           },
           error => console.log('Could not load users.')
         );
+
+        this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key + '/userData');
+        this.userSub$ = this.userFirebaseObj$.subscribe(
+          user => {
+            this.user = user;
+            this.setBalance();
+            //this.initUserSubject$.unsubscribe();
+            this.userSubject$.next(this.user);
+          },
+          error => console.log('Could not load current user record.')
+        );
+
       },
       error => console.log(error),
       () => {}
@@ -84,16 +88,18 @@ export class UserService implements OnDestroy {
   }
 
   public async createUser(firstName, lastName, email, password) {
-    let u = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
     this.createUserData = {
-      email: u.email,
+      email: email,
       firstName: firstName,
       lastName: lastName
     }
+    let u = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);//.then(
+    //user =>)
   }
 
   public createUserRecord(auth): User {
     //user doesn't exist, create user entry on db
+
     this.user = {} as User;
     this.user.uid = auth.uid;
     this.user.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
@@ -111,7 +117,7 @@ export class UserService implements OnDestroy {
 
   public keyToUser$(key: string): Observable<User> {
     return this.users$.map(
-      users => users.find(user => user.uid === key)
+      users => users.find(user => user.$key === key).userData
     );
   }
 
@@ -143,14 +149,15 @@ export class UserService implements OnDestroy {
       users = users.map((userRecord) => {
         return userRecord.userData;
       });
-      return users.filter((user) => {
+      let ret = users.filter((user) => {
         //let user = userRecord.userData as User;
-        if (!user.displayName || user.uid == 'undefined' || (user.uid == this.user.uid))
+        if (!user.displayName || user.displayName == '' || user.uid == 'undefined' || (user.uid == this.user.uid))
           return false;
         let s = searchTerm.toLowerCase();
         let d = user.displayName.toLowerCase();
         return d.indexOf(s) > -1;
       });
+      return ret;
     });
   }
 

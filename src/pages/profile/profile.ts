@@ -123,8 +123,10 @@ export class ProfilePage {
 
     uploadTask.then((obj) => {
       this.user.profilePicURL = uploadTask.snapshot.downloadURL;
+      debugger;
+      this.user.authProviders.push('photo');
 
-      this.userService.updateUser({profilePicURL: this.user.profilePicURL})
+      this.userService.updateUser({authProviders: this.user.authProviders, profilePicURL: this.user.profilePicURL})
         .then((success) => {
 
           console.log('userData save success');

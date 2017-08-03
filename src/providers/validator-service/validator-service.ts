@@ -147,6 +147,7 @@ export class ValidatorService {
   }
 
   public completeValidation(user, validator) {
+    debugger;
     if (!validator.appliedUsers) {
     //todo:error
     }

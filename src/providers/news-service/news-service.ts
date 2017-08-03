@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/isEmpty';
 
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
@@ -34,20 +35,23 @@ export class NewsService implements OnDestroy {
     private userService: UserService
   ) {
 
-    this.userService.user$.subscribe(
+    this.userService.initUserSubject$.take(1).subscribe(
       user => {
-        this.user = user;
-        this.setupDBQuery(user);
+        this.setupDBQuery(user.$key);
+        this.userService.user$.subscribe(
+          user =>
+              this.user = user
+        );
       },
       error => console.error(error),
       () => console.log('news-service constructor user$ obs complete')
     );
   }
 
-  private setupDBQuery(user: User):void {
+  private setupDBQuery(userUID):void {
     // sets up a db list binding that will initially return all messages from the last
     // two minutes and then any added to the list after that.
-    this.dbNewsItems$ = this.db.list('/users/' + user.uid + '/news/');
+    this.dbNewsItems$ = this.db.list('/users/' + userUID + '/news/');
     let twoMinsAgo = Date.now() - 120000;
     this.dbNewsItems$.$ref
       .orderByChild('timestamp')
@@ -55,18 +59,28 @@ export class NewsService implements OnDestroy {
       .on('child_added', (firebaseObj,index) => {
         let latestNewsItem = firebaseObj.val();
         //receiving from someone
-        if (latestNewsItem.type == 'transaction' && latestNewsItem.to == user.uid) {
+        if (latestNewsItem.type == 'transaction' && latestNewsItem.to == userUID) {
           let fromUser = this.userService.keyToUser(latestNewsItem.from);
           let msg = 'Receieved ' + latestNewsItem.amount + ' Circles from ' + fromUser.displayName;
           this.notificationsService.create('Transaction', msg, 'info');
         }
       });
-
+      this.dbNewsItems$.subscribe(this.newsItems$);
       this.dbNewsSub$ = this.dbNewsItems$.subscribe(
         newsitems => {
-          debugger;
-          let r = newsitems.sort((a,b) => a.timestamp < b.timestamp ? 1 : -1);
-          this.newsItemsReversed$.next(r)
+
+          if (newsitems.length != 0) {
+            let rev = newsitems.sort((a,b) => a.timestamp < b.timestamp ? 1 : -1);
+            this.newsItemsReversed$.next(rev);
+          }
+          else {
+            let n = {
+              timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+              type: 'createAccount'
+            } as NewsItem;
+            this.dbNewsItems$.push(n);
+          }
+
         },
         error => {
           console.log("Firebase Error: " + error);
@@ -74,11 +88,11 @@ export class NewsService implements OnDestroy {
         () => console.log('news-service setupDBQuery dbNewsSub$ obs complete')
       );
 
-      this.dbNewsItems$.subscribe(this.newsItems$);
-      if (this.createUserNewsItem) {
-        this.dbNewsItems$.push(this.createUserNewsItem);
-        this.createUserNewsItem = null;
-      }
+
+      // if (this.createUserNewsItem) {
+      //   this.dbNewsItems$.push(this.createUserNewsItem);
+      //   this.createUserNewsItem = null;
+      // }
 
   }
 
@@ -107,7 +121,8 @@ export class NewsService implements OnDestroy {
     } as NewsItem;
     this.dbNewsItems$.push(newsItem);
 
-    this.createUserNewsItem = newsItem;
+    this.db.list('/users/'+toUser.$key+'/news/').push(newsItem);
+
 
     //send push notification to other user
     //msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;
@@ -132,11 +147,8 @@ export class NewsService implements OnDestroy {
     //this.notificationsService.create('Join Success','','success');
     let msg = 'Welcome to Circles ' +user.displayName +'!';
     this.notificationsService.create('User Created', msg, 'success');
-    let newsItem = {
-      timestamp: user.createdAt,
-      type: 'createAccount'
-    } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
+
+    //this.createUserNewsItem = newsItem;
   }
 
   public addValidatorTrustAccept(validator: Validator):void {

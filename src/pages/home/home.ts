@@ -43,7 +43,7 @@ export class HomePage {
 
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private notificationsService: NotificationsService,
     private db: AngularFireDatabase,
@@ -99,8 +99,9 @@ export class HomePage {
               if (this.user.uid == key) {
                 return;
               }
-              let trustedUser = this.userService.keyToUser(key);
-              this.networkList.push(trustedUser)
+              this.userService.keyToUser$(key).take(1).subscribe(
+                trustedUser => this.networkList.push(trustedUser)
+              );
             }
           );
         }
