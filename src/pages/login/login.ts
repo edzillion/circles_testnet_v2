@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, Loading, LoadingController, NavParams, NavController } from 'ionic-angular';
-import { AnalyticsService } from '../../providers/analytics-service/analytics-service';
 
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
@@ -20,7 +19,6 @@ export class LoginPage {
   private loading2: Loading;
 
   constructor(
-    private analytics: AnalyticsService,
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private userService: UserService
@@ -59,7 +57,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    this.analytics.trackPageView('Login Page');
+
   }
 
 }

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Toast, ToastController } from 'ionic-angular';
+import { Loading, LoadingController, NavController, NavParams, Toast, ToastController } from 'ionic-angular';
 import { NotificationsService, SimpleNotificationsComponent  } from 'angular2-notifications';
 
 import { DomSanitizer } from '@angular/platform-browser';
-import { Camera } from '@ionic-native/camera';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
+import 'firebase/storage';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../providers/user-service/user-service';
@@ -31,16 +31,17 @@ export class ProfilePage {
   private providers: Array<any>;
   private user: User = {} as User;
 
+  private loading: Loading;
   private fileSelected: any;
 
   constructor(
     private navCtrl: NavController,
-    private camera: Camera,
     private db: AngularFireDatabase,
     private ds: DomSanitizer,
     private toastCtrl: ToastController,
     private userService: UserService,
     private validatorService: ValidatorService,
+    private loadingCtrl: LoadingController,
     private sanitizer:DomSanitizer
   ) { }
 
@@ -72,8 +73,8 @@ export class ProfilePage {
         var reader = new FileReader();
 
         reader.onload = (e) => {
-            this.base64ImageData = e.target['result'];
-            this.profilePicURL = this.base64ImageData;
+            this.profilePicURL = e.target['result'];
+            this.base64ImageData = this.profilePicURL.substring(22);
         }
 
         reader.readAsDataURL(fileInput.target.files[0]);
@@ -81,65 +82,68 @@ export class ProfilePage {
 }
 
   private fileUpload() {
+
+    this.loading = this.loadingCtrl.create({
+      content: 'Uploading ...',
+      //dismissOnPageChange: true
+    });
     debugger;
-    let uploadTask = firebase.storage().ref('/profilepics').child(this.user.uid).putString(this.base64ImageData, 'base64', { contentType: 'image/jpg' });
+    let storageRef = firebase.storage().ref('/profilepics');
+    let c = storageRef.child(this.user.uid);
+    let uploadTask = c.putString(this.base64ImageData, 'base64', { contentType: 'image/jpg' });
 
     uploadTask.on(
       firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
       function(snapshot) {
-        debugger;
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        // var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        // console.log('Upload is ' + progress + '% done');
-        // switch (snapshot.state) {
-        //   case firebase.storage.TaskState.PAUSED: // or 'paused'
-        //     console.log('Upload is paused');
-        //     break;
-        //   case firebase.storage.TaskState.RUNNING: // or 'running'
-        //     console.log('Upload is running');
-        //     break;
-        // }
+        //Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
       },
       function(error) {
         this.toast = this.toastCtrl.create({
           message: 'Error uploading image: ' + error,
-          duration: 3000,
+          duration: 1500,
           position: 'middle'
         });
         console.error(error);
         this.toast.present();
+      },
+      function() {
+        // Upload completed successfully, now we can get the download URL
+        console.log('Upload Complete');
       });
-      //,
-      // function() {
-      //   // Upload completed successfully, now we can get the download URL
-      //   console.log('Upload Complete');
-      // });
 
-    // uploadTask.then((obj) => {
-    //   this.user.profilePicURL = uploadTask.snapshot.downloadURL;
-    //
-    //   this.db.object(`users/${this.UID}`).set(this.user)
-    //     .then((success) => {
-    //
-    //       console.log('userData save success');
-    //       this.pushService.initialise().then( () => {
-    //         console.log('pushService initialised');
-    //         this.formState.loading.dismiss();
-    //         if (this.formState.refilling)
-    //           this.navCtrl.setRoot(TabsPage);
-    //       });
-    //     })
-    //     .catch(
-    //     error => {
-    //       this.toast = this.toastCtrl.create({
-    //         message: 'Error saving user: ' + error,
-    //         duration: 3000,
-    //         position: 'middle'
-    //       });
-    //       console.error(error);
-    //       this.toast.present();
-    //     });
-    // });
+    uploadTask.then((obj) => {
+      this.user.profilePicURL = uploadTask.snapshot.downloadURL;
+
+      this.userService.updateUser({profilePicURL: this.user.profilePicURL})
+        .then((success) => {
+
+          console.log('userData save success');
+
+        })
+        .catch(
+        error => {
+          this.loading.dismiss();
+          this.toast = this.toastCtrl.create({
+            message: 'Error saving user: ' + error,
+            duration: 1500,
+            position: 'middle'
+          });
+          console.error(error);
+          this.toast.present();
+        },
+      ),
+      () => {this.loading.dismiss();};
+    });
   }
 
   private saveProfile() {

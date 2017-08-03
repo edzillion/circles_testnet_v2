@@ -38,7 +38,6 @@ private initSub$: Subscription;
     private platform: Platform,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    //aprivate analytics: AnalyticsService,
     private loadingCtrl: LoadingController
   ) {
     platform.ready().then(() => {

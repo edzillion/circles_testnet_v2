@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Camera } from '@ionic-native/camera';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';

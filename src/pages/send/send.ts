@@ -11,7 +11,6 @@ import 'rxjs/add/operator/debounceTime';
 import { TransactionService } from '../../providers/transaction-service/transaction-service';
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
-import { AnalyticsService } from '../../providers/analytics-service/analytics-service';
 
 import { ConfirmModal } from '../../pages/confirm-modal/confirm-modal';
 
@@ -30,7 +29,6 @@ export class SendPage {
   private toast: Toast;
 
   constructor(
-    private analytics: AnalyticsService,
     private formBuilder: FormBuilder,
     private loadingCtrl: LoadingController,
     private notificationsService: NotificationsService,
@@ -90,14 +88,13 @@ export class SendPage {
   }
 
   ionViewDidLoad() {
-    this.analytics.trackPageView('Send Page');
 
     this.userSub$ = this.userService.user$.subscribe(
       user => this.user = user,
       error => {
         this.toast = this.toastCtrl.create({
           message: 'Error getting user: '+error,
-          duration: 3000,
+          duration: 1500,
           position: 'middle'
         });
         console.error(error);

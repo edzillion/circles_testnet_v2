@@ -1,7 +1,6 @@
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
-    host: 'localhost',
     apiKey: 'AIzaSyD-qk6NzF4sTQwqvgTSzl6z-tUH4Wd7PXc',
     authDomain: 'circles-testnet.firebaseapp.com',
     databaseURL: 'https://circles-testnet.firebaseio.com',

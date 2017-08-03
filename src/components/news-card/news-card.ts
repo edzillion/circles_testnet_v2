@@ -43,7 +43,7 @@ export class NewsCard implements OnDestroy, OnInit {
       error => {
         this.toast = this.toastCtrl.create({
           message: 'Error getting user: ' + error,
-          duration: 3000,
+          duration: 1500,
           position: 'middle'
         });
         console.error(error);

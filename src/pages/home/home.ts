@@ -3,7 +3,6 @@ import { NavController, NavParams, Toast, ToastController } from 'ionic-angular'
 import { NotificationsService, SimpleNotificationsComponent  } from 'angular2-notifications';
 
 import { DomSanitizer } from '@angular/platform-browser';
-import { Camera } from '@ionic-native/camera';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
@@ -43,8 +42,10 @@ export class HomePage {
   private myCoinName: string;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private notificationsService: NotificationsService,
-    private camera: Camera,
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private notificationsService: NotificationsService,
     private db: AngularFireDatabase,
     private ds: DomSanitizer,
     private toastCtrl: ToastController,

@@ -4,9 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { Camera } from '@ionic-native/camera';
-
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 import 'angular2-notifications';
 
@@ -30,7 +27,6 @@ import { WalletPage } from '../pages/wallet/wallet';
 import { SettingsPage } from '../pages/settings/settings';
 
 //services
-import { AnalyticsService } from '../providers/analytics-service/analytics-service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
@@ -39,13 +35,11 @@ import { UserService } from '../providers/user-service/user-service';
 
 import { TransactionService } from '../providers/transaction-service/transaction-service';
 import { NewsService } from '../providers/news-service/news-service';
-import { PushService } from '../providers/push-service/push-service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 //vendor
-import { SuperTabsModule } from 'ionic2-super-tabs';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
 //configs
@@ -81,7 +75,6 @@ import { NewsCard } from '../components/news-card/news-card';
     BrowserModule,
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
-    SuperTabsModule.forRoot(),
     IonicModule.forRoot(MyApp, {mode: 'ios'}) //this will force 'ios' style on all platforms
   ],
   bootstrap: [IonicApp],
@@ -103,11 +96,7 @@ import { NewsCard } from '../components/news-card/news-card';
     ApplyPage
   ],
   providers: [
-    AnalyticsService,
-    Camera,
-    GoogleAnalytics,
     NewsService,
-    PushService,
     SplashScreen,
     StatusBar,
     TransactionService,

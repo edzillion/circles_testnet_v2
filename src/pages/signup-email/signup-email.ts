@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, Loading, LoadingController, Toast, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { AnalyticsService } from '../../providers/analytics-service/analytics-service';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -20,7 +19,6 @@ export class SignupEmailPage {
   private loading: Loading;
 
   constructor(
-    private analytics: AnalyticsService,
     private formBuilder: FormBuilder,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
@@ -57,7 +55,7 @@ export class SignupEmailPage {
   }
 
   ionViewDidLoad() {
-    this.analytics.trackPageView('Signup Email Page');
+    
   }
 
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, Loading, LoadingController, Toast, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AnalyticsService } from '../../providers/analytics-service/analytics-service';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -19,7 +18,6 @@ export class LoginEmailPage {
   private toast: Toast;
 
   constructor(
-    private analytics: AnalyticsService,
     private formBuilder: FormBuilder,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
@@ -54,7 +52,7 @@ export class LoginEmailPage {
       error => {
         this.toast = this.toastCtrl.create({
           message: error.toString(),
-          duration: 3000,
+          duration: 1500,
           position: 'middle'
         });
         console.error(error);
@@ -65,7 +63,7 @@ export class LoginEmailPage {
   }
 
   ionViewDidLoad() {
-    this.analytics.trackPageView('Login Email Page');
+
   }
 
 }
