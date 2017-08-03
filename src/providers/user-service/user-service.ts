@@ -51,11 +51,21 @@ export class UserService implements OnDestroy {
 
     this.user.createdAt = 0;
     this.authState$ = this.afAuth.authState;
+    this.user$ = this.userSubject$.asObservable();
+
     this.initUserSubject$.take(1).subscribe(
       initUser => {
-        this.user$ = this.userSubject$.asObservable();
         // this.userSubject$ is our app wide current user Subscription
         this.userFirebaseObj$ = this.db.object('/users/' + initUser.$key + '/userData');
+        this.userSub$ = this.userFirebaseObj$.subscribe(
+          user => {
+            this.user = user;
+            this.setBalance();
+            //this.initUserSubject$.unsubscribe();
+            this.userSubject$.next(this.user);
+          },
+          error => console.log('Could not load current user record.')
+        );
 
         this.usersSub$ = this.db.list('/users/').subscribe(
           users => {
@@ -64,15 +74,6 @@ export class UserService implements OnDestroy {
               this.users[u.$key] = u.userData;
             }
             this.usersSubject$.next(users);
-            this.userSub$ = this.userFirebaseObj$.subscribe(
-              user => {
-                this.user = user;
-                this.setBalance();
-                //this.initUserSubject$.unsubscribe();
-                this.userSubject$.next(this.user);
-              },
-              error => console.log('Could not load current user record.')
-            );
           },
           error => console.log('Could not load users.')
         );

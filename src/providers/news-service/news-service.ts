@@ -1,11 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 
-import { NotificationsService, SimpleNotificationsComponent  } from 'angular2-notifications';
+import { NotificationsService  } from 'angular2-notifications';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/take';
@@ -13,7 +12,6 @@ import 'rxjs/add/operator/take';
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 import { NewsItem } from '../../interfaces/news-item-interface';
-import { Offer } from '../../interfaces/offer-interface';
 import { Validator } from '../../interfaces/validator-interface';
 //import { PushService } from '../../providers/push-service/push-service';
 
@@ -21,6 +19,7 @@ import { Validator } from '../../interfaces/validator-interface';
 export class NewsService implements OnDestroy {
 
   private user: User;
+  private createUserNewsItem: any;
 
   private dbNewsItems$: FirebaseListObservable<NewsItem[]>;
   private dbNewsSub$: Subscription;
@@ -35,7 +34,7 @@ export class NewsService implements OnDestroy {
     private userService: UserService
   ) {
 
-    this.userService.initUserSubject$.subscribe(
+    this.userService.user$.subscribe(
       user => {
         this.user = user;
         this.setupDBQuery(user);
@@ -65,6 +64,7 @@ export class NewsService implements OnDestroy {
 
       this.dbNewsSub$ = this.dbNewsItems$.subscribe(
         newsitems => {
+          debugger;
           let r = newsitems.sort((a,b) => a.timestamp < b.timestamp ? 1 : -1);
           this.newsItemsReversed$.next(r)
         },
@@ -75,6 +75,10 @@ export class NewsService implements OnDestroy {
       );
 
       this.dbNewsItems$.subscribe(this.newsItems$);
+      if (this.createUserNewsItem) {
+        this.dbNewsItems$.push(this.createUserNewsItem);
+        this.createUserNewsItem = null;
+      }
 
   }
 
@@ -103,7 +107,7 @@ export class NewsService implements OnDestroy {
     } as NewsItem;
     this.dbNewsItems$.push(newsItem);
 
-    this.db.list('/users/'+toUser.uid+'/news/').push(newsItem);
+    this.createUserNewsItem = newsItem;
 
     //send push notification to other user
     //msg = 'Receieved ' + txItem.amount + ' Circles from ' + this.user.displayName;

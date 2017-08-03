@@ -11,7 +11,6 @@ import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
 import { NewsItem } from '../../interfaces/news-item-interface';
 import { LogItem } from '../../interfaces/log-item-interface';
-import { Offer } from '../../interfaces/offer-interface';
 
 @Injectable()
 export class TransactionService implements OnDestroy {
