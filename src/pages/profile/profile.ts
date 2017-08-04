@@ -26,6 +26,7 @@ export class ProfilePage {
   private toast: Toast;
   private base64ImageData: string;
   public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
+  public dataURI: any;
 
   private userSub$: Subscription;
   private providers: Array<any>;
@@ -42,7 +43,7 @@ export class ProfilePage {
     private userService: UserService,
     private validatorService: ValidatorService,
     private loadingCtrl: LoadingController,
-    private sanitizer:DomSanitizer
+    private sanitizer: DomSanitizer
   ) { }
 
   ionViewDidLoad() {
@@ -61,25 +62,43 @@ export class ProfilePage {
 
   private isUploadSupported() {
     if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
-        return false;
+      return false;
     }
     var elem = document.createElement('input');
     elem.type = 'file';
     return !elem.disabled;
   }
 
-  public fileChangeEvent(fileInput: any){
-      if (fileInput.target.files && fileInput.target.files[0]) {
-        var reader = new FileReader();
+  public fileChangeEvent(fileInput: any) {
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      var reader = new FileReader();
 
-        reader.onload = (e) => {
-            this.profilePicURL = e.target['result'];
-            this.base64ImageData = this.profilePicURL.substring(22);
-        }
+      reader.onload = (e) => {
+        this.profilePicURL = e.target['result'];
+        var img = new Image;
+        img.src = e.target['result'];
+        img.onload = (() => {
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
 
-        reader.readAsDataURL(fileInput.target.files[0]);
+          // We set the dimensions at the wanted size.
+          canvas.width = 600;
+          canvas.height = 800;
+
+          // We resize the image with the canvas method drawImage();
+          ctx.drawImage(img, 0, 0, 600, 800);
+
+          let resize = canvas.toDataURL('image/jpeg', 0.7);
+          this.dataURI = resize.substring(23);
+          // continue from here...
+        });
+
+        this.base64ImageData = this.profilePicURL.substring(22);
+      }
+
+      reader.readAsDataURL(fileInput.target.files[0]);
     }
-}
+  }
 
   private fileUpload() {
 
@@ -87,18 +106,18 @@ export class ProfilePage {
       content: 'Uploading ...',
       //dismissOnPageChange: true
     });
-    debugger;
     let storageRef = firebase.storage().ref('/profilepics');
     let c = storageRef.child(this.user.uid);
-    let uploadTask = c.putString(this.base64ImageData, 'base64', { contentType: 'image/jpg' });
+    let uploadTask = c.putString(this.dataURI, 'base64', { contentType: 'image/jpg' });
 
     uploadTask.on(
       firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
       function(snapshot) {
+        let snap = snapshot as any;
         //Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        var progress = (snap.bytesTransferred / snap.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
+        switch (snap.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
             console.log('Upload is paused');
             break;
@@ -115,18 +134,13 @@ export class ProfilePage {
         });
         console.error(error);
         this.toast.present();
-      },
-      function() {
-        // Upload completed successfully, now we can get the download URL
-        console.log('Upload Complete');
       });
 
     uploadTask.then((obj) => {
       this.user.profilePicURL = uploadTask.snapshot.downloadURL;
-      debugger;
       this.user.authProviders.push('photo');
 
-      this.userService.updateUser({authProviders: this.user.authProviders, profilePicURL: this.user.profilePicURL})
+      this.userService.updateUser({ authProviders: this.user.authProviders, profilePicURL: this.user.profilePicURL })
         .then((success) => {
 
           console.log('userData save success');
@@ -144,7 +158,7 @@ export class ProfilePage {
           this.toast.present();
         },
       ),
-      () => {this.loading.dismiss();};
+        () => { this.loading.dismiss(); };
     });
   }
 

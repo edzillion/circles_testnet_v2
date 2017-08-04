@@ -48,6 +48,8 @@ import { Keyobject } from '../pipes/key-object/key-object';
 import { ValidatorService } from '../providers/validator-service/validator-service';
 import { NewsCard } from '../components/news-card/news-card';
 
+import pica from 'pica';
+
 @NgModule({
   declarations: [
     LoginEmailPage,

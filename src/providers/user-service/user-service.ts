@@ -149,6 +149,7 @@ export class UserService implements OnDestroy {
       users = users.map((userRecord) => {
         return userRecord.userData;
       });
+      debugger;
       let ret = users.filter((user) => {
         //let user = userRecord.userData as User;
         if (!user.displayName || user.displayName == '' || user.uid == 'undefined' || (user.uid == this.user.uid))

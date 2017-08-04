@@ -392,12 +392,12 @@
             "priority": 0,
             "title": "Brian Coin"
           }
-        },
-        "news": [{
-          "timestamp": 1497089879370,
-          "type": "createAccount"
-        }]
-      }
+        }
+      },
+      "news": [{
+        "timestamp": 1497089879370,
+        "type": "createAccount"
+      }]
     }
   }
 }
