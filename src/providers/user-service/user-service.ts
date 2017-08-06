@@ -116,7 +116,14 @@ export class UserService implements OnDestroy {
   public createCirclesUser(formUser): Individual | Organisation {
 
     formUser.createdAt = firebase.database['ServerValue']['TIMESTAMP'];
-    formUser.authProviders = ["email","name"];
+    if (!formUser.authProviders) {
+      formUser.authProviders = ["email","name"];
+    }
+    else {
+      formUser.authProviders.push("email");
+      formUser.authProviders.push("name");
+    }
+
     formUser.agreedToDisclaimer = false;
 
     if (!this.isOrg(formUser)) {

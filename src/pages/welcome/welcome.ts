@@ -205,8 +205,7 @@ export class WelcomePage {
         (profileURL) => {
           user.profilePicURL = profileURL;
           progressIntervalObs$.unsubscribe();
-          if (!user.authProviders['photo'])
-            user.authProviders.push('photo');
+            user.authProviders = ['photo'];
           this.saveUser(user);
         },
         (error) => {
