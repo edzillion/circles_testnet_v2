@@ -37,6 +37,7 @@ export class UserService implements OnDestroy {
 
   private userSub$: Subscription;
   private usersSub$: Subscription;
+  private combinedSub$: Subscription;
   private weeklyGrant: number = 100;
   private myCoins: Coin = {} as Coin;
   private allCoins: { [key: string]: Coin };
@@ -82,10 +83,20 @@ export class UserService implements OnDestroy {
           error => console.log('Could not load current user record.')
         );
 
-        Observable.combineLatest(this.userFirebaseObj$, this.usersFirebaseList$).subscribe(
+        this.combinedSub$  = Observable.combineLatest(this.userFirebaseObj$, this.usersFirebaseList$).subscribe(
           (result) => {
             let user = result[0];
             let users = result[1];
+
+            if (!this.users) {
+              debugger;
+              this.users = [];
+              for (let u of users) {
+                this.users[u.$key] = u.userData;
+              }
+              this.usersSubject$.next(users);
+            }
+
             if (user.trustedUsers) {
               this.trustedUsers = user.trustedUsers.map( (uKey:string) => this.keyToUser(uKey));
             }
@@ -217,7 +228,10 @@ export class UserService implements OnDestroy {
   }
 
   public signOut() {
-    this.clearUser();
+    //this.clearUser();
+    this.userSub$.unsubscribe();
+    this.usersSub$.unsubscribe();
+    this.combinedSub$.unsubscribe();
     return this.afAuth.auth.signOut();
   }
 
@@ -232,20 +246,20 @@ export class UserService implements OnDestroy {
   public async updateUser(updateObject: Object) {
     try {
       let result = await this.userFirebaseObj$.update(updateObject);
-      console.log(result);
+      console.log('updateUser success');
     } catch (error) {
       console.error(error);
-      throw new Error("userService update fail");
+      throw new Error("userService updateUser fail");
     }
   }
 
   public async saveUser() {
     try {
       let result = await this.userFirebaseObj$.set(this.user);
-      console.log(result);
+      console.log('saveUser success');
     } catch (error) {
       console.error(error);
-      throw new Error("userService save fail");
+      throw new Error("userService saveUser fail");
     }
   }
 

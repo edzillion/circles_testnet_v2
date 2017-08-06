@@ -44,13 +44,11 @@ export class UserDetailPage {
   private revokeTrust() {
     this.newsService.revokeUserTrust(this.viewUser);
     this.userService.removeTrustedUser(this.viewUser.uid);
-    this.userService.saveUser();
   }
 
   private affordTrust() {
     this.newsService.addTrust(this.viewUser);
     this.userService.addTrustedUser(this.viewUser.uid);
-    this.userService.saveUser();
   }
 
   private sendCircles () {
@@ -60,6 +58,7 @@ export class UserDetailPage {
   ionViewDidLoad() {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
+        debugger;
         this.user = user;
         if (this.viewUser.profilePicURL)
           this.profilePicURL = this.viewUser.profilePicURL;

@@ -97,6 +97,7 @@
   "users": {
     "du6jisreecQL3ok81WDLXyKdS9T2": {
       "userData": {
+        "agreedToDisclaimer": true,
         "uid": "du6jisreecQL3ok81WDLXyKdS9T2",
         "authProviders": ["email", "name", "photo"],
         "createdAt": 1497078643926,
@@ -154,6 +155,7 @@
     },
     "jSu2I20VwcgesCvTCsAb2wsTqNG2": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "jSu2I20VwcgesCvTCsAb2wsTqNG2",
         "balance": 100,
         "createdAt": 1497078643916,
@@ -208,6 +210,7 @@
     },
     "5jrFiCphYKbDZ4FeSMFuhMM8wzw2": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "5jrFiCphYKbDZ4FeSMFuhMM8wzw2",
         "balance": 650,
         "createdAt": 1496781495492,
@@ -236,6 +239,7 @@
     },
     "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "7H0ByozNeBgwy2ZdQjWnTk2ZbCN2",
         "balance": 143,
         "createdAt": 1496952402440,
@@ -262,6 +266,7 @@
     },
     "J56XFbhioecI8PTQb90NKe5bwB13": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "J56XFbhioecI8PTQb90NKe5bwB13",
         "balance": 143,
         "createdAt": 1496952177281,
@@ -288,6 +293,7 @@
     },
     "SKMdyuZc5cRdje6GHiXzcEL7wQs1": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "SKMdyuZc5cRdje6GHiXzcEL7wQs1",
         "balance": 143,
         "createdAt": 1496952304626,
@@ -313,6 +319,7 @@
     },
     "8tmyxjdsXOWQM6YLCGeYwLfqU4I3": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "8tmyxjdsXOWQM6YLCGeYwLfqU4I3",
         "balance": 857,
         "createdAt": 1497089064339,
@@ -346,6 +353,7 @@
     },
     "Ea793jse7XNcSrMMmO8GvRPLlbU2": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "Ea793jse7XNcSrMMmO8GvRPLlbU2",
         "balance": 857,
         "createdAt": 1497078641926,
@@ -372,6 +380,7 @@
     },
     "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3": {
       "userData": {
+  "agreedToDisclaimer": true,
         "uid": "ZSbGLxzQwgfYMQ5Xy98dyqlL8JA3",
         "balance": 857,
         "createdAt": 1497089879370,

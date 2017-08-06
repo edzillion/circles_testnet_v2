@@ -7,10 +7,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { Subscription } from 'rxjs/Subscription';
 
-import { NewsService } from '../providers/news-service/news-service';
+import { AuthService } from '../providers/auth-service/auth-service';
 import { UserService } from '../providers/user-service/user-service';
-import { ValidatorService } from '../providers/validator-service/validator-service';
-import { StorageService } from '../providers/storage-service/storage-service';
 
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
@@ -35,15 +33,13 @@ export class CirclesApp {
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
+    private authService: AuthService,
     private loadingCtrl: LoadingController,
-    private newsService: NewsService,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private storageService: StorageService,
     private toastCtrl: ToastController,
     private userService: UserService,
-    private validatorService: ValidatorService
   ) {
     platform.ready().then(() => {
 
@@ -77,7 +73,7 @@ export class CirclesApp {
               });
           }
           else {
-            //this.nav.setRoot(LoginPage);
+            this.nav.setRoot(LoginPage);
           }
         },
         error => {
@@ -107,15 +103,6 @@ export class CirclesApp {
   }
 
   private logout(): void {
-    //close subscriptions?? close services??
-
-    this.userService.signOut().then(
-      (user) => {
-        console.log('logout success');
-
-        this.nav.setRoot(LoginPage);
-      }, function(error) {
-        console.log('logout fail:', error);
-      });
+    this.authService.signOut();
   }
 }

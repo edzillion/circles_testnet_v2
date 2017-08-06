@@ -196,7 +196,6 @@ export class WelcomePage {
 
       let progressIntervalObs$ = Observable.interval(200).subscribe( () => {
         this.profilePicUpload.progress++;
-        console.log(this.profilePicUpload.progress);
         this.loading.data.content = this.sanitizer.bypassSecurityTrustHtml(
           '<p>Saving Profile ...</p><progress value="'+this.profilePicUpload.progress+'" max="100"></progress>'
         )
@@ -206,6 +205,8 @@ export class WelcomePage {
         (profileURL) => {
           user.profilePicURL = profileURL;
           progressIntervalObs$.unsubscribe();
+          if (!user.authProviders['photo'])
+            user.authProviders.push('photo');
           this.saveUser(user);
         },
         (error) => {

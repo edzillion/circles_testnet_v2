@@ -53,6 +53,7 @@ import { NewsCard } from '../components/news-card/news-card';
 import pica from 'pica';
 
 import { StorageService } from '../providers/storage-service/storage-service';
+import { AuthService } from '../providers/auth-service/auth-service';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { StorageService } from '../providers/storage-service/storage-service';
     WelcomePage
   ],
   providers: [
+    AuthService,
     NewsService,
     SplashScreen,
     StatusBar,
@@ -111,7 +113,7 @@ import { StorageService } from '../providers/storage-service/storage-service';
     // PushService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ValidatorService,
-    StorageService
+    StorageService    
   ]
 })
 export class AppModule {}

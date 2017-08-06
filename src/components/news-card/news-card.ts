@@ -36,7 +36,6 @@ export class NewsCard implements OnDestroy, OnInit {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
-        //this.profilePicURL = user.profilePicURL;
       },
       error => {
         this.toast = this.toastCtrl.create({
@@ -54,6 +53,7 @@ export class NewsCard implements OnDestroy, OnInit {
       this.title = "Account Creation";
       this.itemIcon = "add-circle";
       this.message = "Your Circles account was created!";
+      this.profilePicURL = this.user.profilePicURL;
     }
     else if (this.newsItem.type == 'transaction' && this.newsItem.from == this.user.uid) {
       this.title = "Sent Circles";
@@ -109,6 +109,7 @@ export class NewsCard implements OnDestroy, OnInit {
       this.title = "Issuance";
       this.itemIcon = "cash";
       this.message = `Issued ${this.newsItem.amount} ${this.newsItem.coinTitle}s`;
+      this.profilePicURL = this.user.profilePicURL;
     }
   }
   ngOnDestroy() {

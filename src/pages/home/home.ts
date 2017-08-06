@@ -41,7 +41,6 @@ export class HomePage {
   private allCoinBalance: number;
   private myCoinName: string;
 
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -67,7 +66,6 @@ export class HomePage {
   }
 
   private selectNetwork(): void {
-    debugger;
     this.selectedView = 'network';
   }
 

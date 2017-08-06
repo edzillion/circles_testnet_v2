@@ -211,6 +211,10 @@ export class NewsService implements OnDestroy {
     this.newsItemsFirebaseList$.push(newsItem);
   }
 
+  public signOut() {
+    this.newsItemsSub$.unsubscribe();
+  }
+
   ngOnDestroy () {
     this.newsItemsSub$.unsubscribe();
   }

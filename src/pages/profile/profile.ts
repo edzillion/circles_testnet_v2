@@ -89,7 +89,6 @@ export class ProfilePage {
 
       let progressIntervalObs$ = Observable.interval(200).subscribe( () => {
         this.profilePicUpload.progress++;
-        console.log(this.profilePicUpload.progress);
         this.loading.data.content = this.sanitizer.bypassSecurityTrustHtml(
           '<p>Saving Profile ...</p><progress value="'+this.profilePicUpload.progress+'" max="100"></progress>'
         )
