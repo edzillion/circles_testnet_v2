@@ -1,7 +1,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { IonicStorageModule } from '@ionic/storage';
+import { CirclesApp } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
@@ -18,7 +19,8 @@ import { LoginEmailPage } from '../pages/login-email/login-email';
 import { SignupEmailPage } from '../pages/signup-email/signup-email';
 import { SendPage } from '../pages/send/send';
 import { ApplyPage } from '../pages/apply/apply';
-import { DisclaimerPage } from '../pages/disclaimer/disclaimer';
+import { WelcomePage } from '../pages/welcome/welcome';
+
 
 import { ConfirmModal } from '../pages/confirm-modal/confirm-modal';
 
@@ -50,25 +52,27 @@ import { NewsCard } from '../components/news-card/news-card';
 
 import pica from 'pica';
 
+import { StorageService } from '../providers/storage-service/storage-service';
+
 @NgModule({
   declarations: [
+    ApplyPage,
+    CirclesApp,
+    ConfirmModal,
+    HomePage,
+    Keyobject,
     LoginEmailPage,
     LoginPage,
-    MyApp,
-    ProfilePage,
-    HomePage,
-    SearchPage,
-    UserDetailPage,
-    SignupEmailPage,
-    SendPage,
-    WalletPage,
-    ValidatorDetailPage,
-    Keyobject,
-    SettingsPage,
     NewsCard,
-    DisclaimerPage,
-    ConfirmModal,
-    ApplyPage
+    ProfilePage,
+    SearchPage,
+    SendPage,
+    SettingsPage,
+    SignupEmailPage,
+    UserDetailPage,
+    ValidatorDetailPage,
+    WalletPage,
+    WelcomePage
   ],
   imports: [
     AngularFireAuthModule,
@@ -77,25 +81,26 @@ import pica from 'pica';
     BrowserModule,
     BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot(),
-    IonicModule.forRoot(MyApp, {mode: 'ios'}) //this will force 'ios' style on all platforms
+    IonicModule.forRoot(CirclesApp), //{mode: 'ios'}) //this will force 'ios' style on all platforms
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    ApplyPage,
+    CirclesApp,
+    ConfirmModal,
+    HomePage,
     LoginEmailPage,
     LoginPage,
-    MyApp,
     ProfilePage,
-    HomePage,
     SearchPage,
-    UserDetailPage,
-    SignupEmailPage,
     SendPage,
-    WalletPage,
-    ValidatorDetailPage,
     SettingsPage,
-    DisclaimerPage,
-    ConfirmModal,
-    ApplyPage
+    SignupEmailPage,
+    UserDetailPage,
+    ValidatorDetailPage,
+    WalletPage,
+    WelcomePage
   ],
   providers: [
     NewsService,
@@ -105,7 +110,8 @@ import pica from 'pica';
     UserService,
     // PushService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ValidatorService
+    ValidatorService,
+    StorageService
   ]
 })
 export class AppModule {}

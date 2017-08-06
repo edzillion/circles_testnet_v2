@@ -12,6 +12,8 @@ import { UserService } from '../../providers/user-service/user-service';
 import { NewsService } from '../../providers/news-service/news-service';
 import { ValidatorService } from '../../providers/validator-service/validator-service';
 import { User } from '../../interfaces/user-interface';
+import { Individual } from '../../interfaces/individual-interface';
+import { Organisation } from '../../interfaces/organisation-interface';
 
 import { SearchPage } from '../search/search';
 import { UserDetailPage } from '../user-detail/user-detail';
@@ -25,8 +27,6 @@ export class HomePage {
 
   private toast: Toast;
   private base64ImageData: string;
-  public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
-
   private user: User;
   private userSub$: Subscription;
 
@@ -67,6 +67,7 @@ export class HomePage {
   }
 
   private selectNetwork(): void {
+    debugger;
     this.selectedView = 'network';
   }
 
@@ -79,44 +80,23 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.networkList = [];
-    this.validatorList = [];
+
     this.userSub$ = this.userService.user$.subscribe(
       user => {
-        this.user = {} as User;
-        this.networkList = [];
-        this.validatorList = [];
-        this.user = user;
-        if (this.user.profilePicURL)
-          this.profilePicURL = this.user.profilePicURL;
-        this.myCoinName = this.user.wallet[this.user.uid].title;
-        this.myCoinBalance = this.user.wallet[this.user.uid].amount;
-        this.allCoinBalance = this.user.balance;
 
-        if (user.trustedUsers) {
-          user.trustedUsers.map(
-            key => {
-              if (this.user.uid == key) {
-                return;
-              }
-              this.userService.keyToUser$(key).take(1).subscribe(
-                trustedUser => this.networkList.push(trustedUser)
-              );
-            }
-          );
+        if (!user.agreedToDisclaimer) {
+          //if they got this far then they have agreed to the disclaimer
+          this.userService.updateUser({agreedToDisclaimer:true});
         }
-        if (this.user.validators) {
-          this.validatorService.validators$.subscribe(
-            valis => {
-              this.validatorList = [];
-              if (this.user.validators) {
-                for (let vKey of this.user.validators) {
-                  let v = valis[vKey];
-                  this.validatorList.push(v);
-                }
-              }
-            }
-          );
+
+        if (this.userService.type === 'organisation') {
+          this.user = user as Organisation;
+        }
+        else {
+          this.user = user as Individual;
+          this.myCoinName = user.wallet[user.uid].title;
+          this.myCoinBalance = user.wallet[user.uid].amount;
+          this.allCoinBalance = user.balance;
         }
       }
     );

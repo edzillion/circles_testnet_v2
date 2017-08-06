@@ -8,4 +8,5 @@ export interface NewsItem {
   title: string;
   to: string;
   type: string;
+  coinTitle:string;
 }

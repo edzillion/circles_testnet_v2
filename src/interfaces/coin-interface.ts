@@ -1,6 +1,7 @@
 export interface Coin {
   amount: number;
+  createdAt: number;
   owner: string;
-  title: string;
   priority:number;
+  title: string;
 }

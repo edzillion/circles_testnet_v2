@@ -27,8 +27,7 @@ export class UserDetailPage {
   private trusted: boolean = false;
   private validatedBy: Validator = {} as Validator;
 
-  private genericProfilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
-  private profilePicURL: string = this.genericProfilePicURL;
+  private profilePicURL: string;
 
   constructor(
     private navCtrl: NavController,
@@ -83,16 +82,16 @@ export class UserDetailPage {
         }
         else if (this.user.validators) {
           for (let vKey of this.user.validators) {
-            let v = this.validatorService.validators[vKey] as Validator;
-            if (v.trustedUsers) {
-              for (let tUserKey of v.trustedUsers) {
-                if (tUserKey == this.viewUser.uid) {
-                  this.validatorTrust = true;
-                  this.validatedBy = v;
-                  this.trusted = true;
-                }
-              }
-            }
+            // let v = this.validatorService.validators[vKey] as Validator;
+            // if (v.trustedUsers) {
+            //   for (let tUserKey of v.trustedUsers) {
+            //     if (tUserKey == this.viewUser.uid) {
+            //       this.validatorTrust = true;
+            //       this.validatedBy = v;
+            //       this.trusted = true;
+            //     }
+            //   }
+            // }
           }
         }
       }

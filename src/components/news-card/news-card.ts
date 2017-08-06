@@ -20,9 +20,9 @@ export class NewsCard implements OnDestroy, OnInit {
   private title: string;
   private message: string;
   private itemIcon: string;
-  private subject: string;
-  private profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
   private userSub$: Subscription;
+
+  private profilePicURL: string;
 
   private toast: Toast;
 
@@ -36,9 +36,7 @@ export class NewsCard implements OnDestroy, OnInit {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
         this.user = user;
-        if (this.user.profilePicURL) {
-          this.profilePicURL = this.user.profilePicURL;
-        }
+        //this.profilePicURL = user.profilePicURL;
       },
       error => {
         this.toast = this.toastCtrl.create({
@@ -61,67 +59,57 @@ export class NewsCard implements OnDestroy, OnInit {
       this.title = "Sent Circles";
       this.itemIcon = "arrow-dropright-circle";
       let user = this.userService.keyToUser(this.newsItem.to);
-      if (user.profilePicURL) {
-        this.profilePicURL = user.profilePicURL;
-      }
+      this.profilePicURL = user.profilePicURL;
       this.message = `${this.newsItem.amount} Circles to ${user.displayName}`;
     }
     else if (this.newsItem.type == 'transaction' && this.user.uid == this.newsItem.to) {
       this.title = "Received Circles";
       this.itemIcon = "arrow-dropleft-circle";
       let user = this.userService.keyToUser(this.newsItem.from);
-        if (user.profilePicURL) {
-          this.profilePicURL = user.profilePicURL;
-        }
-        this.message = `${this.newsItem.amount} Circles from ${user.displayName}`;
+      this.profilePicURL = user.profilePicURL;
+      this.message = `${this.newsItem.amount} Circles from ${user.displayName}`;
       }
 
     else if (this.newsItem.type == 'validatorRequest') {
       this.title = "Validator Request";
       this.itemIcon = "help-circle";
       let validator = this.validatorService.keyToValidator(this.newsItem.from);
-      if (validator.profilePicURL) {
-        this.profilePicURL = validator.profilePicURL;
-      }
+      this.profilePicURL = validator.profilePicURL;
       this.message = `Requested validation from: ${validator.displayName}`;
     }
     else if (this.newsItem.type == 'validatorAccept') {
       this.title = "Validator Accept";
       this.itemIcon = "checkmark-circle";
       let validator = this.validatorService.keyToValidator(this.newsItem.from);
-      if (validator.profilePicURL) {
-        this.profilePicURL = validator.profilePicURL;
-      }
+      this.profilePicURL = validator.profilePicURL;
       this.message = `Validated by: ${validator.displayName}`;
     }
     else if (this.newsItem.type == 'revokeValidator') {
       this.title = "Revoke Validation";
       this.itemIcon = "close-circle";
       let validator = this.validatorService.keyToValidator(this.newsItem.to);
-      if (validator.profilePicURL) {
-        this.profilePicURL = validator.profilePicURL;
-      }
+      this.profilePicURL = validator.profilePicURL;
       this.message = `No longer validated by ${validator.displayName}`;
     }
     else if (this.newsItem.type == 'trustUser') {
       this.title = "Trust Accept";
       this.itemIcon = "checkmark-circle";
       let user = this.userService.keyToUser(this.newsItem.to);
-      if (user.profilePicURL) {
-        this.profilePicURL = user.profilePicURL;
-      }
+      this.profilePicURL = user.profilePicURL;
       this.message = `Afforded trust to: ${user.displayName}`;
     }
     else if (this.newsItem.type == 'revokeUser') {
       this.title = "Revoke Trust";
       this.itemIcon = "close-circle";
       let user = this.userService.keyToUser(this.newsItem.to);
-      if (user.profilePicURL) {
-        this.profilePicURL = user.profilePicURL;
-      }
+      this.profilePicURL = user.profilePicURL;
       this.message = `Stopped trusting: ${user.displayName}`;
     }
-
+    else if (this.newsItem.type == 'issuance') {
+      this.title = "Issuance";
+      this.itemIcon = "cash";
+      this.message = `Issued ${this.newsItem.amount} ${this.newsItem.coinTitle}s`;
+    }
   }
   ngOnDestroy() {
     this.userSub$.unsubscribe();

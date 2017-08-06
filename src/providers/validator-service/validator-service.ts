@@ -1,58 +1,81 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 import { NavParams } from 'ionic-angular';
+
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Subscription } from 'rxjs/Subscription';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
-import { User } from '../../interfaces/user-interface';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/operator/map';
 
+import { UserService } from '../user-service/user-service';
+import { User } from '../../interfaces/user-interface';
 import { Validator } from '../../interfaces/validator-interface'
+import { Provider } from '../../interfaces/provider-interface'
 
 @Injectable()
 export class ValidatorService {
 
+  private user: User;
   public validatorsFirebaseObj$: FirebaseListObservable<Validator[]>;
+  public providersFirebaseObj$: FirebaseListObservable<Provider[]>;
   public validators: Array<Validator>;
   public validatorArray: Array<Validator>;
   public initValSubject$: ReplaySubject<any> = new ReplaySubject<any>(1);
-  public validators$: Observable<Validator[]>
+  public validators$: Observable<Validator[]>;
+  public providers$: Observable<Provider[]>;
+  private providers: any;
 
-  public allProviders: Array<any> = [];
+  public allProviders: {[key: string]: Provider} = {};
+  public allValidators: {[key: string]: Validator} = {};
   public userProviders: Array<any>;
+  public userValidators: Array<any>;
   public valRequirements: Array<any>;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private userService: UserService) {
 
     this.validators$ = this.initValSubject$.asObservable();
 
     this.validatorsFirebaseObj$ = this.db.list('/validators/');
-    this.validatorsFirebaseObj$.subscribe(
-      valis => {
-        this.validatorArray = valis;
-        this.validators = [];
-        for (let v of valis) {
-          this.validators[v.$key] = v;
-        }
-        this.initValSubject$.next(this.validators);
-      }
-    );
+    this.providersFirebaseObj$ = this.db.list('/static/authProviders/');
 
-    this.db.list('/static/authProviders/').take(1).subscribe(
-      provs => {
-        for (let p of provs) {
-          this.allProviders[p.$key] = p;
-        }
+    const initStreams = [this.userService.initUserSubject$, this.providersFirebaseObj$, this.validatorsFirebaseObj$];
+
+    const combinator = (user, providers, validators) => {
+      this.user = user;
+      this.providers = providers;
+      for (let p of this.providers) {
+        this.allProviders[p.$key] = p;
       }
-    );
+      this.userProviders = this.user.authProviders.map( (pKey:string) => this.keyToProvider(pKey));
+
+      this.validators = validators;
+      for (let v of this.validators) {
+        this.allValidators[v.$key] = v;
+      }
+      if (this.user.validators) {
+        this.userValidators = this.user.validators.map( (vKey:string) => this.keyToValidator(vKey));
+      }
+      else {
+        this.userValidators = [];
+      }
+    };
+
+    Observable.combineLatest(initStreams, combinator).first().subscribe(
+      (result) => console.log('initStreams'),
+      (error) => console.log(error),
+      () => {
+        const userStreams = [this.userService.user$, this.providersFirebaseObj$, this.validatorsFirebaseObj$]
+        Observable.combineLatest(userStreams, combinator).subscribe( () => console.log('userStreams'));
+      });
+
   }
 
   public getUserProviders(user: User) {
 
     this.userProviders = [];
     for (let pKey in this.allProviders) {
-      let p = Object.assign({}, this.allProviders[pKey]);
+      let p = Object.assign({}, this.allProviders[pKey]) as any;
       if (user.authProviders.find(aKey => pKey == aKey)) {
         p.completed = true;
       }
@@ -64,7 +87,7 @@ export class ValidatorService {
   public getValidatorRequirements(vali: Validator, user: User) {
     this.valRequirements = [];
     for (let req of vali.requirements) {
-      let r = Object.assign({}, this.allProviders[req]);
+      let r = Object.assign({}, this.allProviders[req]) as any;
       if (user.authProviders.find(auth => {
         return req == auth;
       })) {
@@ -83,7 +106,7 @@ export class ValidatorService {
   }
 
   public keyToValidatorName(key: string): string {
-    let d = this.validators[key];
+    let d = this.allValidators[key];
     //if (!d)
       //todo:error message
     return d.displayName;
@@ -97,7 +120,14 @@ export class ValidatorService {
   }
 
   public keyToValidator(key: string): Validator {
-    let d = this.validators[key];
+    let d = this.allValidators[key];
+    //if (!d)
+      //todo:error message
+    return d;
+  }
+
+  public keyToProvider(key: string): Provider {
+    let d = this.allProviders[key];
     //if (!d)
       //todo:error message
     return d;
@@ -147,7 +177,6 @@ export class ValidatorService {
   }
 
   public completeValidation(user, validator) {
-    debugger;
     if (!validator.appliedUsers) {
     //todo:error
     }

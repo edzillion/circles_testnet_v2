@@ -26,8 +26,6 @@ export class SignupEmailPage {
   ) {
 
     this.createUserForm = formBuilder.group({
-      firstName: [null, Validators.required],
-      lastName: [null, Validators.required],
       email: [null,  Validators.compose([Validators.required, Validators.email])],
       password1: [null, Validators.required],
       password2: [null, Validators.required],
@@ -38,13 +36,18 @@ export class SignupEmailPage {
     if (!formValid)
       return;
 
-    this.userService.createUser(
-      formData.firstName,
-      formData.lastName,
-      formData.email,
-      formData.password1
+    this.userService.createAuthUser(formData.email,formData.password1).then(
+      (success) => {},
+      (error) => {
+        this.toast = this.toastCtrl.create({
+          message: 'Firebase error: ' + error,
+          duration: 2500,
+          position: 'middle'
+        });
+        console.error(error);
+        this.toast.present();
+      }
     );
-
   }
 
   private passwordsAreEqual(ctrl: FormControl): any {
@@ -55,7 +58,7 @@ export class SignupEmailPage {
   }
 
   ionViewDidLoad() {
-    
+
   }
 
 }

@@ -116,18 +116,20 @@ export class TransactionService implements OnDestroy {
 
   //which of the receivingUser's trusted coins does the sendingUser have?
   private getTrustIntersection(sendingUser:User, receivingUser:User) {
-    let ret = [];
+    let returnArray = [];
     let sum = 0;
+    let rTrusts = receivingUser.trustedUsers as string[];
+
     if (receivingUser.trustedUsers) {
-      for (let u of receivingUser.trustedUsers) {
-        if (this.user.wallet[u]) {
-          sum += this.user.wallet[u].amount;
-          let p = this.user.wallet[u].priority;
-          ret[p] = this.user.wallet[u];
+      for (let tUserKey of rTrusts) {
+        if (sendingUser.wallet[tUserKey]) {
+          sum += this.user.wallet[tUserKey].amount;
+          let p = this.user.wallet[tUserKey].priority;
+          returnArray[p] = this.user.wallet[tUserKey];
         }
       }
     }
-    return {trustedCoins:ret,balance:sum};
+    return {trustedCoins:returnArray,balance:sum};
   }
 
   ngOnDestroy() {

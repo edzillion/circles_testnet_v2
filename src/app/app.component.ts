@@ -1,14 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, Loading, LoadingController, Events, Platform } from 'ionic-angular';
+import { Loading, LoadingController, Platform, Toast, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { Subscription } from 'rxjs/Subscription';
 
+import { NewsService } from '../providers/news-service/news-service';
 import { UserService } from '../providers/user-service/user-service';
+import { ValidatorService } from '../providers/validator-service/validator-service';
+import { StorageService } from '../providers/storage-service/storage-service';
 
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
@@ -16,29 +18,32 @@ import { HomePage } from '../pages/home/home';
 import { WalletPage } from '../pages/wallet/wallet';
 import { SettingsPage } from '../pages/settings/settings';
 import { ProfilePage } from '../pages/profile/profile';
-import { DisclaimerPage } from '../pages/disclaimer/disclaimer';
+import { WelcomePage } from '../pages/welcome/welcome';
+
+var authUserObs$: FirebaseObjectObservable<any>;
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
-  rootPage:any = LoginPage;
+export class CirclesApp {
+  rootPage: any = LoginPage;
   @ViewChild('content') nav;
 
-private loading: Loading;
-
-private initSub$: Subscription;
+  private loading: Loading;
+  private toast: Toast;
 
   constructor(
-    private alertController: AlertController,
-    private userService: UserService,
-    public events: Events,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
+    private loadingCtrl: LoadingController,
+    private newsService: NewsService,
     private platform: Platform,
-    private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private loadingCtrl: LoadingController
+    private statusBar: StatusBar,
+    private storageService: StorageService,
+    private toastCtrl: ToastController,
+    private userService: UserService,
+    private validatorService: ValidatorService
   ) {
     platform.ready().then(() => {
 
@@ -49,54 +54,68 @@ private initSub$: Subscription;
       this.userService.authState$.subscribe(
         auth => {
           if (auth) {
-            let userObs$ = this.db.object('/users/' + auth.uid);
-            let userSub$ = userObs$.subscribe(
+            let authUserObs$ = this.db.object('/users/' + auth.uid);
+            let authUserSub$ = authUserObs$.subscribe(
               user => {
                 if (!user.$exists()) {
-                  this.nav.push(DisclaimerPage, { obs: userObs$, auth:auth });
+                  this.nav.push(WelcomePage, { authUser: auth, obs: authUserObs$ });
                 }
                 else {
-                  userSub$.unsubscribe();
-                  this.userService.initUserSubject$.next(user)
+                  authUserSub$.unsubscribe();
+                  this.userService.initUserSubject$.next(user.userData);
                   this.nav.setRoot(HomePage);
                 }
-              }
-            );
+              },
+              error => {
+                this.toast = this.toastCtrl.create({
+                  message: 'Error saving user: ' + error,
+                  duration: 1500,
+                  position: 'middle'
+                });
+                console.error(error);
+                this.toast.present();
+              });
           }
           else {
             //this.nav.setRoot(LoginPage);
           }
-
         },
-        error => console.error(error),
+        error => {
+          this.toast = this.toastCtrl.create({
+            message: 'User auth error: ' + error,
+            duration: 1500,
+            position: 'middle'
+          });
+          console.error(error);
+          this.toast.present();
+        },
         () => { }
       );
-
     });
   }
 
-  private goToWallet() : void {
+  private goToWallet(): void {
     this.nav.push(WalletPage);
   }
 
-  private goToSettings() : void {
+  private goToSettings(): void {
     this.nav.push(SettingsPage);
   }
 
-  private goToProfile() : void {
+  private goToProfile(): void {
     this.nav.push(ProfilePage);
   }
 
-  private logout() : void {
+  private logout(): void {
     //close subscriptions?? close services??
 
     this.userService.signOut().then(
       (user) => {
-      console.log('logout success');
+        console.log('logout success');
 
-      this.nav.setRoot(LoginPage);
-    }, function(error) {
-      console.log('logout fail:', error);
-    });
+        this.nav.setRoot(LoginPage);
+      }, function(error) {
+        console.log('logout fail:', error);
+      });
   }
 }

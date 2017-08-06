@@ -12,6 +12,8 @@ import 'rxjs/add/operator/isEmpty';
 
 import { UserService } from '../../providers/user-service/user-service';
 import { User } from '../../interfaces/user-interface';
+import { Individual } from '../../interfaces/individual-interface';
+import { Organisation } from '../../interfaces/organisation-interface';
 import { NewsItem } from '../../interfaces/news-item-interface';
 import { Validator } from '../../interfaces/validator-interface';
 //import { PushService } from '../../providers/push-service/push-service';
@@ -22,8 +24,8 @@ export class NewsService implements OnDestroy {
   private user: User;
   private createUserNewsItem: any;
 
-  private dbNewsItems$: FirebaseListObservable<NewsItem[]>;
-  private dbNewsSub$: Subscription;
+  private newsItemsFirebaseList$: FirebaseListObservable<NewsItem[]>;
+  private newsItemsSub$: Subscription;
 
   private newsItemsReversed$: BehaviorSubject<NewsItem[]> = new BehaviorSubject([]);
   private newsItems$: BehaviorSubject<NewsItem[]> = new BehaviorSubject([]);
@@ -36,11 +38,13 @@ export class NewsService implements OnDestroy {
   ) {
 
     this.userService.initUserSubject$.take(1).subscribe(
-      user => {
-        this.setupDBQuery(user.$key);
+      initUser => {
+        this.setupDBQuery(initUser.uid);
+        if (!initUser.agreedToDisclaimer)
+          this.addCreateUser(initUser);
+
         this.userService.user$.subscribe(
-          user =>
-              this.user = user
+          user => this.user
         );
       },
       error => console.error(error),
@@ -48,49 +52,40 @@ export class NewsService implements OnDestroy {
     );
   }
 
-  private setupDBQuery(userUID):void {
+  private setupDBQuery(uid):void {
     // sets up a db list binding that will initially return all messages from the last
     // two minutes and then any added to the list after that.
-    this.dbNewsItems$ = this.db.list('/users/' + userUID + '/news/');
+    this.newsItemsFirebaseList$ = this.db.list('/users/' + uid + '/news/');
     let twoMinsAgo = Date.now() - 120000;
-    this.dbNewsItems$.$ref
+    this.newsItemsFirebaseList$.$ref
       .orderByChild('timestamp')
       .startAt(twoMinsAgo)
       .on('child_added', (firebaseObj,index) => {
         let latestNewsItem = firebaseObj.val();
         //receiving from someone
-        if (latestNewsItem.type == 'transaction' && latestNewsItem.to == userUID) {
+        if (latestNewsItem.type == 'transaction' && latestNewsItem.to == uid) {
           let fromUser = this.userService.keyToUser(latestNewsItem.from);
           let msg = 'Receieved ' + latestNewsItem.amount + ' Circles from ' + fromUser.displayName;
           this.notificationsService.create('Transaction', msg, 'info');
         }
       });
-      this.dbNewsItems$.subscribe(this.newsItems$);
-      this.dbNewsSub$ = this.dbNewsItems$.subscribe(
-        newsitems => {
+      this.newsItemsFirebaseList$.subscribe(this.newsItems$);
 
-          if (newsitems.length != 0) {
+      this.newsItemsSub$ = this.newsItemsFirebaseList$.subscribe(
+        newsitems => {
             let rev = newsitems.sort((a,b) => a.timestamp < b.timestamp ? 1 : -1);
             this.newsItemsReversed$.next(rev);
-          }
-          else {
-            let n = {
-              timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-              type: 'createAccount'
-            } as NewsItem;
-            this.dbNewsItems$.push(n);
-          }
 
         },
         error => {
           console.log("Firebase Error: " + error);
         },
-        () => console.log('news-service setupDBQuery dbNewsSub$ obs complete')
+        () => console.log('news-service setupDBQuery newsItemsSub$ obs complete')
       );
 
 
       // if (this.createUserNewsItem) {
-      //   this.dbNewsItems$.push(this.createUserNewsItem);
+      //   this.newsItemsFirebaseList$.push(this.createUserNewsItem);
       //   this.createUserNewsItem = null;
       // }
 
@@ -119,7 +114,7 @@ export class NewsService implements OnDestroy {
       type: 'transaction',
       message: message || ''
     } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
+    this.newsItemsFirebaseList$.push(newsItem);
 
     this.db.list('/users/'+toUser.$key+'/news/').push(newsItem);
 
@@ -140,15 +135,28 @@ export class NewsService implements OnDestroy {
       from: validator.$key,
       type: 'validatorRequest'
     } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
+    this.newsItemsFirebaseList$.push(newsItem);
   }
 
-  public addCreateUser(user: User):void {
-    //this.notificationsService.create('Join Success','','success');
-    let msg = 'Welcome to Circles ' +user.displayName +'!';
+  public addCreateUser(initUserData: Individual | Organisation):void {
+    let msg = 'Welcome to Circles ' +initUserData.displayName +'!';
     this.notificationsService.create('User Created', msg, 'success');
 
-    //this.createUserNewsItem = newsItem;
+    let n = {
+      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+      type: 'createAccount'
+    } as NewsItem;
+    this.newsItemsFirebaseList$.push(n);
+
+    if (this.userService.type == 'organisation') {
+      let n2 = {
+        timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+        type: 'issuance',
+        amount: initUserData.balance,
+        coinTitle: initUserData.wallet[initUserData.uid].title
+      } as NewsItem;
+      this.newsItemsFirebaseList$.push(n2);
+    }
   }
 
   public addValidatorTrustAccept(validator: Validator):void {
@@ -161,7 +169,7 @@ export class NewsService implements OnDestroy {
       from: validator.$key,
       type: 'validatorAccept'
     } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
+    this.newsItemsFirebaseList$.push(newsItem);
   }
 
   public addTrust(user: User):void {
@@ -174,7 +182,7 @@ export class NewsService implements OnDestroy {
       to: user.uid,
       type: 'trustUser'
     } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
+    this.newsItemsFirebaseList$.push(newsItem);
   }
 
   public revokeUserTrust(user: User):void {
@@ -187,7 +195,7 @@ export class NewsService implements OnDestroy {
       to: user.uid,
       type: 'revokeUser'
     } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
+    this.newsItemsFirebaseList$.push(newsItem);
   }
 
   public revokeValidatorTrust(vali: Validator):void {
@@ -200,11 +208,11 @@ export class NewsService implements OnDestroy {
       to: vali.$key,
       type: 'revokeValidator'
     } as NewsItem;
-    this.dbNewsItems$.push(newsItem);
+    this.newsItemsFirebaseList$.push(newsItem);
   }
 
   ngOnDestroy () {
-    this.dbNewsSub$.unsubscribe();
+    this.newsItemsSub$.unsubscribe();
   }
 
 }

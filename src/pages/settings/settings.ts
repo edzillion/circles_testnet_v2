@@ -23,7 +23,6 @@ export class SettingsPage {
 
   //vars
   private base64ImageData: string;
-  public profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2Fgeneric-profile-pic.png?alt=media&token=d151cdb8-115f-483c-b701-e227d52399ef";
   private user: User;
   private userSub$: Subscription;
 

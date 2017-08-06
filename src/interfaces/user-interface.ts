@@ -1,22 +1,22 @@
-import { NewsItem } from './news-item-interface';
 import { Validator } from './validator-interface';
 import { Coin } from './coin-interface';
+import { Provider } from './provider-interface';
 
 export interface User {
   $key: string,
-  authProviders: Array<any>;
+  agreedToDisclaimer:boolean, //used for legal reasons, and to denote that the user has been fully set up
+  authProviders: Array<string|Provider>;
   balance: number;
   createdAt: any;
   displayName: string;
   email: string;
-  firstName: string;
   greeting?: string;
-  lastName: string;
   profilePicURL: string;
   pushID: string;
   tradeMessage?:string;
-  trustedUsers: Array<any>;
+  trustedUsers: Array<string|User>;
   uid: string;
-  validators: Array<any>;
-  wallet: {};
+  validators: Array<string|Validator>;
+  wallet:{ [key: string]: Coin };
+  website?: string;
 }
