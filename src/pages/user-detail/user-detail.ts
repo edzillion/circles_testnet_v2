@@ -58,7 +58,6 @@ export class UserDetailPage {
   ionViewDidLoad() {
     this.userSub$ = this.userService.user$.subscribe(
       user => {
-        debugger;
         this.user = user;
         if (this.viewUser.profilePicURL)
           this.profilePicURL = this.viewUser.profilePicURL;

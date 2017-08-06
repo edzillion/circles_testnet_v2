@@ -52,7 +52,7 @@ export class LoginEmailPage {
       error => {
         this.toast = this.toastCtrl.create({
           message: error.toString(),
-          duration: 1500,
+          duration: 2500,
           position: 'middle'
         });
         console.error(error);

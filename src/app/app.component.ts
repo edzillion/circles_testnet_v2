@@ -65,7 +65,7 @@ export class CirclesApp {
               error => {
                 this.toast = this.toastCtrl.create({
                   message: 'Error saving user: ' + error,
-                  duration: 1500,
+                  duration: 2500,
                   position: 'middle'
                 });
                 console.error(error);
@@ -79,7 +79,7 @@ export class CirclesApp {
         error => {
           this.toast = this.toastCtrl.create({
             message: 'User auth error: ' + error,
-            duration: 1500,
+            duration: 2500,
             position: 'middle'
           });
           console.error(error);

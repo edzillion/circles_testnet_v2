@@ -89,7 +89,6 @@ export class UserService implements OnDestroy {
             let users = result[1];
 
             if (!this.users) {
-              debugger;
               this.users = [];
               for (let u of users) {
                 this.users[u.$key] = u.userData;

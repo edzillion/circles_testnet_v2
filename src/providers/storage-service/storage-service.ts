@@ -139,31 +139,6 @@ export class StorageService {
       );
     });
   }
-  //     uploadTask.then((obj) => {
-  //       this.user.profilePicURL = uploadTask.snapshot.downloadURL;
-  //       this.user.authProviders.push('photo');
-  //
-  //       this.userService.updateUser({ authProviders: this.user.authProviders, profilePicURL: this.user.profilePicURL })
-  //         .then((success) => {
-  //
-  //           console.log('userData save success');
-  //
-  //         })
-  //         .catch(
-  //         error => {
-  //           this.loading.dismiss();
-  //           this.toast = this.toastCtrl.create({
-  //             message: 'Error saving user: ' + error,
-  //             duration: 1500,
-  //             position: 'middle'
-  //           });
-  //           console.error(error);
-  //           this.toast.present();
-  //         },
-  //       ),
-  //         () => { this.loading.dismiss(); };
-  //     });
-  // }
 
 
   public isUploadSupported(): boolean {
