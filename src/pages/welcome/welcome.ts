@@ -39,7 +39,7 @@ export class WelcomePage {
   private profilePicUpload: UploadImage;
 
   private profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FGeneric_Image_Missing-Profile.jpg?alt=media&token=f1f08984-69f3-4f25-b505-17358b437d7a";
-  private imagedataURI: string;
+  private base64ImageData: string;
 
   private formState = {
     type: <string>null,
@@ -154,13 +154,12 @@ export class WelcomePage {
       var reader = new FileReader();
       reader.onload = (e) => {
         this.profilePicURL = e.target['result'];
-        this.imagedataURI = this.profilePicURL.substring(23);
+        this.base64ImageData = this.profilePicURL.substring(23);
         this.formState.profilePicSelected = true;
-        this.picForm.patchValue({ profilePicURL: this.imagedataURI });
+        this.picForm.patchValue({ profilePicURL: this.base64ImageData });
       }
       reader.readAsDataURL(fileInput.target.files[0]);
     }
-
   }
 
 
@@ -191,7 +190,7 @@ export class WelcomePage {
       user.profilePicURL = this.picForm.get('profilePicURL').value;
     }
 
-    if (this.imagedataURI) {
+    if (this.base64ImageData) {
       this.profilePicUpload = new UploadImage(this.profilePicURL);
       this.profilePicUpload.owner = user.uid;
 

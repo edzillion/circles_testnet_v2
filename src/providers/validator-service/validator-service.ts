@@ -42,12 +42,19 @@ export class ValidatorService {
     const initStreams = [this.userService.initUserSubject$, this.providersFirebaseObj$, this.validatorsFirebaseObj$];
 
     const combinator = (user, providers, validators) => {
+
       this.user = user;
       this.providers = providers;
-      for (let p of this.providers) {
-        this.allProviders[p.$key] = p;
+      this.userProviders = [];
+
+      for (let provider of this.providers) {
+        this.allProviders[provider.$key] = provider;
+        let p = Object.assign({}, provider) as any;
+        if (user.authProviders.find(aKey => provider.$key == aKey)) {
+          p.completed = true;
+        }
+        this.userProviders.push(p);
       }
-      this.userProviders = this.user.authProviders.map( (pKey:string) => this.keyToProvider(pKey));
 
       this.validators = validators;
       for (let v of this.validators) {

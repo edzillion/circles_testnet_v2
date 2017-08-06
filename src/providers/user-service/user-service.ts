@@ -87,10 +87,7 @@ export class UserService implements OnDestroy {
             let user = result[0];
             let users = result[1];
             if (user.trustedUsers) {
-              this.trustedUsers = user.trustedUsers.map( (uKey:string) => {
-                let t = this.keyToUser(uKey);
-                return t
-              });
+              this.trustedUsers = user.trustedUsers.map( (uKey:string) => this.keyToUser(uKey));
             }
           }
         );
@@ -177,13 +174,19 @@ export class UserService implements OnDestroy {
   }
 
   public addTrustedUser(userKey) {
-    this.user.trustedUsers.push(userKey);
+    if (this.user.trustedUsers)
+      this.user.trustedUsers.push(userKey);
+    else
+      this.user.trustedUsers = [userKey];
+
+    this.updateUser({trustedUsers:this.user.trustedUsers});
   }
 
   public removeTrustedUser(userKey) {
     this.user.trustedUsers = this.user.trustedUsers.filter(user => {
 	     return user != userKey;
     });
+    this.updateUser({trustedUsers:this.user.trustedUsers});
   }
 
   private setInitialWallet(user:Individual): Individual {
@@ -211,14 +214,6 @@ export class UserService implements OnDestroy {
       total += user.wallet[i].amount;
     }
     user.balance = total;
-  }
-
-  public affordTrust(userKey) {
-    this.addTrustedUser(userKey);
-  }
-
-  public revokeTrust(userKey) {
-    this.removeTrustedUser(userKey);
   }
 
   public signOut() {

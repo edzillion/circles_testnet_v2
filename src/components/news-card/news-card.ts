@@ -92,7 +92,7 @@ export class NewsCard implements OnDestroy, OnInit {
       this.message = `No longer validated by ${validator.displayName}`;
     }
     else if (this.newsItem.type == 'trustUser') {
-      this.title = "Trust Accept";
+      this.title = "Trust Afforded";
       this.itemIcon = "checkmark-circle";
       let user = this.userService.keyToUser(this.newsItem.to);
       this.profilePicURL = user.profilePicURL;

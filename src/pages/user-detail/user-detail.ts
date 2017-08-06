@@ -43,13 +43,13 @@ export class UserDetailPage {
 
   private revokeTrust() {
     this.newsService.revokeUserTrust(this.viewUser);
-    this.userService.revokeTrust(this.viewUser.uid);
+    this.userService.removeTrustedUser(this.viewUser.uid);
     this.userService.saveUser();
   }
 
   private affordTrust() {
     this.newsService.addTrust(this.viewUser);
-    this.userService.affordTrust(this.viewUser.uid);
+    this.userService.addTrustedUser(this.viewUser.uid);
     this.userService.saveUser();
   }
 
@@ -64,35 +64,14 @@ export class UserDetailPage {
         if (this.viewUser.profilePicURL)
           this.profilePicURL = this.viewUser.profilePicURL;
         if (this.user.trustedUsers) {
-          let dTrust = this.user.trustedUsers.some(tUserKey => {
+          this.trustTo = this.user.trustedUsers.some(tUserKey => {
             return tUserKey == this.viewUser.uid;
           });
-          if (dTrust) {
-            this.trustTo = true;
-          }
         }
         if (this.viewUser.trustedUsers) {
-          let dTrust = this.viewUser.trustedUsers.some(tUserKey => {
+          this.trusted = this.trustFrom = this.viewUser.trustedUsers.some(tUserKey => {
             return tUserKey == this.user.uid;
           });
-          if (dTrust) {
-            this.trustFrom = true;
-            this.trusted = true;
-          }
-        }
-        else if (this.user.validators) {
-          for (let vKey of this.user.validators) {
-            // let v = this.validatorService.validators[vKey] as Validator;
-            // if (v.trustedUsers) {
-            //   for (let tUserKey of v.trustedUsers) {
-            //     if (tUserKey == this.viewUser.uid) {
-            //       this.validatorTrust = true;
-            //       this.validatedBy = v;
-            //       this.trusted = true;
-            //     }
-            //   }
-            // }
-          }
         }
       }
     );

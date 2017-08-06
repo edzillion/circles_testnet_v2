@@ -62,8 +62,8 @@ export class WalletPage {
     for (let c of this.displayWallet) {
       this.user.wallet[c.owner] = c;
     }
-
-    this.userService.saveUser();
+    this.userService.updateUser({wallet:this.user.wallet});
+    this.navCtrl.pop();
   }
 
   ionViewDidLoad() {
@@ -75,9 +75,8 @@ export class WalletPage {
         this.user = user;
         this.displayWallet = [];
         for (let i in this.user.wallet) {
-          let w = Object.assign({},this.user.wallet[i]);
-          let displayName = this.userService.keyToUserName(w.owner);
-          w.owner = displayName;
+          let w = Object.assign({},this.user.wallet[i]) as any;
+          w.displayOwner = this.userService.keyToUserName(w.owner);
           this.displayWallet.push(w);
         }
         this.orderByPriority();

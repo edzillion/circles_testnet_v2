@@ -11,16 +11,25 @@
 
       <form (ngSubmit)="saveProfile()">
         <!-- First Name -->
-        <ion-item>
-          <ion-label stacked>First Name</ion-label>
-          <ion-input type="text" [(ngModel)]="user.firstName" name="firstname"></ion-input>
-        </ion-item>
+        <span *ngIf="userService.type == 'individual'">
+          <ion-item>
+            <ion-label stacked>First Name</ion-label>
+            <ion-input type="text" [(ngModel)]="user.firstName" name="firstname"></ion-input>
+          </ion-item>
 
-        <!-- Last Name -->
-        <ion-item>
-          <ion-label stacked>Last Name</ion-label>
-          <ion-input type="text" [(ngModel)]="user.lastName" name="lastname"></ion-input>
-        </ion-item>
+          <!-- Last Name -->
+          <ion-item>
+            <ion-label stacked>Last Name</ion-label>
+            <ion-input type="text" [(ngModel)]="user.lastName" name="lastname"></ion-input>
+          </ion-item>
+        </span>
+
+        <span *ngIf="userService.type == 'organisation'">
+          <ion-item>
+            <ion-label stacked>Organisation Name</ion-label>
+            <ion-input type="text" [(ngModel)]="user.displayName" name="firstname"></ion-input>
+          </ion-item>
+        </span>
 
         <!-- Greeting -->
         <ion-item>
@@ -35,7 +44,7 @@
               <img [src]="sanitizer.bypassSecurityTrustResourceUrl(profilePicURL)">
             </div>
         </ion-item>
-        <input ion-input *ngIf="isUploadSupported()" (change)="fileChangeEvent($event)" id="file" type="file" accept="image/*">
+        <input ion-input *ngIf="storageService.isUploadSupported()" (change)="fileChangeEvent($event)" id="file" type="file" accept="image/*">
         <button ion-button *ngIf="this.base64ImageData" (click)="fileUpload()">Upload Photo</button>
         <ion-item>
           <ion-label stacked>Trade Message</ion-label>

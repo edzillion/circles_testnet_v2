@@ -50,7 +50,7 @@ validator
             </ion-icon>
           </button>
         </div>
-        <ion-item>
+        <ion-item *ngIf="this.trusted">
           <ion-icon name="people" item-left></ion-icon>
           <ion-grid>
         		<ion-row>
