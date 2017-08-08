@@ -22,7 +22,6 @@ import { Validator } from '../../interfaces/validator-interface';
 export class NewsService implements OnDestroy {
 
   private user: User;
-  private createUserNewsItem: any;
 
   private newsItemsFirebaseList$: FirebaseListObservable<NewsItem[]>;
   private newsItemsSub$: Subscription;
@@ -44,7 +43,7 @@ export class NewsService implements OnDestroy {
           this.addCreateUser(initUser);
 
         this.userService.user$.subscribe(
-          user => this.user
+          (user) => this.user = user
         );
       },
       error => console.error(error),
@@ -73,22 +72,14 @@ export class NewsService implements OnDestroy {
 
       this.newsItemsSub$ = this.newsItemsFirebaseList$.subscribe(
         newsitems => {
-            let rev = newsitems.sort((a,b) => a.timestamp < b.timestamp ? 1 : -1);
-            this.newsItemsReversed$.next(rev);
-
+          let rev = newsitems.sort((a,b) => a.timestamp < b.timestamp ? 1 : -1);
+          this.newsItemsReversed$.next(rev);
         },
         error => {
           console.log("Firebase Error: " + error);
         },
         () => console.log('news-service setupDBQuery newsItemsSub$ obs complete')
       );
-
-
-      // if (this.createUserNewsItem) {
-      //   this.newsItemsFirebaseList$.push(this.createUserNewsItem);
-      //   this.createUserNewsItem = null;
-      // }
-
   }
 
   public get allNewsItems$(): BehaviorSubject<NewsItem[]> {
@@ -116,7 +107,7 @@ export class NewsService implements OnDestroy {
     } as NewsItem;
     this.newsItemsFirebaseList$.push(newsItem);
 
-    this.db.list('/users/'+toUser.$key+'/news/').push(newsItem);
+    this.db.list('/users/'+toUser.uid+'/news/').push(newsItem);
 
 
     //send push notification to other user

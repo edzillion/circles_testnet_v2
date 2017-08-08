@@ -137,7 +137,7 @@ export class UserService implements OnDestroy {
 
   public keyToUser$(key: string): Observable<User> {
     return this.users$.map(
-      users => users.find(user => user.$key === key).userData
+      users => users.find(user => user.uid === key).userData
     );
   }
 
@@ -172,7 +172,7 @@ export class UserService implements OnDestroy {
 
       let ret = users.filter((user) => {
         //let user = userRecord.userData as User;
-        if (!user.displayName || user.displayName == '' || user.uid == 'undefined' || (user.uid == this.user.uid))
+        if (!user || !user.displayName || user.displayName == '' || user.uid == 'undefined' || (user.uid == this.user.uid))
           return false;
         let s = searchTerm.toLowerCase();
         let d = user.displayName.toLowerCase();

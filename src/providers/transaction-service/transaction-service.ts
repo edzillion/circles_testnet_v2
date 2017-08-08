@@ -73,7 +73,7 @@ export class TransactionService implements OnDestroy {
     }
 
     try {
-      await this.db.object('/users/'+toUser.uid).update({
+      await this.db.object('/users/'+toUser.uid+'/userData').update({
         wallet: toUser.wallet,
         balance: toUser.balance
       });

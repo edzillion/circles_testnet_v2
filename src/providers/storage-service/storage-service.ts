@@ -92,10 +92,6 @@ export class StorageService {
     }
 
     return this.pica.resize(fileList, w, h);
-
-    //
-    // return this.pica.resize(files, width: number, height: number): Observable<any> {
-
   }
 
   public async resizeProfilePic(upload: UploadImage, maxHeight:number, maxWidth:number): Promise<Upload>{
@@ -138,9 +134,6 @@ export class StorageService {
 
           }
         )
-
-        // let resize = canvas.toDataURL('image/jpeg', 0.8);
-        // upload.base64String = resize.substring(23);
         resolve(upload);
       });
 
@@ -186,7 +179,7 @@ export class StorageService {
           console.log('Upload Complete');
           //upload.progress = 100;
           let uploadLogEntry = {
-            createdAt: (new Date()),
+            createdAt: upload.createdAt,
             name: uploadTask.snapshot.metadata.name,
             size: uploadTask.snapshot.metadata.size,
             url:uploadTask.snapshot.downloadURL
