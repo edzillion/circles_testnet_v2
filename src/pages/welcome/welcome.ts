@@ -11,7 +11,7 @@ import { HomePage } from '../home/home';
 import { User } from '../../interfaces/user-interface';
 import { Individual } from '../../interfaces/individual-interface';
 import { Organisation } from '../../interfaces/organisation-interface';
-import { StorageService, UploadImage } from '../../providers/storage-service/storage-service';
+import { StorageService, UploadFile } from '../../providers/storage-service/storage-service';
 import { UserService } from '../../providers/user-service/user-service';
 import { NewsService } from '../../providers/news-service/news-service';
 
@@ -36,7 +36,7 @@ export class WelcomePage {
   private picForm: FormGroup;
   private disclaimerForm: FormGroup;
 
-  private profilePicUpload: UploadImage;
+  private profilePicUpload: UploadFile;
 
   private profilePicURL: string = "https://firebasestorage.googleapis.com/v0/b/circles-testnet.appspot.com/o/profilepics%2FGeneric_Image_Missing-Profile.jpg?alt=media&token=f1f08984-69f3-4f25-b505-17358b437d7a";
   private base64ImageData: string;
@@ -153,14 +153,23 @@ export class WelcomePage {
 
       var reader = new FileReader();
       reader.onload = (e) => {
-        this.profilePicURL = e.target['result'];
-        this.base64ImageData = this.profilePicURL.substring(23);
-        this.formState.profilePicSelected = true;
-        this.picForm.patchValue({ profilePicURL: this.base64ImageData });
+        let img = new Image;
+        img.src = reader.result;
+        img.onload = ( (file) => {
+
+          this.storageService.resizePicFile(fileInput.target.files, img.height, img.width).subscribe(
+            imageBlob => {
+              this.profilePicURL = URL.createObjectURL(imageBlob);
+              this.base64ImageData = this.profilePicURL.substring(23);
+              this.profilePicUpload = new UploadFile(imageBlob as File, this.authUser.uid);
+            }
+          );
+        });
       }
+
       reader.readAsDataURL(fileInput.target.files[0]);
-    }
   }
+}
 
 
   private saveForm(): void {
@@ -190,22 +199,19 @@ export class WelcomePage {
       user.profilePicURL = this.picForm.get('profilePicURL').value;
     }
 
-    if (this.base64ImageData) {
-      this.profilePicUpload = new UploadImage(this.profilePicURL);
-      this.profilePicUpload.owner = user.uid;
+    if (this.profilePicUpload) {
 
       let progressIntervalObs$ = Observable.interval(200).subscribe( () => {
-        this.profilePicUpload.progress++;
         this.loading.data.content = this.sanitizer.bypassSecurityTrustHtml(
           '<p>Saving Profile ...</p><progress value="'+this.profilePicUpload.progress+'" max="100"></progress>'
         )
       });
 
-      this.storageService.resizeAndUploadProfilePic(this.profilePicUpload).then(
+      this.storageService.uploadFile(this.profilePicUpload).then(
         (profileURL) => {
           user.profilePicURL = profileURL;
           progressIntervalObs$.unsubscribe();
-            user.authProviders = ['photo'];
+          user.authProviders = ['photo'];
           this.saveUser(user);
         },
         (error) => {

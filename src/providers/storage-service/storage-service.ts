@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Toast, ToastController } from 'ionic-angular';
 
+import { Ng2PicaService } from 'ng2-pica';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import 'rxjs/add/operator/map';
@@ -22,16 +23,18 @@ export class Upload {
 
 export class UploadImage extends Upload {
   base64String: string;
-  constructor(base64String: string) {
+  constructor(base64String: string, owner:string) {
     super();
+    this.owner = owner;
     this.base64String = base64String;
   }
 }
 
 export class UploadFile extends Upload {
   file: File;
-  constructor(file: File) {
+  constructor(file: File, owner:string) {
     super();
+    this.owner = owner;
     this.file = file;
   }
 }
@@ -51,6 +54,7 @@ export class StorageService {
 
   constructor(
     private db: AngularFireDatabase,
+    private pica: Ng2PicaService,
     private toastCtrl: ToastController
   ) {
     this.profilePicRef = firebase.storage().ref('/profilepics');
@@ -60,32 +64,83 @@ export class StorageService {
   }
 
   resizeAndUploadProfilePic(upload: UploadImage): Promise<any> {
-    return this.resizeProfilePic(upload, 800, 600).then(
+
+    return this.resizeProfilePic(upload, 1024, 768).then(
       uploadResized => {
         return this.uploadFile(uploadResized);
       }
     )
   }
 
-  public async resizeProfilePic(upload: UploadImage, height:number, width:number): Promise<Upload>{
+  public resizePicFile(files: File[], sourceHeight:number, sourceWidth:number): Observable<any> { //}: Promise<Upload>{
+
+    let fileList = Array.from(files);
+
+    let maxHeight = 1024;
+    let maxWidth = 768;
+    let h,w;
+
+    if (sourceHeight > sourceWidth) {
+      let ratio = maxHeight/sourceHeight;
+      h = maxHeight;
+      w = sourceWidth * ratio;
+    }
+    else if (sourceWidth >= sourceHeight){
+      let ratio = maxWidth/sourceWidth;
+      w = maxWidth;
+      h = sourceHeight * ratio;
+    }
+
+    return this.pica.resize(fileList, w, h);
+
+    //
+    // return this.pica.resize(files, width: number, height: number): Observable<any> {
+
+  }
+
+  public async resizeProfilePic(upload: UploadImage, maxHeight:number, maxWidth:number): Promise<Upload>{
     return new Promise<Upload>((resolve, reject) => {
 
       let img = new Image;
       img.src = upload.base64String;
 
-      img.onload = (() => {
+      img.onload = ( (file) => {
+
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
+        let h,w;
 
+        ctx.drawImage(img, 0, 0);
+
+        if (img.height > img.width) {
+          let ratio = img.width/img.height;
+          h = maxHeight;
+          w = img.width * ratio;
+        }
+        else if (img.width >= img.height){
+          let ratio = img.height/img.width;
+          w = maxWidth;
+          h = img.height * ratio;
+        }
+
+        var canvas2 = document.createElement('canvas');
+        var ctx2 = canvas.getContext('2d');
         // We set the dimensions at the wanted size.
-        canvas.width = height;
-        canvas.height = width;
+        canvas.width = w;
+        canvas.height = h;
+        this.pica.resizeCanvas(canvas, canvas2, {
+          unsharpAmount: 80,
+          unsharpRadius: 0.6,
+          unsharpThreshold: 2
+        })
+        .then(
+          result => {
 
-        // We resize the image with the canvas method drawImage();
-        ctx.drawImage(img, 0, 0, width, height);
+          }
+        )
 
-        let resize = canvas.toDataURL('image/jpeg', 0.8);
-        upload.base64String = resize.substring(23);
+        // let resize = canvas.toDataURL('image/jpeg', 0.8);
+        // upload.base64String = resize.substring(23);
         resolve(upload);
       });
 
@@ -100,15 +155,15 @@ export class StorageService {
 
     let uploadTask;
     if (upload instanceof UploadImage) {
-      let c = this.profilePicRef.child(upload.owner);
+      let c = this.profilePicRef.child(upload.owner+'.jpg');
       uploadTask = c.putString(upload.base64String, 'base64', { contentType: 'image/jpg' });
     }
     else if (upload instanceof UploadFile) {
-      let c = this.profilePicRef.child(upload.owner);
+      let c = this.profilePicRef.child(upload.owner+'.jpg');
       uploadTask = c.put(upload.file);
     }
 
-    return new Promise ((resolve,reject) => {
+    return new Promise<string> ((resolve,reject) => {
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
           upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -129,17 +184,19 @@ export class StorageService {
         () => {
           // Upload completed successfully, now we can get the download URL
           console.log('Upload Complete');
-          upload.progress = 100;
-          upload.url = uploadTask.snapshot.downloadURL;
-          upload.name = uploadTask.snapshot.metadata.name;
-          upload.size = uploadTask.snapshot.metadata.size;
-          this.saveFileData(upload);
-          resolve(upload.url);
+          //upload.progress = 100;
+          let uploadLogEntry = {
+            createdAt: (new Date()),
+            name: uploadTask.snapshot.metadata.name,
+            size: uploadTask.snapshot.metadata.size,
+            url:uploadTask.snapshot.downloadURL
+          }
+          this.saveFileData(uploadLogEntry);
+          resolve(uploadTask.snapshot.downloadURL);
         }
       );
     });
   }
-
 
   public isUploadSupported(): boolean {
     if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
@@ -151,8 +208,8 @@ export class StorageService {
   }
 
   // Writes the file details to the realtime db
-  private saveFileData(upload: Upload) {
-    this.uploads.push(upload);
+  private saveFileData(uploadLogEntry: any) {
+    this.uploads.push(uploadLogEntry);
   }
 
 }

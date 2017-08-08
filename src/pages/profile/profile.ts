@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from '../../providers/user-service/user-service';
 import { NewsService } from '../../providers/news-service/news-service';
 import { ValidatorService } from '../../providers/validator-service/validator-service';
-import { StorageService, UploadImage } from '../../providers/storage-service/storage-service';
+import { StorageService, UploadImage, UploadFile } from '../../providers/storage-service/storage-service';
 import { User } from '../../interfaces/user-interface';
 import { Individual  } from '../../interfaces/individual-interface';
 
@@ -28,6 +28,7 @@ export class ProfilePage {
 
   private toast: Toast;
   private base64ImageData: string;
+  private imageBlob: Blob;
   private profilePicURL: any;
 
   private userSub$: Subscription;
@@ -36,7 +37,7 @@ export class ProfilePage {
 
   private loading: Loading;
   private fileSelected: any;
-  private profilePicUpload: UploadImage;
+  private profilePicUpload: UploadImage | UploadFile;
 
   constructor(
     private db: AngularFireDatabase,
@@ -69,12 +70,24 @@ export class ProfilePage {
 
       var reader = new FileReader();
       reader.onload = (e) => {
-        this.profilePicURL = e.target['result'];
-        this.base64ImageData = this.profilePicURL.substring(23);
+        let img = new Image;
+        img.src = reader.result;
+        img.onload = ( (file) => {
+
+          this.storageService.resizePicFile(fileInput.target.files, img.height, img.width).subscribe(
+            imageBlob => {
+              this.profilePicURL = URL.createObjectURL(imageBlob);
+              this.base64ImageData = this.profilePicURL.substring(23);
+              this.profilePicUpload = new UploadFile(imageBlob as File, this.user.uid);
+            }
+          );
+        });
       }
+
       reader.readAsDataURL(fileInput.target.files[0]);
     }
   }
+
 
   private fileUpload() {
 
@@ -82,36 +95,32 @@ export class ProfilePage {
       content: 'Uploading ...',
       //dismissOnPageChange: true
     });
+    this.loading.present();
 
-    if (this.base64ImageData) {
-      this.profilePicUpload = new UploadImage(this.profilePicURL);
-      this.profilePicUpload.owner = this.user.uid;
-
-      let progressIntervalObs$ = Observable.interval(200).subscribe( () => {
-        this.profilePicUpload.progress++;
-        this.loading.data.content = this.sanitizer.bypassSecurityTrustHtml(
-          '<p>Saving Profile ...</p><progress value="'+this.profilePicUpload.progress+'" max="100"></progress>'
-        )
-      });
-
-      this.storageService.resizeAndUploadProfilePic(this.profilePicUpload).then(
-        (profileURL) => {
-          this.user.profilePicURL = profileURL;
-          progressIntervalObs$.unsubscribe();
-          this.userService.updateUser({profilePicURL:this.user.profilePicURL});
-        },
-        (error) => {
-          progressIntervalObs$.unsubscribe();
-          this.toast = this.toastCtrl.create({
-            message: error.message + ': ' + error.details,
-            duration: 2500,
-            position: 'middle'
-          });
-          console.error(error);
-          this.toast.present();
-        }
+    let progressIntervalObs$ = Observable.interval(200).subscribe( () => {
+      this.loading.data.content = this.sanitizer.bypassSecurityTrustHtml(
+        '<p>Saving Profile ...</p><progress value="'+this.profilePicUpload.progress+'" max="100"></progress>'
       );
-    }
+    });
+
+    this.storageService.uploadFile(this.profilePicUpload).then(
+      (profileURL) => {
+        this.user.profilePicURL = profileURL;
+        progressIntervalObs$.unsubscribe();
+        this.loading.dismiss();
+        this.userService.updateUser({profilePicURL:this.user.profilePicURL});
+      },
+      (error) => {
+        progressIntervalObs$.unsubscribe();
+        this.toast = this.toastCtrl.create({
+          message: error.message + ': ' + error.details,
+          duration: 2500,
+          position: 'middle'
+        });
+        console.error(error);
+        this.toast.present();
+      }
+    );
   }
 
   private saveProfile() {
